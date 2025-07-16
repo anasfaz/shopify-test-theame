@@ -1,0 +1,695 @@
+{% comment %}
+  Dynamic Banner Slider Section for Shopify
+  File: sections/banner-slider.liquid
+{% endcomment %}
+
+<div id="banner-slider-{{ section.id }}" class="banner-slider-wrapper">
+  <div class="banner-slider-container" 
+       style="
+         --top-spacing-mobile: {{ section.settings.top_spacing_mobile }}px;
+         --bottom-spacing-mobile: {{ section.settings.bottom_spacing_mobile }}px;
+         --top-spacing-desktop: {{ section.settings.top_spacing_desktop }}px;
+         --bottom-spacing-desktop: {{ section.settings.bottom_spacing_desktop }}px;
+         --slider-bg-color: {{ section.settings.section_bg_color }};
+       ">
+    
+    <div class="banner-slider-content">
+      <div class="slider-wrapper">
+        
+        {% if section.blocks.size > 0 %}
+          <div class="banner-slides" data-slides="{{ section.blocks.size }}">
+            {% for block in section.blocks %}
+              <div class="banner-slide {% if forloop.first %}active{% endif %}" 
+                   data-slide="{{ forloop.index0 }}"
+                   style="--slide-bg-color: {{ block.settings.slide_bg_color }}; --slide-text-color: {{ block.settings.slide_text_color }};">
+                
+                <div class="slide-content">
+                  <div class="slide-inner">
+                    
+                    {% if block.settings.image != blank %}
+                      <div class="slide-image">
+                        <img src="{{ block.settings.image | image_url: width: 350 }}" 
+                             alt="{{ block.settings.image.alt | escape }}"
+                             width="350" 
+                             height="auto"
+                             loading="lazy">
+                      </div>
+                    {% endif %}
+                    
+                    <div class="slide-text-content">
+                      <div class="slide-text">
+                        {% if block.settings.title != blank %}
+                          <h2 class="slide-title">{{ block.settings.title }}</h2>
+                        {% endif %}
+                        
+                        {% if block.settings.description != blank %}
+                          <p class="slide-description">{{ block.settings.description }}</p>
+                        {% endif %}
+                      </div>
+                      
+                      {% if block.settings.button_text != blank and block.settings.button_url != blank %}
+                        <a href="{{ block.settings.button_url }}" 
+                           class="slide-button"
+                           style="--button-bg: {{ block.settings.button_bg_color }}; --button-text: {{ block.settings.button_text_color }}; --button-border: {{ block.settings.button_border_color }};">
+                          <span>{{ block.settings.button_text }}</span>
+                        </a>
+                      {% endif %}
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          
+          {% if section.blocks.size > 1 %}
+            <!-- Navigation Arrows -->
+            <button class="slider-nav prev-slide" aria-label="Previous slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="slider-nav next-slide" aria-label="Next slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            
+            <!-- Dot Indicators -->
+            <div class="slider-dots">
+              {% for block in section.blocks %}
+                <button class="slider-dot {% if forloop.first %}active{% endif %}" 
+                        data-slide="{{ forloop.index0 }}"
+                        aria-label="Go to slide {{ forloop.index }}"></button>
+              {% endfor %}
+            </div>
+          {% endif %}
+          
+        {% else %}
+          <!-- Default content when no blocks are added -->
+          <div class="banner-slide active" style="--slide-bg-color: #37a6ca; --slide-text-color: #ffffff;">
+            <div class="slide-content">
+              <div class="slide-inner">
+                <div class="slide-text-content">
+                  <div class="slide-text">
+                    <h2 class="slide-title">Add Your Banner Content</h2>
+                    <p class="slide-description">Click "Add block" to create your banner slides.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .banner-slider-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .banner-slider-container {
+    background-color: var(--slider-bg-color);
+    padding-top: var(--top-spacing-mobile);
+    padding-bottom: var(--bottom-spacing-mobile);
+    margin: 0 16px;
+  }
+
+  @media (min-width: 768px) {
+    .banner-slider-container {
+      padding-top: var(--top-spacing-desktop);
+      padding-bottom: var(--bottom-spacing-desktop);
+      margin: 0 30px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .banner-slider-container {
+      margin: 0 60px;
+    }
+  }
+
+  .banner-slider-content {
+    max-width: 100rem;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .slider-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background: var(--slide-bg-color);
+  }
+
+  .banner-slides {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+  }
+
+  .banner-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.5, 0, 0, 1);
+    transform: translateX(100%);
+  }
+
+  .banner-slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    position: relative;
+  }
+
+  .slide-content {
+    width: 100%;
+    min-height: 300px;
+    background-color: var(--slide-bg-color);
+    color: var(--slide-text-color);
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 42px;
+  }
+
+  .slide-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+
+  @media (min-width: 1024px) {
+    .slide-inner {
+      flex-direction: row;
+      text-align: left;
+    }
+    
+    .slide-content {
+      padding: 28px 50px 0 35px;
+    }
+  }
+
+  .slide-image {
+    width: 100%;
+    margin-bottom: 44px;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 1024px) {
+    .slide-image {
+      width: 300px;
+      margin: 0 48px 0 0;
+      flex-shrink: 0;
+    }
+  }
+
+  .slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .slide-text-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 38px;
+  }
+
+  @media (min-width: 1024px) {
+    .slide-text-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0 28px;
+    }
+  }
+
+  .slide-title {
+    font-family: 'Mier-A-DemiBold', Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 28px;
+    line-height: 26px;
+    letter-spacing: -0.6px;
+    font-weight: 700;
+    text-transform: lowercase;
+    margin: 0 0 6px 0;
+  }
+
+  @media (min-width: 1024px) {
+    .slide-title {
+      font-size: 36px;
+      line-height: 38px;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  .slide-description {
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: -0.2px;
+    font-weight: 400;
+    margin: 0 0 20px 0;
+  }
+
+  @media (min-width: 1024px) {
+    .slide-description {
+      line-height: 23px;
+      margin-bottom: 0;
+    }
+  }
+
+  .slide-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 26px;
+    font-family: 'Mier-A-DemiBold', Helvetica, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    text-transform: lowercase;
+    text-decoration: none;
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: 1px solid var(--button-border);
+    transition: all 0.2s cubic-bezier(0.5, 0, 0, 1);
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  @media (min-width: 1024px) {
+    .slide-button {
+      padding: 5px 18px;
+      margin-top: 0;
+    }
+  }
+
+  .slide-button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.2);
+  }
+
+  .slide-button span {
+    padding: 5px 8px;
+  }
+
+  @media (min-width: 1024px) {
+    .slide-button span {
+      padding: 10px;
+    }
+  }
+
+  /* Navigation Controls */
+  .slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .slider-nav:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .prev-slide {
+    left: 20px;
+  }
+
+  .next-slide {
+    right: 20px;
+  }
+
+  .slider-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+  }
+
+  .slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .slider-dot.active,
+  .slider-dot:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.2);
+  }
+
+  /* Mobile Optimizations */
+  @media (max-width: 768px) {
+    .slider-nav {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .prev-slide {
+      left: 10px;
+    }
+    
+    .next-slide {
+      right: 10px;
+    }
+    
+    .slide-button {
+      padding-left: 56px;
+      padding-right: 56px;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sliderWrapper = document.querySelector('#banner-slider-{{ section.id }}');
+  if (!sliderWrapper) return;
+
+  const slides = sliderWrapper.querySelectorAll('.banner-slide');
+  const dots = sliderWrapper.querySelectorAll('.slider-dot');
+  const prevBtn = sliderWrapper.querySelector('.prev-slide');
+  const nextBtn = sliderWrapper.querySelector('.next-slide');
+  
+  let currentSlide = 0;
+  let totalSlides = slides.length;
+  let autoplayInterval;
+
+  // Auto-play settings
+  const autoplay = {{ section.settings.autoplay | json }};
+  const autoplaySpeed = {{ section.settings.autoplay_speed | times: 1000 }};
+
+  function showSlide(index) {
+    // Remove active class from all slides and dots
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Add active class to current slide and dot
+    if (slides[index]) {
+      slides[index].classList.add('active');
+    }
+    if (dots[index]) {
+      dots[index].classList.add('active');
+    }
+    
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    const next = (currentSlide + 1) % totalSlides;
+    showSlide(next);
+  }
+
+  function prevSlide() {
+    const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+    showSlide(prev);
+  }
+
+  // Event listeners
+  if (nextBtn) {
+    nextBtn.addEventListener('click', nextSlide);
+  }
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', prevSlide);
+  }
+
+  // Dot navigation
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => showSlide(index));
+  });
+
+  // Touch/swipe support
+  let startX = null;
+  let startY = null;
+
+  sliderWrapper.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  });
+
+  sliderWrapper.addEventListener('touchend', (e) => {
+    if (!startX || !startY) return;
+
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const diffX = startX - endX;
+    const diffY = startY - endY;
+
+    // Only trigger swipe if horizontal movement is greater than vertical
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+      if (diffX > 0) {
+        nextSlide(); // Swipe left - next slide
+      } else {
+        prevSlide(); // Swipe right - previous slide
+      }
+    }
+
+    startX = null;
+    startY = null;
+  });
+
+  // Autoplay functionality
+  function startAutoplay() {
+    if (autoplay && totalSlides > 1) {
+      autoplayInterval = setInterval(nextSlide, autoplaySpeed);
+    }
+  }
+
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+    }
+  }
+
+  // Pause autoplay on hover
+  sliderWrapper.addEventListener('mouseenter', stopAutoplay);
+  sliderWrapper.addEventListener('mouseleave', startAutoplay);
+
+  // Start autoplay
+  startAutoplay();
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      prevSlide();
+    } else if (e.key === 'ArrowRight') {
+      nextSlide();
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Banner Slider",
+  "tag": "section",
+  "class": "banner-slider-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background Color",
+      "default": "#37a6ca"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "top_spacing_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Spacing (Mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "bottom_spacing_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Spacing (Mobile)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "top_spacing_desktop",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Spacing (Desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "bottom_spacing_desktop",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Spacing (Desktop)",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay Speed",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Banner Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Slide Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Slide Title",
+          "default": "Ready to shop?"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Slide Description",
+          "default": "Find your favorite flavors and taste the difference."
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button Link"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "slide_bg_color",
+          "label": "Slide Background Color",
+          "default": "#37a6ca"
+        },
+        {
+          "type": "color",
+          "id": "slide_text_color",
+          "label": "Slide Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_bg_color",
+          "label": "Button Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button Text Color",
+          "default": "#2a2a2a"
+        },
+        {
+          "type": "color",
+          "id": "button_border_color",
+          "label": "Button Border Color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner Mini",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Ready to shop?",
+            "description": "Find your favorite flavors and taste the difference.",
+            "button_text": "Shop Now",
+            "button_url": "/collections/all"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

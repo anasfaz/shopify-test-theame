@@ -1,0 +1,701 @@
+{% comment %}
+  Promotional Categories Section
+  Usage: Add this to your sections folder as promotional-categories.liquid
+{% endcomment %}
+
+<div class="promotional-categories-section">
+  <!-- Sponsor Logos -->
+  {% if section.settings.show_sponsors %}
+    <div class="sponsors-container">
+      <h3 class="sponsors-title">{{ section.settings.sponsors_title }}</h3>
+      <div class="sponsors-logos">
+        {% for block in section.blocks %}
+          {% if block.type == 'sponsor' %}
+            <div class="sponsor-logo">
+              {% if block.settings.sponsor_image %}
+                <img src="{{ block.settings.sponsor_image | img_url: '120x60' }}" 
+                     alt="{{ block.settings.sponsor_name }}" 
+                     loading="lazy">
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <!-- Decorative coins -->
+      <div class="coin coin-1"></div>
+      <div class="coin coin-2"></div>
+      <div class="coin coin-3"></div>
+      <div class="coin coin-4"></div>
+      <div class="star star-1"></div>
+    </div>
+  {% endif %}
+
+  <!-- Categories Grid -->
+  <div class="categories-grid">
+    {% for block in section.blocks %}
+      {% if block.type == 'category' %}
+        {% assign collection_handle = block.settings.collection %}
+        {% assign collection_obj = collections[collection_handle] %}
+        
+        {% comment %} Get background image URL {% endcomment %}
+        {% assign bg_image_url = '' %}
+        {% if block.settings.category_image %}
+          {% assign bg_image_url = block.settings.category_image | img_url: '400x400' %}
+        {% elsif collection_obj.featured_image %}
+          {% assign bg_image_url = collection_obj.featured_image | img_url: '400x400' %}
+        {% elsif collection_obj.products.first.featured_image %}
+          {% assign bg_image_url = collection_obj.products.first.featured_image | img_url: '400x400' %}
+        {% endif %}
+
+        <div class="category-card" 
+             data-collection="{{ collection_handle }}"
+             {% if bg_image_url != '' %}
+               style="background-image: url('{{ bg_image_url }}');"
+             {% endif %}>
+          <div class="category-overlay"></div>
+          <div class="category-content">
+            <h4 class="category-title">{{ block.settings.category_title }}</h4>
+
+            <!-- Collection Info -->
+            {% if collection_obj %}
+              <div class="collection-info">
+                <span class="product-count">{{ collection_obj.products_count }} Products</span>
+              </div>
+            {% endif %}
+            
+            <!-- Offer Badge -->
+            <div class="category-offer">
+              {% if block.settings.offer_type == 'percentage' %}
+                <span class="offer-text">UP TO {{ block.settings.offer_value }}% OFF</span>
+              {% elsif block.settings.offer_type == 'fixed' %}
+                <span class="offer-text">FROM {{ block.settings.currency_symbol }}{{ block.settings.offer_value }}</span>
+              {% elsif block.settings.offer_type == 'custom' %}
+                <span class="offer-text">{{ block.settings.custom_offer_text }}</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Dynamic Link - Collection or Custom URL -->
+          {% if collection_obj %}
+            <a href="{{ collection_obj.url }}" class="category-link" aria-label="Shop {{ collection_obj.title }} - {{ collection_obj.products_count }} products"></a>
+          {% elsif block.settings.category_link %}
+            <a href="{{ block.settings.category_link }}" class="category-link" aria-label="Shop {{ block.settings.category_title }}"></a>
+          {% endif %}
+
+          <!-- Hover Preview for Collections -->
+          {% if collection_obj and collection_obj.products.size > 0 %}
+            <div class="category-preview">
+              <div class="preview-products">
+                {% for product in collection_obj.products limit: 3 %}
+                  <div class="preview-product">
+                    <img src="{{ product.featured_image | img_url: '80x80' }}" 
+                         alt="{{ product.title }}" 
+                         loading="lazy">
+                    <span class="preview-price">
+                      {% if product.compare_at_price > product.price %}
+                        <s>{{ product.compare_at_price | money }}</s>
+                      {% endif %}
+                      {{ product.price | money }}
+                    </span>
+                  </div>
+                {% endfor %}
+              </div>
+              <div class="preview-action">
+                <span>View All {{ collection_obj.products_count }} Products →</span>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.promotional-categories-section {
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 50%, #f48fb1 100%);
+  padding: 2rem 1rem;
+  position: relative;
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+/* Sponsors Section */
+.sponsors-container {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.sponsors-title {
+  font-size: 1.5rem;
+  color: #e91e63;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.sponsors-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.sponsor-logo {
+  background: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.sponsor-logo:hover {
+  transform: translateY(-2px);
+}
+
+.sponsor-logo img {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Decorative Elements */
+.coin {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  border: 2px solid #ffa000;
+  z-index: 1;
+}
+
+.coin::before {
+  content: '$';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ff8f00;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.coin-1 { top: 20%; left: 5%; }
+.coin-2 { top: 30%; right: 8%; }
+.coin-3 { bottom: 25%; left: 10%; }
+.coin-4 { bottom: 15%; right: 12%; }
+
+.star {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 12px solid #ff4081;
+  transform: rotate(35deg);
+}
+
+.star::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: -8px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 12px solid #ff4081;
+  transform: rotate(-70deg);
+}
+
+.star::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 2px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 12px solid #ff4081;
+  transform: rotate(70deg);
+}
+
+.star-1 {
+  top: 25%;
+  left: 20%;
+  z-index: 1;
+}
+
+/* Categories Grid */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.category-card {
+  background: rgba(255, 255, 255, 0.9);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.category-card:hover .category-preview {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.category-card:hover .category-overlay {
+  opacity: 0.3;
+}
+
+/* Overlay for better text readability */
+.category-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+  border-radius: 16px;
+  transition: opacity 0.3s ease;
+  opacity: 0.5;
+}
+
+.category-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+.category-content {
+  position: relative;
+  z-index: 2;
+}
+
+.category-title {
+  font-size: 0.9rem;
+  color: white;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  line-height: 1.3;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.category-image {
+  margin-bottom: 1rem;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.category-image img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-image img {
+  transform: scale(1.05);
+}
+
+.category-offer {
+  background: linear-gradient(135deg, #9c27b0, #673ab7);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+/* Collection Info */
+.collection-info {
+  margin-bottom: 0.75rem;
+}
+
+.product-count {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Category Placeholder */
+.category-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+/* Category Preview on Hover */
+.category-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.preview-products {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.preview-product {
+  text-align: center;
+  flex: 1;
+}
+
+.preview-product img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.25rem;
+}
+
+.preview-price {
+  font-size: 0.7rem;
+  color: #333;
+  font-weight: 600;
+  display: block;
+}
+
+.preview-price s {
+  color: #999;
+  font-size: 0.65rem;
+}
+
+.preview-action {
+  text-align: center;
+  color: #9c27b0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  background: rgba(156, 39, 176, 0.1);
+  border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .promotional-categories-section {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .categories-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .sponsors-logos {
+    gap: 1rem;
+  }
+  
+  .sponsor-logo {
+    padding: 0.5rem 1rem;
+  }
+  
+  .sponsor-logo img {
+    height: 24px;
+  }
+  
+  .coin {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .coin::before {
+    font-size: 1rem;
+  }
+  
+  .category-card {
+    padding: 1rem;
+  }
+  
+  .category-image {
+    height: 60px;
+  }
+  
+  .category-image img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .sponsors-logos {
+    justify-content: center;
+  }
+  
+  .sponsors-title {
+    font-size: 1.2rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Promotional Categories",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_sponsors",
+      "label": "Show Sponsors Section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sponsors_title",
+      "label": "Sponsors Title",
+      "default": "Powered by"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sponsor",
+      "name": "Sponsor Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "sponsor_image",
+          "label": "Sponsor Logo"
+        },
+        {
+          "type": "text",
+          "id": "sponsor_name",
+          "label": "Sponsor Name"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "name": "Category Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category_title",
+          "label": "Category Title",
+          "default": "Category Name"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection",
+          "info": "Choose a collection to link this category to. This will automatically show collection products and link to the collection page."
+        },
+        {
+          "type": "image_picker",
+          "id": "category_image",
+          "label": "Custom Category Image",
+          "info": "Optional: Upload a custom image. If not provided, the collection's featured image will be used."
+        },
+        {
+          "type": "url",
+          "id": "category_link",
+          "label": "Custom Link",
+          "info": "Optional: Add a custom link. If a collection is selected above, the collection link will be used instead."
+        },
+        {
+          "type": "select",
+          "id": "offer_type",
+          "label": "Offer Type",
+          "options": [
+            {
+              "value": "percentage",
+              "label": "Percentage Off"
+            },
+            {
+              "value": "fixed",
+              "label": "Fixed Price"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Text"
+            }
+          ],
+          "default": "percentage"
+        },
+        {
+          "type": "number",
+          "id": "offer_value",
+          "label": "Offer Value",
+          "default": 50,
+          "info": "Used for percentage and fixed price offers"
+        },
+        {
+          "type": "text",
+          "id": "custom_offer_text",
+          "label": "Custom Offer Text",
+          "default": "SPECIAL OFFER",
+          "info": "Used when 'Custom Text' is selected above"
+        },
+        {
+          "type": "text",
+          "id": "currency_symbol",
+          "label": "Currency Symbol",
+          "default": "₹"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promotional Categories",
+      "blocks": [
+        {
+          "type": "sponsor"
+        },
+        {
+          "type": "sponsor"
+        },
+        {
+          "type": "sponsor"
+        },
+        {
+          "type": "sponsor"
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "Fresh corner",
+            "offer_type": "fixed",
+            "offer_value": 19
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "Cooking essentials",
+            "offer_type": "percentage",
+            "offer_value": 50
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "Breakfast, tea & coffee",
+            "offer_type": "percentage",
+            "offer_value": 50
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "Cleaning picks",
+            "offer_type": "percentage",
+            "offer_value": 50
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "Snacks & instant food",
+            "offer_type": "percentage",
+            "offer_value": 70
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "Ice creams & cold drinks",
+            "offer_type": "percentage",
+            "offer_value": 55
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "Home & kitchen needs",
+            "offer_type": "percentage",
+            "offer_value": 75
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "Beauty & personal care",
+            "offer_type": "percentage",
+            "offer_value": 60
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "Trending brands",
+            "offer_type": "percentage",
+            "offer_value": 60
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "Baby & kids supplies",
+            "offer_type": "percentage",
+            "offer_value": 60
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

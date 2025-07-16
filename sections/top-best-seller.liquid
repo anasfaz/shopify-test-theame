@@ -1,0 +1,1845 @@
+{% comment %}
+  Top Best Seller Section
+  Preserves original HTML structure while making content editable
+{% endcomment %}
+
+<section class="row-qsi ecom-t5e section-jin ecom-yej" style="z-index: inherit;">
+    <div class="column-q2v">
+        <div class="column-brq ecom-t5e ecom-611">
+            <div class="wrapper-jbd">
+                <div class="overlay-98h">
+                    <div class="overlay-96p"></div>
+                </div>
+                <div class="block-h6o">
+                    <div class="block-y2z">
+                        <div class="block-ryd ecom-t5e elm-574 ecom-8nl">
+                            <div class="eco-o7l ele-qnk ecom-ffg">
+                                <h3 class="eco-p18 ecom-po7">{{ section.settings.section_title }}</h3>
+                            </div>
+                        </div>
+                        <div class="block-ryd ecom-t5e elm-574 ecom-hht">
+                            <div class="slide-676">
+                                <div class="ecom-t5e ecom-srb">
+                                    <div style="">
+                                        <div class="container-nr3 wrapper-jsq">
+                                            <div class="ecom-ffg slide-mte container-jrg ecom-swiper-9tj fa-6tw">
+                                                <div class="wrapper-24y" style="transform: translate3d(0px, 0px, 0px);">
+                                                    
+                                                    {% for block in section.blocks %}
+                                                    <div class="slide-5cl box-fpt" style="width: 386.667px; margin-right: 40px;">
+                                                        <div class="content-lzf">
+                                                            <div class="container-5hh">
+                                                                <div class="block-h6o">
+                                                                    <div class="block-y2z">
+                                                                        <div class="block-ryd ecom-t5e elm-574">
+                                                                            <div class="row-qsi ecom-t5e 
+                                                                                {% case forloop.index %}
+                                                                                    {% when 1 %}ecom-c7o
+                                                                                    {% when 2 %}ecom-bc5
+                                                                                    {% when 3 %}ecom-wwk
+                                                                                    {% else %}ecom-c7o
+                                                                                {% endcase %}" style="z-index: inherit;">
+                                                                                <div class="column-q2v">
+                                                                                    <div class="column-brq ecom-t5e 
+                                                                                        {% case forloop.index %}
+                                                                                            {% when 1 %}ecom-kwo
+                                                                                            {% when 2 %}ecom-owt
+                                                                                            {% when 3 %}ecom-vef
+                                                                                            {% else %}ecom-kwo
+                                                                                        {% endcase %}">
+                                                                                        <div class="wrapper-jbd">
+                                                                                            <div class="overlay-98h">
+                                                                                                <div class="overlay-96p"></div>
+                                                                                            </div>
+                                                                                            <div class="block-h6o">
+                                                                                                <div class="block-y2z">
+                                                                                                    <div class="block-ryd ecom-t5e">
+                                                                                                        <div class="ecom-ffg">
+                                                                                                            <div class="ecom-t5e ecom-srb">
+                                                                                                                <div style="">
+                                                                                                                    <div>
+                                                                                                                        <div>
+                                                                                                                            <div>
+                                                                                                                                <form>
+                                                                                                                                    <div class="block-h6o">
+                                                                                                                                        <div class="block-y2z">
+                                                                                                                                            <div class="block-ryd ecom-t5e elm-574 
+                                                                                                                                                {% case forloop.index %}
+                                                                                                                                                    {% when 1 %}ecom-4iv
+                                                                                                                                                    {% when 2 %}ecom-qs9
+                                                                                                                                                    {% when 3 %}ecom-opx
+                                                                                                                                                    {% else %}ecom-4iv
+                                                                                                                                                {% endcase %}">
+                                                                                                                                                <div class="ecom-ffg ecom-product-j5y media-las">
+                                                                                                                                                    <div>
+                                                                                                                                                        <div class="container-odl">
+                                                                                                                                                            <div class="media-6hm">
+                                                                                                                                                                <div class="media-hi3 slide-5cl ecom-rkl" style="padding-top: 107.51295336787565%;">
+                                                                                                                                                                    <img src="{{ block.settings.product_image | image_url: width: 1946 }}" width="1946" height="2092" class="image-oot" alt="{{ block.settings.product_title }}">
+                                                                                                                                                                </div>
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div></div>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                            <div class="block-ryd ecom-t5e elm-574 
+                                                                                                                                                {% case forloop.index %}
+                                                                                                                                                    {% when 1 %}ecom-byx
+                                                                                                                                                    {% when 2 %}ecom-1kv
+                                                                                                                                                    {% when 3 %}ecom-99d
+                                                                                                                                                    {% else %}ecom-byx
+                                                                                                                                                {% endcase %}">
+                                                                                                                                                <div class="ecom-ffg ecom-product-j5y">
+                                                                                                                                                    <div>
+                                                                                                                                                        <div>
+                                                                                                                                                            <h2 class="ecom-7cr" href="{{ block.settings.product_url }}">{{ block.settings.product_title }}</h2>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                            <div class="block-ryd ecom-t5e 
+                                                                                                                                                {% case forloop.index %}
+                                                                                                                                                    {% when 1 %}ecom-ycv
+                                                                                                                                                    {% when 2 %}ecom-lei
+                                                                                                                                                    {% when 3 %}ecom-oh8
+                                                                                                                                                    {% else %}ecom-ycv
+                                                                                                                                                {% endcase %}">
+                                                                                                                                                <div class="ecom-ffg ecom-product-j5y">
+                                                                                                                                                    <div>
+                                                                                                                                                        <div class="container-eao">
+                                                                                                                                                            <div class="container-n84">
+                                                                                                                                                                <div class="ecom-product-j5y ecom-product-single__price--go2">
+                                                                                                                                                                    <div class="ecom-product-single__price--dnp">${{ block.settings.sale_price }} </div>
+                                                                                                                                                                    <div class="ecom-product-single__price--ijc">${{ block.settings.original_price }} </div>
+                                                                                                                                                                </div>
+                                                                                                                                                                <div>
+                                                                                                                                                                    <div>
+                                                                                                                                                                        <span class="badge-rc5" style="display: block;"> -{{ block.settings.discount_percentage }}%</span>
+                                                                                                                                                                        <span class="badge-8fo" style="display:none"> Sold out </span>
+                                                                                                                                                                    </div>
+                                                                                                                                                                </div>
+                                                                                                                                                            </div>
+                                                                                                                                                            <div>
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                            <div class="block-ryd ecom-t5e 
+                                                                                                                                                {% case forloop.index %}
+                                                                                                                                                    {% when 1 %}ecom-gjy
+                                                                                                                                                    {% when 2 %}ecom-bhn
+                                                                                                                                                    {% when 3 %}ecom-26i
+                                                                                                                                                    {% else %}ecom-gjy
+                                                                                                                                                {% endcase %}">
+                                                                                                                                                <div class="ecom-ffg ecom-product-j5y">
+                                                                                                                                                    <div>
+                                                                                                                                                        <div>
+                                                                                                                                                            <div>
+                                                                                                                                                                <div class="wrapper-e1j">
+                                                                                                                                                                    <button type="submit" class="ecom-product-single__add-to-cart--bvo ecom-rkl" name="add" onclick="window.location.href='{{ block.settings.product_url }}'">
+                                                                                                                                                                        <span>{{ block.settings.button_text }}</span>
+                                                                                                                                                                        <span class="button-9no"></span>
+                                                                                                                                                                    </button>
+                                                                                                                                                                </div>
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                                                                                </form>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="section-1tx">
+                                                                                    <div class="overlay-96p"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                    
+                                                </div><span></span>
+                                            </div>
+                                            <div class="nav-lb6" style="display: none;">
+                                                <button type="button" class="button-6ab button-po5 button-vd4 button-21f" style="--ecom-position: unset; --ecom-position__tablet: unset; --ecom-position__mobile: unset;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+                                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                                    </svg>
+                                                </button>
+                                                <button type="button" class="button-6ab button-t5b button-vd4 button-21f" style="--ecom-position: unset; --ecom-position__tablet: unset; --ecom-position__mobile: unset;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+                                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div class="pagination-8aw pagination-2kf pagination-cr3 pagination-fsb pagination-9ms" style="display: none;">
+                                                <span class="pagination-2kb pagination-k62"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-1tx">
+        <div class="overlay-96p"></div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Top Best Seller",
+  "tag": "section",
+  "class": "bestseller-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "TOP BEST SELLER"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title",
+          "default": "Product Name"
+        },
+        {
+          "type": "url",
+          "id": "product_url",
+          "label": "Product URL"
+        },
+        {
+          "type": "text",
+          "id": "sale_price",
+          "label": "Sale Price",
+          "default": "13.97",
+          "info": "Enter price without currency symbol"
+        },
+        {
+          "type": "text",
+          "id": "original_price",
+          "label": "Original Price",
+          "default": "26.79",
+          "info": "Enter price without currency symbol"
+        },
+        {
+          "type": "number",
+          "id": "discount_percentage",
+          "label": "Discount Percentage",
+          "default": 48,
+          "info": "Enter number without % symbol"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Add to cart"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top Best Seller",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "product_title": "Hydro Boost Night Pressed Serum",
+            "sale_price": "13.97",
+            "original_price": "26.79",
+            "discount_percentage": 48,
+            "button_text": "Add to cart"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "product_title": "Skin Renewing Nightly Treatment",
+            "sale_price": "23.86",
+            "original_price": "29.99",
+            "discount_percentage": 20,
+            "button_text": "Add to cart"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "product_title": "Daily Collagen Face Moisturizer",
+            "sale_price": "22.49",
+            "original_price": "51.91",
+            "discount_percentage": 57,
+            "button_text": "Add to cart"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+/* Shopify Theme Default Fonts */
+@font-face { 
+  font-family:'ecom-swiper-icons';
+  src:url('data:application/font-woff;charset=utf-8;base64, d09GRgABAAAAAAZgABAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAGRAAAABoAAAAci6qHkUdERUYAAAWgAAAAIwAAACQAYABXR1BPUwAABhQAAAAuAAAANuAY7+xHU1VCAAAFxAAAAFAAAABm2fPczU9TLzIAAAHcAAAASgAAAGBP9V5RY21hcAAAAkQAAACIAAABYt6F0cBjdnQgAAACzAAAAAQAAAAEABEBRGdhc3AAAAWYAAAACAAAAAj//wADZ2x5ZgAAAywAAADMAAAD2MHtryVoZWFkAAABbAAAADAAAAA2E2+eoWhoZWEAAAGcAAAAHwAAACQC9gDzaG10eAAAAigAAAAZAAAArgJkABFsb2NhAAAC0AAAAFoAAABaFQAUGG1heHAAAAG8AAAAHwAAACAAcABAbmFtZQAAA/gAAAE5AAACXvFdBwlwb3N0AAAFNAAAAGIAAACE5s74hXjaY2BkYGAAYpf5Hu/j+W2+MnAzMYDAzaX6QjD6/4//Bxj5GA8AuRwMYGkAPywL13jaY2BkYGA88P8Agx4j+/8fQDYfA1AEBWgDAIB2BOoAeNpjYGRgYNBh4GdgYgABEMnIABJzYNADCQAACWgAsQB42mNgYfzCOIGBlYGB0YcxjYGBwR1Kf2WQZGhhYGBiYGVmgAFGBiQQkOaawtDAoMBQxXjg/wEGPcYDDA4wNUA2CCgwsAAAO4EL6gAAeNpj2M0gyAACqxgGNWBkZ2D4/wMA+xkDdgAAAHjaY2BgYGaAYBkGRgYQiAHyGMF8FgYHIM3DwMHABGQrMOgyWDLEM1T9/w8UBfEMgLzE////P/5//f/V/xv+r4eaAAeMbAxwIUYmIMHEgKYAYjUcsDAwsLKxc3BycfPw8jEQA/gZBASFhEVExcQlJKWkZWTl5BUUlZRVVNXUNTQZBgMAAMR+E+gAEQFEAAAAKgAqACoANAA+AEgAUgBcAGYAcAB6AIQAjgCYAKIArAC2AMAAygDUAN4A6ADyAPwBBgEQARoBJAEuATgBQgFMAVYBYAFqAXQBfgGIAZIBnAGmAbIBzgHsAAB42u2NMQ6CUAyGW568x9AneYYgm4MJbhKFaExIOAVX8ApewSt4Bic4AfeAid3VOBixDxfPYEza5O+Xfi04YADggiUIULCuEJK8VhO4bSvpdnktHI5QCYtdi2sl8ZnXaHlqUrNKzdKcT8cjlq+rwZSvIVczNiezsfnP/uznmfPFBNODM2K7MTQ45YEAZqGP81AmGGcF3iPqOop0r1SPTaTbVkfUe4HXj97wYE+yNwWYxwWu4v1ugWHgo3S1XdZEVqWM7ET0cfnLGxWfkgR42o2PvWrDMBSFj/IHLaF0zKjRgdiVMwScNRAoWUoH78Y2icB/yIY09An6AH2Bdu/UB+yxopYshQiEvnvu0dURgDt8QeC8PDw7Fpji3fEA4z/PEJ6YOB5hKh4dj3EvXhxPqH/SKUY3rJ7srZ4FZnh1PMAtPhwP6fl2PMJMPDgeQ4rY8YT6Gzao0eAEA409DuggmTnFnOcSCiEiLMgxCiTI6Cq5DZUd3Qmp10vO0LaLTd2cjN4fOumlc7lUYbSQcZFkutRG7g6JKZKy0RmdLY680CDnEJ+UMkpFFe1RN7nxdVpXrC4aTtnaurOnYercZg2YVmLN/d/gczfEimrE/fs/bOuq29Zmn8tloORaXgZgGa78yO9/cnXm2BpaGvq25Dv9S4E9+5SIc9PqupJKhYFSSl47+Qcr1mYNAAAAeNptw0cKwkAAAMDZJA8Q7OUJvkLsPfZ6zFVERPy8qHh2YER+3i/BP83vIBLLySsoKimrqKqpa2hp6+jq6RsYGhmbmJqZSy0sraxtbO3sHRydnEMU4uR6yx7JJXveP7WrDycAAAAAAAH//wACeNpjYGRgYOABYhkgZgJCZgZNBkYGLQZtIJsFLMYAAAw3ALgAeNolizEKgDAQBCchRbC2sFER0YD6qVQiBCv/H9ezGI6Z5XBAw8CBK/m5iQQVauVbXLnOrMZv2oLdKFa8Pjuru2hJzGabmOSLzNMzvutpB3N42mNgZGBg4GKQYzBhYMxJLMlj4GBgAYow/P/PAJJhLM6sSoWKfWCAAwDAjgbRAAB42mNgYGBkAIIbCZo5IPrmUn0hGA0AO8EFTQAA');
+  font-weight:400;
+  font-style:normal;
+} 
+
+/* Use Shopify theme default fonts */
+body {  
+  font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif);
+}  
+@media all{ 
+  div { 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    vertical-align: baseline;
+  } 
+
+  *  { 
+    box-sizing: border-box;
+  } 
+}     
+
+body { 
+    font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif);
+} 
+
+@media all{ 
+  body { 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    vertical-align: baseline;
+  } 
+
+  html { 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    vertical-align: baseline;
+  } 
+
+  html { 
+    scroll-behavior: smooth;
+  } 
+
+  :root { 
+    --ecom-swiper-theme-color: #007aff;
+  } 
+
+  :root { 
+    --ecom-swiper-navigation-size: 44px;
+  } 
+
+  section { 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    vertical-align: baseline;
+  } 
+}     
+
+.row-qsi { 
+    width: 100%; 
+    position: relative;
+} 
+
+.row-qsi.section-jin { 
+    clear: both;
+} 
+
+.ecom-t5e.ecom-yej { 
+    background: url('https://cdn.shopify.com/s/files/1/0623/8303/0317/files/ecom-no-replace-e9EIwAyfg3Frame_1000004735.png?v=1725002608') no-repeat scroll center center/cover;
+} 
+
+.ecom-t5e.ecom-yej { 
+    padding-top: 84px !important; 
+    padding-bottom: 84px !important;
+} 
+
+@media all{ 
+  * , div.ecom-builder ::before, div.ecom-builder ::after { 
+    box-sizing: border-box;
+  } 
+
+  div.ecom-builder *, div.ecom-builder ::before, div.ecom-builder ::after { 
+    box-sizing: border-box;
+  } 
+
+  div.column-q2v { 
+    margin: 0 auto; 
+    display: flex; 
+    flex-wrap: wrap; 
+    width: 100%; 
+    position: relative; 
+    z-index: 1;
+  } 
+}     
+
+.section-jin > div.column-q2v  { 
+    max-width: 1400px;
+} 
+
+.section-jin > div.column-q2v  { 
+    max-width: 1200px;
+} 
+
+.ecom-t5e.ecom-yej > div.column-q2v { 
+    max-width: 1280px;
+} 
+
+.column-brq { 
+    position: relative;
+} 
+
+.ecom-t5e.ecom-611 { 
+    width: 100%;
+} 
+
+@media all{ 
+  .overlay-96p { 
+    pointer-events: none;
+  } 
+}     
+
+.overlay-96p { 
+    display: block; 
+    position: absolute; 
+    inset: 0;
+} 
+
+.section-1tx > .overlay-96p  { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    bottom: 0; 
+    right: 0;
+} 
+
+@media all{ 
+  .ecom-t5e div:empty  { 
+    display: block;
+  } 
+}     
+
+.column-brq > .wrapper-jbd  { 
+    align-items: flex-start; 
+    display: flex;
+} 
+
+@media only screen and (min-width: 768px){ 
+  .column-brq > .wrapper-jbd  { 
+    height: 100%;
+  } 
+}     
+
+.column-brq > div.wrapper-jbd  { 
+    padding: 15px;
+} 
+
+.column-brq > div.wrapper-jbd  { 
+    padding: 20px;
+} 
+
+@media all{ 
+  div.block-h6o { 
+    display: flex; 
+    width: 100%; 
+    height: 100%;
+  } 
+}     
+
+.overlay-98h .overlay-96p  { 
+    pointer-events: none;
+} 
+
+.overlay-98h > .overlay-96p  { 
+    position: absolute; 
+    inset: 0;
+} 
+
+@media all{ 
+  div.block-h6o > div.block-y2z  { 
+    display: flex; 
+    flex-wrap: wrap; 
+    align-content: flex-start; 
+    width: 100%;
+  } 
+
+  div.block-ryd { 
+    position: relative; 
+    display: inline-block; 
+    width: 100%;
+  } 
+}     
+
+.ecom-t5e.ecom-8nl { 
+    padding-bottom: 0 !important;
+} 
+
+@media all{ 
+  div.block-ryd:not(.ecom-grid-item) { 
+    height: -webkit-fit-content; 
+    height: -moz-fit-content; 
+    height: fit-content;
+  } 
+}     
+
+.ecom-t5e.ecom-hht { 
+    margin-top: 80px !important;
+} 
+
+div.block-y2z > div.block-ryd.elm-574:not(:first-child)  { 
+    margin-top: 20px;
+} 
+
+div.block-y2z > div.block-ryd + div.block-ryd.elm-574  { 
+    margin-top: 20px;
+} 
+
+@media all{ 
+  .eco-o7l,.ecom-ffg { 
+    display: block; 
+    position: relative; 
+    width: 100%;
+  } 
+}     
+
+.slide-676 { 
+    overflow: hidden;
+} 
+
+@media all{ 
+  h3 { 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    vertical-align: baseline;
+  } 
+
+  .ecom-po7 { 
+    display: block;
+  } 
+}     
+
+.ecom-t5e.ecom-8nl .ele-qnk .eco-p18  { 
+    text-align: center; 
+    margin: 0px; 
+    padding: 0px;
+} 
+
+.ecom-t5e.ecom-8nl .ele-qnk .eco-p18  { 
+    font-weight: 700; 
+    font-size: 40px; 
+    font-family: var(--font-heading-family, var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif)); 
+    text-transform: uppercase; 
+    text-decoration: none; 
+    line-height: 1.3em; 
+    letter-spacing: -0.8px;
+} 
+
+.ecom-t5e.ecom-8nl .ele-qnk .eco-p18  { 
+    color: #00528C;
+} 
+
+@media all{ 
+  div.ecom-srb { 
+    overflow: visible !important;
+  } 
+}     
+
+.container-nr3 { 
+    opacity: 0; 
+    position: relative; 
+    display: flex; 
+    flex-direction: column;
+} 
+
+.container-nr3.wrapper-jsq { 
+    opacity: 1;
+} 
+
+.ecom-t5e.ecom-hht .container-nr3  { 
+    padding-left: calc((100% - 100%) / 2); 
+    padding-right: calc((100% - 100%) / 2);
+} 
+
+@media all{ 
+  .ecom-ffg { 
+    display: block; 
+    position: relative; 
+    width: 100%;
+  } 
+
+  .container-jrg { 
+    overflow: hidden;
+  } 
+
+  .ecom-swiper-9tj { 
+    touch-action: pan-y;
+  } 
+}     
+
+.container-jrg { 
+    width: 100%;
+} 
+
+.ecom-t5e.ecom-hht .container-nr3 .slide-mte  { 
+    height: none;
+} 
+
+.nav-lb6 { 
+    display: flex;
+} 
+
+@media all{ 
+  .pagination-8aw { 
+    position: absolute; 
+    text-align: center; 
+    transition: 300ms opacity; 
+    transform: translate3d(0, 0, 0); 
+    z-index: 10;
+  } 
+
+  .pagination-9ms { 
+    display: none;
+  } 
+
+  .pagination-cr3.pagination-fsb { 
+    bottom: var(--ecom-swiper-pagination-bottom, 8px); 
+    top: var(--ecom-swiper-pagination-top, auto); 
+    left: 0; 
+    width: 100%;
+  } 
+}     
+
+.container-nr3 .pagination-cr3  { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    bottom: 0;
+} 
+
+.container-nr3 .pagination-cr3  { 
+    bottom: 0;
+} 
+
+.container-nr3 .pagination-8aw:not(.ecom-swiper-pagination-progressbar)  { 
+    position: relative; 
+    display: flex; 
+    flex-wrap: wrap; 
+    align-items: center;
+} 
+
+@media all{ 
+  .wrapper-24y { 
+    position: relative; 
+    width: 100%; 
+    height: 100%; 
+    z-index: 1; 
+    display: flex; 
+    transition-property: transform; 
+    transition-timing-function: var(--ecom-swiper-wrapper-transition-timing-function, initial); 
+    box-sizing: content-box;
+  } 
+
+  .wrapper-24y { 
+    transform: translate3d(0px, 0, 0);
+  } 
+}     
+
+.wrapper-24y { 
+    align-items: stretch;
+} 
+
+.container-nr3 .ecom-swiper-9tj .wrapper-24y  { 
+    height: 100% !important;
+} 
+
+@media all{ 
+  span { 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    vertical-align: baseline;
+  } 
+
+  .button-po5 { 
+    position: absolute; 
+    top: var(--ecom-swiper-navigation-top-offset, 50%); 
+    width: calc(var(--ecom-swiper-navigation-size) / 44 * 27); 
+    height: var(--ecom-swiper-navigation-size); 
+    margin-top: calc(0px - (var(--ecom-swiper-navigation-size) / 2)); 
+    z-index: 10; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: var(--ecom-swiper-navigation-color, var(--ecom-swiper-theme-color));
+  } 
+
+  .button-po5 { 
+    left: var(--ecom-swiper-navigation-sides-offset, 10px); 
+    right: auto;
+  } 
+
+  .button-21f { 
+    display: none;
+  } 
+
+  .ecom-sections button { 
+    cursor: pointer;
+  } 
+}     
+
+.nav-lb6 button  { 
+    margin: 0;
+} 
+
+@media all{ 
+  .button-po5.button-vd4 { 
+    opacity: 0.35; 
+    cursor: auto;
+  } 
+}     
+
+.container-nr3 .button-po5  { 
+    border: 0; 
+    background: transparent; 
+    width: auto; 
+    height: auto; 
+    padding: 5px; 
+    color: #444;
+} 
+
+.nav-lb6 .button-6ab  { 
+    position: var(--ecom-position);
+} 
+
+@media all{ 
+  .button-po5:after,.button-t5b:after { 
+    font-family: ecom-swiper-icons; 
+    font-size: var(--ecom-swiper-navigation-size); 
+    text-transform: none !important; 
+    letter-spacing: 0; 
+    font-variant: initial; 
+    line-height: 1;
+  } 
+
+  .button-po5:after, .ecom-swiper-rtl .button-t5b::after { 
+    content: 'prev';
+  } 
+}     
+
+.container-nr3 .button-t5b::after, .container-nr3 .button-po5::after { 
+    content: none;
+} 
+
+@media all{ 
+  .button-t5b { 
+    position: absolute; 
+    top: var(--ecom-swiper-navigation-top-offset, 50%); 
+    width: calc(var(--ecom-swiper-navigation-size) / 44 * 27); 
+    height: var(--ecom-swiper-navigation-size); 
+    margin-top: calc(0px - (var(--ecom-swiper-navigation-size) / 2)); 
+    z-index: 10; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: var(--ecom-swiper-navigation-color, var(--ecom-swiper-theme-color));
+  } 
+
+  .button-t5b { 
+    right: var(--ecom-swiper-navigation-sides-offset, 10px); 
+    left: auto;
+  } 
+
+  .button-t5b.button-vd4 { 
+    opacity: 0.35; 
+    cursor: auto;
+  } 
+}     
+
+.container-nr3 .button-t5b  { 
+    border: 0; 
+    background: transparent; 
+    width: auto; 
+    height: auto; 
+    padding: 5px; 
+    color: #444;
+} 
+
+@media all{ 
+  .button-t5b:after, .ecom-swiper-rtl .button-po5::after { 
+    content: 'next';
+  } 
+
+  .pagination-2kb { 
+    width: var(--ecom-swiper-pagination-bullet-width, var(--ecom-swiper-pagination-bullet-size, 8px)); 
+    height: var(--ecom-swiper-pagination-bullet-height, var(--ecom-swiper-pagination-bullet-size, 8px)); 
+    display: inline-block; 
+    border-radius: var(--ecom-swiper-pagination-bullet-border-radius, 50%); 
+    background: var(--ecom-swiper-pagination-bullet-inactive-color, #000); 
+    opacity: var(--ecom-swiper-pagination-bullet-inactive-opacity, 0.2);
+  } 
+
+  .pagination-k62 { 
+    opacity: var(--ecom-swiper-pagination-bullet-opacity, 1); 
+    background: var(--ecom-swiper-pagination-color, var(--ecom-swiper-theme-color));
+  } 
+}     
+
+.pagination-2kb { 
+    position: relative;
+} 
+
+@media all{ 
+  .pagination-2kf .pagination-2kb  { 
+    cursor: pointer;
+  } 
+
+  .pagination-2kb:only-child { 
+    display: none !important;
+  } 
+}     
+
+.pagination-2kb:only-child { 
+    opacity: none;
+} 
+
+.container-nr3 .pagination-2kb  { 
+    width: 15px; 
+    height: 15px; 
+    opacity: 1; 
+    overflow: hidden;
+} 
+
+.container-nr3 .pagination-2kb ,.container-nr3 .pagination-k62  { 
+    background-clip: content-box; 
+    padding: 1px; 
+    box-sizing: content-box !important; 
+    background-color: currentColor;
+} 
+
+@media all{ 
+  .pagination-fsb.pagination-cr3 .pagination-2kb  { 
+    margin: 0 var(--ecom-swiper-pagination-bullet-horizontal-gap, 4px);
+  } 
+}     
+
+.pagination-2kb:after { 
+    content: ''; 
+    position: absolute; 
+    bottom: 0; 
+    height: 0; 
+    left: 0; 
+    width: 100%; 
+    box-shadow: 0 0 1px #fff; 
+    -webkit-transition: height .3s; 
+    transition: height .5s;
+} 
+
+@media all{ 
+  .slide-5cl { 
+    flex-shrink: 0; 
+    width: 100%; 
+    height: 100%; 
+    position: relative; 
+    transition-property: transform; 
+    display: block;
+  } 
+
+  .fa-6tw .slide-5cl  { 
+    transform: translateZ(0); 
+    -webkit-backface-visibility: hidden; 
+    backface-visibility: hidden;
+  } 
+}     
+
+.container-nr3 .slide-5cl  { 
+    position: relative;
+} 
+
+.wrapper-24y .slide-5cl  { 
+    text-align: center;
+} 
+
+.ecom-t5e.ecom-hht .slide-5cl  { 
+    animation-duration: 5000ms !important; 
+    background-color: transparent;
+} 
+
+.ecom-t5e.ecom-hht .slide-5cl.box-fpt  { 
+    background-color: transparent;
+} 
+
+.ecom-t5e.ecom-hht .slide-5cl:hover { 
+    background-color: transparent;
+} 
+
+@media all{ 
+  .button-po5 svg  { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; 
+    transform-origin: center;
+  } 
+}     
+
+.button-6ab svg  { 
+    width: 24px; 
+    height: 24px;
+} 
+
+@media all{ 
+  .button-t5b svg  { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain; 
+    transform-origin: center;
+  } 
+}     
+
+.content-lzf { 
+    height: 100%;
+} 
+
+.slide-5cl .content-lzf  { 
+    display: flex; 
+    justify-content: center;
+} 
+
+.ecom-t5e.ecom-hht .content-lzf  { 
+    align-content: center; 
+    align-items: center; 
+    display: flex;
+} 
+
+.container-5hh { 
+    width: 100%; 
+    z-index: 99;
+} 
+
+.slide-5cl div.block-h6o > div.block-y2z  { 
+    display: flex;
+} 
+
+.row-qsi:hover { 
+    z-index: 1;
+} 
+
+.row-qsi:not(.section-jin) { 
+    float: left;
+} 
+
+.ecom-t5e.ecom-kwo { 
+    width: 100%;
+} 
+
+.ecom-t5e.ecom-owt { 
+    width: 100%;
+} 
+
+.ecom-t5e.ecom-vef { 
+    width: 100%;
+} 
+
+.ecom-t5e.ecom-c7o > .column-q2v > .column-brq > .wrapper-jbd  { 
+    padding: 0px;
+} 
+
+.ecom-t5e.ecom-bc5 > .column-q2v > .column-brq > .wrapper-jbd  { 
+    padding: 0px;
+} 
+
+.ecom-t5e.ecom-wwk > .column-q2v > .column-brq > .wrapper-jbd  { 
+    padding: 0px;
+} 
+
+.ecom-t5e.ecom-kwo > div.wrapper-jbd > div.block-h6o > .block-y2z  { 
+    justify-content: center;
+} 
+
+.ecom-t5e.ecom-kwo > div.wrapper-jbd > div.block-h6o > div.block-y2z  { 
+    align-items: center; 
+    align-content: center;
+} 
+
+.ecom-t5e.ecom-owt > div.wrapper-jbd > div.block-h6o > .block-y2z  { 
+    justify-content: center;
+} 
+
+.ecom-t5e.ecom-owt > div.wrapper-jbd > div.block-h6o > div.block-y2z  { 
+    align-items: center; 
+    align-content: center;
+} 
+
+.ecom-t5e.ecom-vef > div.wrapper-jbd > div.block-h6o > .block-y2z  { 
+    justify-content: center;
+} 
+
+.ecom-t5e.ecom-vef > div.wrapper-jbd > div.block-h6o > div.block-y2z  { 
+    align-items: center; 
+    align-content: center;
+} 
+
+@media all{ 
+  form { 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    vertical-align: baseline;
+  } 
+}     
+
+.ecom-t5e.ecom-ycv { 
+    margin-top: 16px !important; 
+    animation-duration: 500ms !important;
+} 
+
+.ecom-t5e.ecom-gjy { 
+    margin-top: 16px !important;
+} 
+
+.ecom-t5e.ecom-lei { 
+    margin-top: 16px !important; 
+    animation-duration: 500ms !important;
+} 
+
+.ecom-t5e.ecom-bhn { 
+    margin-top: 16px !important;
+} 
+
+.ecom-t5e.ecom-oh8 { 
+    margin-top: 16px !important; 
+    animation-duration: 500ms !important;
+} 
+
+.ecom-t5e.ecom-26i { 
+    margin-top: 16px !important;
+} 
+
+.media-las { 
+    display: block; 
+    position: relative; 
+    width: 100%;
+} 
+
+.media-las .container-odl  { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px;
+} 
+
+.container-eao { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 5px;
+} 
+
+.ecom-t5e.ecom-4iv .media-6hm  { 
+    border-radius: 8px; 
+    overflow: hidden;
+} 
+
+@media all{ 
+  h2 { 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    vertical-align: baseline;
+  } 
+}     
+
+.ecom-t5e.ecom-byx .ecom-7cr  { 
+    font-size: 16px; 
+    font-weight: 700; 
+    font-family: var(--font-heading-family, var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif)); 
+    text-transform: uppercase; 
+    text-decoration: none; 
+    letter-spacing: 0px; 
+    line-height: 1.25em;
+} 
+
+.ecom-t5e.ecom-byx .ecom-7cr  { 
+    color: #00528C;
+} 
+
+.container-n84 { 
+    display: flex;
+} 
+
+.ecom-t5e.ecom-ycv .container-n84  { 
+    justify-content: center;
+} 
+
+.ecom-t5e.ecom-ycv .container-n84  { 
+    align-items: center; 
+    width: fit-content; 
+    margin: auto; 
+    padding: 6px 6px 6px 12px; 
+    border-radius: 8px; 
+    background: var(--Linear, linear-gradient(123deg, #0370BB 4.05%, #68B5F8 93.33%));
+} 
+
+.ecom-t5e.ecom-qs9 .media-6hm  { 
+    border-radius: 8px; 
+    overflow: hidden;
+} 
+
+.ecom-t5e.ecom-1kv .ecom-7cr  { 
+    font-size: 16px; 
+    font-weight: 700; 
+    font-family: var(--font-heading-family, var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif)); 
+    text-transform: uppercase; 
+    text-decoration: none; 
+    letter-spacing: 0px; 
+    line-height: 1.25em;
+} 
+
+.ecom-t5e.ecom-1kv .ecom-7cr  { 
+    color: #00528C;
+} 
+
+.ecom-t5e.ecom-lei .container-n84  { 
+    justify-content: center;
+} 
+
+.ecom-t5e.ecom-lei .container-n84  { 
+    align-items: center; 
+    width: fit-content; 
+    margin: auto; 
+    padding: 6px 6px 6px 12px; 
+    border-radius: 8px; 
+    background: var(--Linear, linear-gradient(123deg, #0370BB 4.05%, #68B5F8 93.33%));
+} 
+
+.ecom-t5e.ecom-opx .media-6hm  { 
+    border-radius: 8px; 
+    overflow: hidden;
+} 
+
+.ecom-t5e.ecom-99d .ecom-7cr  { 
+    font-size: 16px; 
+    font-weight: 700; 
+    font-family: var(--font-heading-family, var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif)); 
+    text-transform: uppercase; 
+    text-decoration: none; 
+    letter-spacing: 0px; 
+    line-height: 1.25em;
+} 
+
+.ecom-t5e.ecom-99d .ecom-7cr  { 
+    color: #00528C;
+} 
+
+.ecom-t5e.ecom-oh8 .container-n84  { 
+    justify-content: center;
+} 
+
+.ecom-t5e.ecom-oh8 .container-n84  { 
+    align-items: center; 
+    width: fit-content; 
+    margin: auto; 
+    padding: 6px 6px 6px 12px; 
+    border-radius: 8px; 
+    background: var(--Linear, linear-gradient(123deg, #0370BB 4.05%, #68B5F8 93.33%));
+} 
+
+@media all{ 
+  .ecom-rkl { 
+    display: flex;
+  } 
+}     
+
+.media-hi3 { 
+    min-height: 100px;
+} 
+
+.media-hi3 { 
+    padding-top: var(--img_padding, 100%);
+} 
+
+.container-eao .ecom-product-single__price--go2  { 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px; 
+    flex-wrap: wrap;
+} 
+
+.ecom-t5e.ecom-ycv .ecom-product-j5y.ecom-product-single__price--go2  { 
+    flex-wrap: wrap;
+} 
+
+.wrapper-e1j { 
+    display: flex; 
+    align-items: center;
+} 
+
+.ecom-t5e.ecom-gjy .wrapper-e1j  { 
+    align-items: center; 
+    justify-content: center;
+} 
+
+.ecom-t5e.ecom-lei .ecom-product-j5y.ecom-product-single__price--go2  { 
+    flex-wrap: wrap;
+} 
+
+.ecom-t5e.ecom-bhn .wrapper-e1j  { 
+    align-items: center; 
+    justify-content: center;
+} 
+
+.ecom-t5e.ecom-oh8 .ecom-product-j5y.ecom-product-single__price--go2  { 
+    flex-wrap: wrap;
+} 
+
+.ecom-t5e.ecom-26i .wrapper-e1j  { 
+    align-items: center; 
+    justify-content: center;
+} 
+
+@media all{ 
+  img { 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    vertical-align: baseline;
+  } 
+
+  .image-oot { 
+    display: flex;
+  } 
+}     
+
+.slide-mte img  { 
+    display: block;
+} 
+
+.media-hi3 img  { 
+    display: block; 
+    max-width: 100%; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 100%; 
+    width: 100%; 
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -o-user-select: none; 
+    user-select: none;
+} 
+
+.media-6hm img  { 
+    transform: translate3d(0, 0, 0);
+} 
+
+@media all{ 
+  div.ecom-t5e img  { 
+    max-width: 100%; 
+    height: auto; 
+    border: 0; 
+    vertical-align: middle;
+  } 
+}     
+
+.ecom-t5e.ecom-4iv .media-6hm .image-oot  { 
+    border-radius: 8px; 
+    overflow: hidden;
+} 
+
+.ecom-product-single__price--dnp { 
+    font-size: 30px; 
+    color: rgb(26, 27, 24); 
+    display: inline-flex;
+} 
+
+.ecom-t5e.ecom-ycv .ecom-product-single__price--dnp  { 
+    font-size: 20px; 
+    font-family: var(--font-heading-family, var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif)); 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    text-decoration: none; 
+    letter-spacing: -0.4px; 
+    line-height: 1em;
+} 
+
+.ecom-t5e.ecom-ycv .ecom-product-single__price--dnp  { 
+    color: #fff; 
+    margin: 0px; 
+    padding: 0px;
+} 
+
+.ecom-product-single__price--ijc { 
+    text-decoration: line-through; 
+    color: #6B7280; 
+    display: inline-flex;
+} 
+
+.ecom-t5e.ecom-ycv .ecom-product-single__price--ijc  { 
+    font-weight: 500; 
+    font-size: 14px; 
+    line-height: 1em; 
+    font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif); 
+    letter-spacing: -0.28px; 
+    text-transform: uppercase; 
+    text-decoration: line-through;
+} 
+
+.ecom-t5e.ecom-ycv .ecom-product-single__price--ijc  { 
+    color: #FFFFFF7A; 
+    margin: 0px; 
+    padding: 0px;
+} 
+
+.ecom-product-single__add-to-cart--bvo { 
+    display: flex; 
+    align-items: center;
+} 
+
+.ecom-t5e.ecom-gjy .ecom-product-single__add-to-cart--bvo  { 
+    justify-content: center; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: -0.32px; 
+    font-style: normal; 
+    font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif); 
+    font-size: 16px; 
+    text-decoration: none; 
+    line-height: 1em; 
+    width: 145px; 
+    height: 40px; 
+    min-height: 40px; 
+    color: #fff; 
+    background-color: #00528C; 
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: #00528C; 
+    border-radius: 100px; 
+    transition-duration: 500ms; 
+    padding: 0px; 
+    margin: 0px;
+} 
+
+.ecom-t5e.ecom-gjy .ecom-product-single__add-to-cart--bvo:hover { 
+    color: #00528C; 
+    background-color: #fff; 
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: #00528C; 
+    border-radius: 100px;
+} 
+
+.ecom-t5e.ecom-qs9 .media-6hm .image-oot  { 
+    border-radius: 8px; 
+    overflow: hidden;
+} 
+
+.ecom-t5e.ecom-lei .ecom-product-single__price--dnp  { 
+    font-size: 20px; 
+    font-family: var(--font-heading-family, var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif)); 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    text-decoration: none; 
+    letter-spacing: -0.4px; 
+    line-height: 1em;
+} 
+
+.ecom-t5e.ecom-lei .ecom-product-single__price--dnp  { 
+    color: #fff; 
+    margin: 0px; 
+    padding: 0px;
+} 
+
+.ecom-t5e.ecom-lei .ecom-product-single__price--ijc  { 
+    font-weight: 500; 
+    font-size: 14px; 
+    line-height: 1em; 
+    font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif); 
+    letter-spacing: -0.28px; 
+    text-transform: uppercase; 
+    text-decoration: line-through;
+} 
+
+.ecom-t5e.ecom-lei .ecom-product-single__price--ijc  { 
+    color: #FFFFFF7A; 
+    margin: 0px; 
+    padding: 0px;
+} 
+
+.ecom-t5e.ecom-bhn .ecom-product-single__add-to-cart--bvo  { 
+    justify-content: center; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: -0.32px; 
+    font-style: normal; 
+    font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif); 
+    font-size: 16px; 
+    text-decoration: none; 
+    line-height: 1em; 
+    width: 145px; 
+    height: 40px; 
+    min-height: 40px; 
+    color: #fff; 
+    background-color: #00528C; 
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: #00528C; 
+    border-radius: 100px; 
+    transition-duration: 500ms; 
+    padding: 0px; 
+    margin: 0px;
+}: 'Satoshi-Variable', sans-serif; 
+    font-size: 16px; 
+    text-decoration: none; 
+    line-height: 1em; 
+    width: 145px; 
+    height: 40px; 
+    min-height: 40px; 
+    color: #fff; 
+    background-color: #00528C; 
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: #00528C; 
+    border-radius: 100px; 
+    transition-duration: 500ms; 
+    padding: 0px; 
+    margin: 0px;
+} 
+
+.ecom-t5e.ecom-bhn .ecom-product-single__add-to-cart--bvo:hover { 
+    color: #00528C; 
+    background-color: #fff; 
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: #00528C; 
+    border-radius: 100px;
+} 
+
+.ecom-t5e.ecom-opx .media-6hm .image-oot  { 
+    border-radius: 8px; 
+    overflow: hidden;
+} 
+
+.ecom-t5e.ecom-oh8 .ecom-product-single__price--dnp  { 
+    font-size: 20px; 
+    font-family: 'Satoshi-Variable', sans-serif; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    text-decoration: none; 
+    letter-spacing: -0.4px; 
+    line-height: 1em;
+} 
+
+.ecom-t5e.ecom-oh8 .ecom-product-single__price--dnp  { 
+    color: #fff; 
+    margin: 0px; 
+    padding: 0px;
+} 
+
+.ecom-t5e.ecom-oh8 .ecom-product-single__price--ijc  { 
+    font-weight: 500; 
+    font-size: 14px; 
+    line-height: 1em; 
+    font-family: 'Satoshi-Variable', sans-serif; 
+    letter-spacing: -0.28px; 
+    text-transform: uppercase; 
+    text-decoration: line-through;
+} 
+
+.ecom-t5e.ecom-oh8 .ecom-product-single__price--ijc  { 
+    color: #FFFFFF7A; 
+    margin: 0px; 
+    padding: 0px;
+} 
+
+.ecom-t5e.ecom-26i .ecom-product-single__add-to-cart--bvo  { 
+    justify-content: center; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: -0.32px; 
+    font-style: normal; 
+    font-family: 'Satoshi-Variable', sans-serif; 
+    font-size: 16px; 
+    text-decoration: none; 
+    line-height: 1em; 
+    width: 145px; 
+    height: 40px; 
+    min-height: 40px; 
+    color: #fff; 
+    background-color: #00528C; 
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: #00528C; 
+    border-radius: 100px; 
+    transition-duration: 500ms; 
+    padding: 0px; 
+    margin: 0px;
+} 
+
+.ecom-t5e.ecom-26i .ecom-product-single__add-to-cart--bvo:hover { 
+    color: #00528C; 
+    background-color: #fff; 
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: #00528C; 
+    border-radius: 100px;
+} 
+
+.badge-rc5 { 
+    display: none; 
+    color: red;
+} 
+
+.ecom-t5e.ecom-ycv .badge-rc5  { 
+    font-size: 16px; 
+    font-weight: 700; 
+    line-height: 1em; 
+    text-transform: uppercase; 
+    font-family: 'Satoshi-Variable', sans-serif; 
+    letter-spacing: -0.32px;
+} 
+
+.ecom-t5e.ecom-ycv .badge-rc5  { 
+    color: #00528C; 
+    margin: 0px 0px 0px 12px; 
+    padding: 6px; 
+    background-color: #fff; 
+    border-radius: 4px; 
+    overflow: hidden;
+} 
+
+.ecom-t5e.ecom-ycv .badge-8fo  { 
+    font-size: 12px; 
+    font-weight: 500; 
+    line-height: 1.5em; 
+    font-family: 'DM Sans', sans-serif;
+} 
+
+.ecom-t5e.ecom-ycv .badge-8fo  { 
+    color: #ffffff; 
+    margin: 0px 0px 0px 12px; 
+    padding: 6px; 
+    background-color: #8a8a8a; 
+    border-radius: 4px; 
+    overflow: hidden;
+} 
+
+.ecom-t5e.ecom-ycv .badge-8fo  { 
+    display: flex; 
+    width: max-content;
+} 
+
+.button-9no { 
+    display: flex; 
+    align-items: center;
+} 
+
+.button-9no { 
+    display: inline-flex; 
+    color: inherit;
+} 
+
+.ecom-product-single__add-to-cart--bvo:hover .button-9no { 
+    color: var(--icon-color-hover);
+} 
+
+.ecom-t5e.ecom-lei .badge-rc5  { 
+    font-size: 16px; 
+    font-weight: 700; 
+    line-height: 1em; 
+    text-transform: uppercase; 
+    font-family: 'Satoshi-Variable', sans-serif; 
+    letter-spacing: -0.32px;
+} 
+
+.ecom-t5e.ecom-lei .badge-rc5  { 
+    color: #00528C; 
+    margin: 0px 0px 0px 12px; 
+    padding: 6px; 
+    background-color: #fff; 
+    border-radius: 4px; 
+    overflow: hidden;
+} 
+
+.ecom-t5e.ecom-lei .badge-8fo  { 
+    font-size: 12px; 
+    font-weight: 500; 
+    line-height: 1.5em; 
+    font-family: 'DM Sans', sans-serif;
+} 
+
+.ecom-t5e.ecom-lei .badge-8fo  { 
+    color: #ffffff; 
+    margin: 0px 0px 0px 12px; 
+    padding: 6px; 
+    background-color: #8a8a8a; 
+    border-radius: 4px; 
+    overflow: hidden;
+} 
+
+.ecom-t5e.ecom-lei .badge-8fo  { 
+    display: flex; 
+    width: max-content;
+} 
+
+.ecom-t5e.ecom-oh8 .badge-rc5  { 
+    font-size: 16px; 
+    font-weight: 700; 
+    line-height: 1em; 
+    text-transform: uppercase; 
+    font-family: 'Satoshi-Variable', sans-serif; 
+    letter-spacing: -0.32px;
+} 
+
+.ecom-t5e.ecom-oh8 .badge-rc5  { 
+    color: #00528C; 
+    margin: 0px 0px 0px 12px; 
+    padding: 6px; 
+    background-color: #fff; 
+    border-radius: 4px; 
+    overflow: hidden;
+} 
+
+.ecom-t5e.ecom-oh8 .badge-8fo  { 
+    font-size: 12px; 
+    font-weight: 500; 
+    line-height: 1.5em; 
+    font-family: 'DM Sans', sans-serif;
+} 
+
+.ecom-t5e.ecom-oh8 .badge-8fo  { 
+    color: #ffffff; 
+    margin: 0px 0px 0px 12px; 
+    padding: 6px; 
+    background-color: #8a8a8a; 
+    border-radius: 4px; 
+    overflow: hidden;
+} 
+
+.ecom-t5e.ecom-oh8 .badge-8fo  { 
+    display: flex; 
+    width: max-content;
+} 
+
+@media screen and (max-width: 767px) and (min-width: 101px){ 
+  .ecom-t5e.ecom-yej { 
+    padding-top: 32px !important; 
+    padding-bottom: 32px !important;
+  } 
+
+  .ecom-t5e.ecom-611 { 
+    width: 100%;
+  } 
+
+  .ecom-t5e.ecom-hht { 
+    margin-top: 40px !important;
+  } 
+
+  .ecom-t5e.ecom-8nl .ele-qnk .eco-p18  { 
+    text-align: center;
+  } 
+
+  .ecom-t5e.ecom-8nl .ele-qnk .eco-p18  { 
+    font-size: 28px;
+  } 
+
+  .ecom-t5e.ecom-hht .container-nr3 .slide-mte  { 
+    height: none;
+  } 
+}     
+
+@media (max-width: 1024px){ 
+  .nav-lb6 .button-6ab  { 
+    position: var(--ecom-position__tablet);
+  } 
+}     
+
+@media (max-width: 767px){ 
+  .nav-lb6 .button-6ab  { 
+    position: var(--ecom-position__mobile);
+  } 
+}     
+
+@media all{ 
+  .button-po5::after, .ecom-swiper-rtl .button-t5b::after { 
+    content: 'prev';
+  } 
+
+  .button-t5b::after, .ecom-swiper-rtl .button-po5::after { 
+    content: 'next';
+  } 
+}     
+
+@media screen and (max-width: 767px) and (min-width: 101px){ 
+  .ecom-t5e.ecom-kwo { 
+    width: 100%;
+  } 
+
+  .ecom-t5e.ecom-owt { 
+    width: 100%;
+  } 
+
+  .ecom-t5e.ecom-vef { 
+    width: 100%;
+  } 
+
+  .ecom-t5e.ecom-ycv { 
+    margin-top: 15px !important;
+  } 
+
+  .ecom-t5e.ecom-lei { 
+    margin-top: 15px !important;
+  } 
+
+  .ecom-t5e.ecom-oh8 { 
+    margin-top: 15px !important;
+  } 
+}     
+
+@media (max-width: 767px){ 
+  .media-hi3 { 
+    padding-top: var(--img_padding__mobile, 100%);
+  } 
+}     
+
+@media screen and (max-width: 767px) and (min-width: 101px){ 
+  .ecom-t5e.ecom-ycv .ecom-product-single__price--ijc  { 
+    font-size: 14px;
+  } 
+
+  .ecom-t5e.ecom-lei .ecom-product-single__price--ijc  { 
+    font-size: 14px;
+  } 
+
+  .ecom-t5e.ecom-oh8 .ecom-product-single__price--ijc  { 
+    font-size: 14px;
+  } 
+
+  .ecom-t5e.ecom-ycv .badge-rc5  { 
+    font-size: 14px;
+  } 
+
+  .ecom-t5e.ecom-ycv .badge-rc5  { 
+    padding-right: 15px; 
+    padding-left: 15px;
+  } 
+
+  .ecom-t5e.ecom-lei .badge-rc5  { 
+    font-size: 14px;
+  } 
+
+  .ecom-t5e.ecom-lei .badge-rc5  { 
+    padding-right: 15px; 
+    padding-left: 15px;
+  } 
+
+  .ecom-t5e.ecom-oh8 .badge-rc5  { 
+    font-size: 14px;
+  } 
+
+  .ecom-t5e.ecom-oh8 .badge-rc5  { 
+    padding-right: 15px; 
+    padding-left: 15px;
+  } 
+}     
+
+@media screen and (max-width: 1024px) and (min-width: 768px){ 
+  .ecom-t5e.ecom-yej { 
+    padding-top: 32px !important; 
+    padding-bottom: 32px !important;
+  } 
+
+  .ecom-t5e.ecom-8nl { 
+    padding-bottom: 0 !important;
+  } 
+
+  .ecom-t5e.ecom-hht { 
+    margin-top: 40px !important;
+  } 
+
+  .ecom-t5e.ecom-8nl .ele-qnk .eco-p18  { 
+    text-align: center;
+  } 
+
+  .ecom-t5e.ecom-hht .container-nr3 .slide-mte  { 
+    height: none;
+  } 
+
+  .ecom-t5e.ecom-byx { 
+    padding-bottom: 0 !important;
+  } 
+
+  .ecom-t5e.ecom-ycv { 
+    margin-top: 15px !important;
+  } 
+
+  .ecom-t5e.ecom-lei { 
+    margin-top: 15px !important;
+  } 
+
+  .ecom-t5e.ecom-oh8 { 
+    margin-top: 15px !important;
+  } 
+}     
+
+@media (min-width: 768px) and (max-width: 1024px){ 
+  .media-hi3 { 
+    padding-top: var(--img_padding__tablet, 100%);
+  } 
+}     
+
+@media screen and (max-width: 1024px) and (min-width: 768px){ 
+  .ecom-t5e.ecom-ycv .ecom-product-single__price--ijc  { 
+    font-size: 14px;
+  } 
+
+  .ecom-t5e.ecom-lei .ecom-product-single__price--ijc  { 
+    font-size: 14px;
+  } 
+
+  .ecom-t5e.ecom-oh8 .ecom-product-single__price--ijc  { 
+    font-size: 14px;
+  } 
+}
+</style>

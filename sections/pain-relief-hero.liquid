@@ -1,0 +1,957 @@
+{% comment %}
+DR-HO Pain Relief Hero Section
+Customizable Shopify section with admin settings
+{% endcomment %}
+
+<style>
+  .pain-relief-section {
+    padding: {{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px;
+    background: {{ section.settings.background_color }};
+  }
+
+  .pain-relief-section.gradient-bg {
+    background: linear-gradient(287.79deg, {{ section.settings.gradient_start }} 4.15%, {{ section.settings.gradient_end }} 97.67%);
+  }
+
+  .pain-relief-container {
+    max-width: {{ section.settings.container_max_width }}px;
+    padding-inline: {{ section.settings.container_padding }}px;
+    width: 100%;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+  }
+
+  @media (max-width: 1599px) {
+    .pain-relief-container {
+      max-width: 1392px;
+    }
+  }
+
+  .pain-relief-wrapper {
+    display: flex;
+    gap: {{ section.settings.content_gap }}px;
+    align-items: center;
+    {% if section.settings.enable_gradient %}
+    background: linear-gradient(287.79deg, {{ section.settings.gradient_start }} 4.15%, {{ section.settings.gradient_end }} 97.67%);
+    padding: 0;
+    border-radius: {{ section.settings.border_radius }}px;
+    {% endif %}
+  }
+
+  .pain-relief-content {
+    width: calc({{ section.settings.content_width }}% - {{ section.settings.content_gap | divided_by: 2 }}px);
+    {% if section.settings.enable_gradient %}
+    padding: {{ section.settings.content_padding_y }}px 0 {{ section.settings.content_padding_y }}px {{ section.settings.content_padding_x }}px;
+    {% endif %}
+  }
+
+  .pain-relief-image {
+    width: calc({{ 100 | minus: section.settings.content_width }}% - {{ section.settings.content_gap | divided_by: 2 }}px);
+    position: relative;
+    align-self: flex-end;
+  }
+
+  .pain-relief-title {
+    margin: 0 0 {{ section.settings.title_margin_bottom }}px 0;
+    font-weight: 700;
+    font-family: {{ section.settings.heading_font }}, sans-serif;
+    font-size: {{ section.settings.title_font_size }}px;
+    line-height: {{ section.settings.title_line_height }}px;
+    color: {{ section.settings.title_color }};
+    {% if section.settings.title_capitalize %}
+    text-transform: capitalize;
+    {% endif %}
+  }
+
+  .pain-relief-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: {{ section.settings.features_gap_y }}px {{ section.settings.features_gap_x }}px;
+    margin: {{ section.settings.features_margin }}px 0;
+  }
+
+  .pain-relief-feature {
+    display: flex;
+    align-items: center;
+    gap: {{ section.settings.feature_icon_gap }}px;
+    padding: {{ section.settings.feature_padding }}px 0;
+    border-bottom: 1px solid {{ section.settings.feature_border_color }};
+    max-width: calc(50% - {{ section.settings.features_gap_x | divided_by: 2 }}px);
+    margin: 0;
+    width: calc(50% - {{ section.settings.features_gap_x | divided_by: 2 }}px);
+    pointer-events: none;
+  }
+
+  .pain-relief-feature:last-of-type {
+    padding-bottom: 0;
+  }
+
+  .pain-relief-feature img {
+    width: {{ section.settings.feature_icon_size }}px;
+    min-width: {{ section.settings.feature_icon_size }}px;
+    align-self: flex-start;
+  }
+
+  .pain-relief-feature-text {
+    flex: 1;
+    font-weight: 600;
+    font-family: {{ section.settings.text_font }}, sans-serif;
+    font-size: {{ section.settings.feature_font_size }}px;
+    line-height: {{ section.settings.feature_line_height }}px;
+    color: {{ section.settings.feature_text_color }};
+    margin: 0;
+  }
+
+  .pain-relief-button {
+    appearance: none;
+    line-height: {{ section.settings.button_height }}px;
+    text-align: center;
+    border-radius: {{ section.settings.button_border_radius }}px;
+    background: {{ section.settings.button_background }};
+    color: {{ section.settings.button_text_color }};
+    padding: 0 {{ section.settings.button_padding }}px;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    max-width: {{ section.settings.button_max_width }}px;
+    width: 100%;
+    margin-inline: auto;
+    font-size: {{ section.settings.button_font_size }}px;
+    font-family: {{ section.settings.heading_font }}, sans-serif;
+    font-weight: 700;
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    transition: all 0.3s ease;
+    {% if section.settings.button_capitalize %}
+    text-transform: capitalize;
+    {% endif %}
+  }
+
+  .pain-relief-button:hover {
+    background: {{ section.settings.button_hover_background }};
+    color: {{ section.settings.button_hover_text_color }};
+    transform: translateY(-2px);
+  }
+
+  .pain-relief-image img {
+    border-radius: {{ section.settings.image_border_radius }}px;
+    height: 100%;
+    width: 100%;
+    min-height: {{ section.settings.image_min_height }}px;
+    object-fit: cover;
+  }
+
+  {% if section.settings.enable_gradient %}
+  .pain-relief-content * {
+    color: {{ section.settings.gradient_text_color }};
+  }
+  {% endif %}
+
+  /* Mobile Styles */
+  @media (max-width: 991px) {
+    .pain-relief-section {
+      padding: {{ section.settings.mobile_section_padding_top }}px 0 {{ section.settings.mobile_section_padding_bottom }}px;
+    }
+
+    .pain-relief-wrapper {
+      flex-direction: column-reverse;
+      {% if section.settings.enable_gradient %}
+      flex-direction: column;
+      gap: {{ section.settings.mobile_content_gap }}px;
+      {% endif %}
+    }
+
+    .pain-relief-content,
+    .pain-relief-image {
+      width: 100%;
+    }
+
+    {% if section.settings.enable_gradient %}
+    .pain-relief-content {
+      padding: {{ section.settings.mobile_content_padding }}px {{ section.settings.mobile_content_padding_x }}px 0 {{ section.settings.mobile_content_padding_x }}px;
+    }
+    {% endif %}
+
+    .pain-relief-title {
+      margin-bottom: {{ section.settings.mobile_title_margin }}px;
+      font-size: {{ section.settings.mobile_title_font_size }}px;
+      line-height: {{ section.settings.mobile_title_line_height }}px;
+      {% if section.settings.enable_gradient %}
+      text-align: center;
+      {% endif %}
+    }
+
+    .pain-relief-features {
+      gap: {{ section.settings.mobile_features_gap }}px {{ section.settings.features_gap_x }}px;
+      margin: {{ section.settings.mobile_features_margin }}px 0;
+    }
+
+    .pain-relief-feature {
+      gap: {{ section.settings.mobile_feature_gap }}px;
+      padding: {{ section.settings.mobile_feature_padding }}px 0;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .pain-relief-image img {
+      aspect-ratio: 1 / 0.92;
+    }
+
+    .pain-relief-button {
+      max-width: 100%;
+      display: block;
+    }
+  }
+
+  @media (max-width: 740px) {
+    .pain-relief-title {
+      font-size: {{ section.settings.mobile_title_font_size | minus: 8 }}px;
+      line-height: {{ section.settings.mobile_title_line_height | minus: 10 }}px;
+    }
+
+    .pain-relief-feature-text {
+      font-size: {{ section.settings.mobile_feature_font_size }}px;
+      line-height: {{ section.settings.mobile_feature_line_height }}px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .pain-relief-image img {
+      min-height: {{ section.settings.mobile_image_min_height }}px;
+      height: {{ section.settings.mobile_image_min_height }}px;
+      object-position: {{ section.settings.mobile_image_position }};
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .pain-relief-content {
+      width: calc({{ section.settings.desktop_content_width }}% - {{ section.settings.content_gap | divided_by: 2 }}px);
+      {% if section.settings.enable_gradient %}
+      padding: {{ section.settings.desktop_content_padding_y }}px 0 {{ section.settings.desktop_content_padding_y }}px {{ section.settings.desktop_content_padding_x }}px;
+      {% endif %}
+    }
+
+    .pain-relief-image {
+      margin-top: {{ section.settings.desktop_image_margin_top }}px;
+    }
+  }
+</style>
+
+<div class="pain-relief-section {{ section.settings.css_class }}">
+  <div class="pain-relief-container">
+    <div class="pain-relief-wrapper">
+      <div class="pain-relief-content">
+        {% if section.settings.title != blank %}
+          <h2 class="pain-relief-title">{{ section.settings.title }}</h2>
+        {% endif %}
+        
+        {% if section.settings.subtitle != blank %}
+          <p class="pain-relief-subtitle">{{ section.settings.subtitle }}</p>
+        {% endif %}
+
+        {% if section.blocks.size > 0 %}
+          <div class="pain-relief-features">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'feature' %}
+                  <div class="pain-relief-feature" {{ block.shopify_attributes }}>
+                    {% if block.settings.icon != blank %}
+                      <img src="{{ block.settings.icon | img_url: '32x32' }}" 
+                           alt="{{ block.settings.title }}"
+                           height="{{ section.settings.feature_icon_size }}" 
+                           width="{{ section.settings.feature_icon_size }}">
+                    {% endif %}
+                    <div class="pain-relief-feature-content">
+                      {% if block.settings.title != blank %}
+                        <p class="pain-relief-feature-text">{{ block.settings.title }}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+              {% endcase %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if section.settings.button_text != blank and section.settings.button_url != blank %}
+          <div class="pain-relief-button-wrapper">
+            <a href="{{ section.settings.button_url }}" class="pain-relief-button">
+              {{ section.settings.button_text }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="pain-relief-image">
+        {% if section.settings.image != blank %}
+          <img src="{{ section.settings.image | img_url: '800x600' }}" 
+               alt="{{ section.settings.image.alt | default: section.settings.title }}">
+        {% else %}
+          <div style="background: #f0f0f0; min-height: {{ section.settings.image_min_height }}px; border-radius: {{ section.settings.image_border_radius }}px; display: flex; align-items: center; justify-content: center; color: #666;">
+            Image placeholder
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Pain Relief Hero Section",
+  "tag": "section",
+  "class": "pain-relief-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class",
+      "default": "fa-k1m section-yjx hp-owp"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f1f6ff"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_gradient",
+      "label": "Enable Gradient Background",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "gradient_start",
+      "label": "Gradient Start Color",
+      "default": "#010D15"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end",
+      "label": "Gradient End Color",
+      "default": "#08497C"
+    },
+    {
+      "type": "color",
+      "id": "gradient_text_color",
+      "label": "Gradient Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "Container Max Width",
+      "min": 1200,
+      "max": 1800,
+      "step": 20,
+      "default": 1620
+    },
+    {
+      "type": "range",
+      "id": "container_padding",
+      "label": "Container Padding",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Content Gap",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_content_gap",
+      "label": "Mobile Content Gap",
+      "min": 16,
+      "max": 40,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content Width (%)",
+      "min": 40,
+      "max": 70,
+      "step": 2,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "desktop_content_width",
+      "label": "Desktop Content Width (%)",
+      "min": 40,
+      "max": 70,
+      "step": 2,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border Radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Section Padding Top",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Section Padding Bottom",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_padding_top",
+      "label": "Mobile Section Padding Top",
+      "min": 16,
+      "max": 60,
+      "step": 4,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_padding_bottom",
+      "label": "Mobile Section Padding Bottom",
+      "min": 16,
+      "max": 60,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "content_padding_x",
+      "label": "Content Padding X",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "content_padding_y",
+      "label": "Content Padding Y",
+      "min": 16,
+      "max": 60,
+      "step": 4,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "desktop_content_padding_x",
+      "label": "Desktop Content Padding X",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "desktop_content_padding_y",
+      "label": "Desktop Content Padding Y",
+      "min": 16,
+      "max": 60,
+      "step": 4,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_content_padding",
+      "label": "Mobile Content Padding",
+      "min": 12,
+      "max": 40,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_content_padding_x",
+      "label": "Mobile Content Padding X",
+      "min": 12,
+      "max": 40,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Title Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Reclaim Your Life from Pain with DR-HO'S Today"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_capitalize",
+      "label": "Capitalize Title",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading Font",
+      "options": [
+        { "value": "Aileron-Bold", "label": "Aileron Bold" },
+        { "value": "Arial", "label": "Arial" },
+        { "value": "Helvetica", "label": "Helvetica" }
+      ],
+      "default": "Aileron-Bold"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size",
+      "min": 24,
+      "max": 48,
+      "step": 2,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Title Line Height",
+      "min": 30,
+      "max": 60,
+      "step": 2,
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_font_size",
+      "label": "Mobile Title Font Size",
+      "min": 20,
+      "max": 36,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_line_height",
+      "label": "Mobile Title Line Height",
+      "min": 24,
+      "max": 44,
+      "step": 2,
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "label": "Title Margin Bottom",
+      "min": 8,
+      "max": 60,
+      "step": 4,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_margin",
+      "label": "Mobile Title Margin",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Features Settings"
+    },
+    {
+      "type": "range",
+      "id": "features_gap_x",
+      "label": "Features Horizontal Gap",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "features_gap_y",
+      "label": "Features Vertical Gap",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "mobile_features_gap",
+      "label": "Mobile Features Gap",
+      "min": 5,
+      "max": 15,
+      "step": 1,
+      "default": 7
+    },
+    {
+      "type": "range",
+      "id": "features_margin",
+      "label": "Features Margin",
+      "min": 20,
+      "max": 60,
+      "step": 4,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_features_margin",
+      "label": "Mobile Features Margin",
+      "min": 16,
+      "max": 40,
+      "step": 4,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "feature_icon_size",
+      "label": "Feature Icon Size",
+      "min": 20,
+      "max": 40,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "feature_icon_gap",
+      "label": "Feature Icon Gap",
+      "min": 8,
+      "max": 20,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "mobile_feature_gap",
+      "label": "Mobile Feature Gap",
+      "min": 12,
+      "max": 24,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "feature_padding",
+      "label": "Feature Padding",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_feature_padding",
+      "label": "Mobile Feature Padding",
+      "min": 10,
+      "max": 24,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "feature_border_color",
+      "label": "Feature Border Color",
+      "default": "#EAEAEA"
+    },
+    {
+      "type": "color",
+      "id": "feature_text_color",
+      "label": "Feature Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "text_font",
+      "label": "Text Font",
+      "options": [
+        { "value": "Aileron-SemiBold", "label": "Aileron SemiBold" },
+        { "value": "Arial", "label": "Arial" },
+        { "value": "Helvetica", "label": "Helvetica" }
+      ],
+      "default": "Aileron-SemiBold"
+    },
+    {
+      "type": "range",
+      "id": "feature_font_size",
+      "label": "Feature Font Size",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "feature_line_height",
+      "label": "Feature Line Height",
+      "min": 18,
+      "max": 28,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "mobile_feature_font_size",
+      "label": "Mobile Feature Font Size",
+      "min": 14,
+      "max": 18,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_feature_line_height",
+      "label": "Mobile Feature Line Height",
+      "min": 18,
+      "max": 26,
+      "step": 1,
+      "default": 22
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_capitalize",
+      "label": "Capitalize Button Text",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button Background",
+      "default": "#006BD3"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Button Hover Background",
+      "default": "#005bb3"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button Border Width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Button Height",
+      "min": 40,
+      "max": 70,
+      "step": 5,
+      "default": 55
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button Border Radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "button_padding",
+      "label": "Button Padding",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_max_width",
+      "label": "Button Max Width",
+      "min": 200,
+      "max": 400,
+      "step": 8,
+      "default": 328
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button Font Size",
+      "min": 14,
+      "max": 22,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Image Border Radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "image_min_height",
+      "label": "Image Min Height",
+      "min": 300,
+      "max": 500,
+      "step": 25,
+      "default": 350
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_min_height",
+      "label": "Mobile Image Min Height",
+      "min": 200,
+      "max": 300,
+      "step": 25,
+      "default": 225
+    },
+    {
+      "type": "text",
+      "id": "mobile_image_position",
+      "label": "Mobile Image Position",
+      "default": "-20px 0px"
+    },
+    {
+      "type": "range",
+      "id": "desktop_image_margin_top",
+      "label": "Desktop Image Margin Top",
+      "min": -60,
+      "max": 0,
+      "step": 10,
+      "default": -40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Feature Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Feature Title",
+          "default": "Feature Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pain Relief Hero",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Free Shipping on $100+ Orders"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "100-Day Money-Back Guarantee"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "2-year Product Warranty"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Doctor Developed"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

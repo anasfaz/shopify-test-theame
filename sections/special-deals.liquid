@@ -1,0 +1,1024 @@
+{% comment %}
+  Special Deal Section - Shopify Dynamic Section
+  This section creates an editable special deals carousel with customizable content
+{% endcomment %}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.background_color }};
+  }
+
+  .special-deal-section {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .special-deal-header {
+    text-align: center;
+    margin-bottom: {{ section.settings.header_spacing }}px;
+  }
+
+  .special-deal-title {
+    font-family: {{ section.settings.title_font }};
+    font-size: {{ section.settings.title_size }}px;
+    font-weight: {{ section.settings.title_weight }};
+    color: {{ section.settings.title_color }};
+    text-transform: {{ section.settings.title_transform }};
+    letter-spacing: {{ section.settings.title_letter_spacing }}px;
+    line-height: 1.3;
+    margin: 0 0 {{ section.settings.title_spacing }}px 0;
+    animation: fadeInUp 0.7s ease-out;
+  }
+
+  .special-deal-subtitle {
+    font-family: {{ section.settings.subtitle_font }};
+    font-size: {{ section.settings.subtitle_size }}px;
+    font-weight: {{ section.settings.subtitle_weight }};
+    color: {{ section.settings.subtitle_color }};
+    font-style: {{ section.settings.subtitle_style }};
+    letter-spacing: {{ section.settings.subtitle_letter_spacing }}px;
+    line-height: 1.1;
+    margin: 0;
+    animation: fadeInUp 0.7s ease-out 0.1s both;
+  }
+
+  .deals-carousel {
+    position: relative;
+    overflow: hidden;
+    margin-top: {{ section.settings.carousel_spacing }}px;
+  }
+
+  .deals-wrapper {
+    display: flex;
+    transition: transform 0.3s ease;
+    gap: 20px;
+  }
+
+  .deal-slide {
+    flex: 0 0 calc(50% - 10px);
+    min-width: 0;
+  }
+
+  .deal-card {
+    background: #ffffff;
+    border-radius: {{ section.settings.border_radius }}px;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .deal-image-container {
+    position: relative;
+    padding: 20px;
+    background: #f8f9fa;
+  }
+
+  .deal-image {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .deal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 1.4s ease;
+  }
+
+  .deal-image:hover img {
+    transform: scale(1.05);
+  }
+
+  .gift-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: radial-gradient(50% 50% at 50% 50%, #FFF 56.26%, #C8E0EC 100%);
+    color: {{ section.settings.badge_text_color }};
+    font-family: {{ section.settings.badge_font }};
+    font-size: {{ section.settings.badge_font_size }}px;
+    font-weight: {{ section.settings.badge_font_weight }};
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 2;
+  }
+
+  .gift-badge:hover {
+    transform: scale(1.05);
+  }
+
+  .badge-value {
+    font-size: 32px;
+    font-weight: 700;
+    display: block;
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+
+  .badge-text {
+    font-size: 14px;
+    line-height: 1.2;
+    margin-top: 2px;
+  }
+
+  .deal-content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+    flex: 1;
+  }
+
+  .deal-info {
+    background-color: {{ section.settings.info_bg_color }};
+    padding: {{ section.settings.content_padding }}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .deal-action {
+    background: {{ section.settings.action_bg_gradient }};
+    padding: {{ section.settings.content_padding }}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 120px;
+  }
+
+  .deal-feature {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: {{ section.settings.feature_spacing }}px;
+  }
+
+  .feature-icon {
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .feature-icon svg {
+    width: {{ section.settings.icon_size }}px;
+    height: {{ section.settings.icon_size }}px;
+    color: {{ section.settings.icon_color }};
+  }
+
+  .feature-content h3 {
+    font-family: {{ section.settings.feature_title_font }};
+    font-size: {{ section.settings.feature_title_size }}px;
+    font-weight: {{ section.settings.feature_title_weight }};
+    color: {{ section.settings.feature_title_color }};
+    text-transform: {{ section.settings.feature_title_transform }};
+    margin: 0 0 8px 0;
+    line-height: 1.1;
+  }
+
+  .feature-description {
+    font-family: {{ section.settings.feature_desc_font }};
+    font-size: {{ section.settings.feature_desc_size }}px;
+    font-weight: {{ section.settings.feature_desc_weight }};
+    color: {{ section.settings.feature_desc_color }};
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .shop-now-btn {
+    font-family: {{ section.settings.button_font }};
+    font-size: {{ section.settings.button_font_size }}px;
+    font-weight: {{ section.settings.button_font_weight }};
+    text-transform: {{ section.settings.button_text_transform }};
+    color: {{ section.settings.button_text_color }};
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    letter-spacing: {{ section.settings.button_letter_spacing }}px;
+    min-height: 100px;
+  }
+
+  .shop-now-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-icon {
+    color: {{ section.settings.button_icon_color }};
+    transition: all 0.4s ease;
+  }
+
+  .btn-icon svg {
+    width: {{ section.settings.button_icon_size }}px;
+    height: {{ section.settings.button_icon_size }}px;
+  }
+
+  .carousel-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 20px;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid #ddd;
+    color: {{ section.settings.nav_color }};
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-btn:hover {
+    background: #f5f5f5;
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .nav-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+  .dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: {{ section.settings.dot_color }};
+    opacity: 0.2;
+    margin: 0 4px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .dot.active {
+    opacity: 1;
+    background-color: {{ section.settings.dot_active_color }};
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .special-deal-title {
+      font-size: calc({{ section.settings.title_size }}px * 0.9);
+    }
+    .special-deal-subtitle {
+      font-size: calc({{ section.settings.subtitle_size }}px * 0.8);
+    }
+    
+    .gift-badge {
+      width: 100px;
+      height: 100px;
+      top: 15px;
+      left: 15px;
+    }
+    
+    .badge-value {
+      font-size: 28px;
+    }
+    
+    .badge-text {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: calc({{ section.settings.padding_top }}px * 0.6);
+      padding-bottom: calc({{ section.settings.padding_bottom }}px * 0.6);
+    }
+    
+    .special-deal-title {
+      font-size: calc({{ section.settings.title_size }}px * 0.7);
+    }
+    
+    .special-deal-subtitle {
+      font-size: calc({{ section.settings.subtitle_size }}px * 0.5);
+    }
+    
+    .deals-wrapper {
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .deal-slide {
+      flex: 0 0 100%;
+    }
+    
+    .deal-content {
+      grid-template-columns: 1fr;
+    }
+    
+    .deal-action {
+      min-width: auto;
+      padding: 20px;
+    }
+    
+    .shop-now-btn {
+      flex-direction: row;
+      min-height: 60px;
+      gap: 12px;
+    }
+    
+    .btn-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .gift-badge {
+      width: 80px;
+      height: 80px;
+      top: 10px;
+      left: 10px;
+    }
+    
+    .badge-value {
+      font-size: 20px;
+    }
+    
+    .badge-text {
+      font-size: 10px;
+    }
+    
+    .feature-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .feature-content h3 {
+      font-size: calc({{ section.settings.feature_title_size }}px * 0.875);
+    }
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+{%- endstyle -%}
+
+<section class="special-deal-section">
+  {% if section.settings.show_header %}
+    <div class="special-deal-header">
+      {% if section.settings.main_title != blank %}
+        <h2 class="special-deal-title">{{ section.settings.main_title }}</h2>
+      {% endif %}
+      {% if section.settings.main_subtitle != blank %}
+        <h3 class="special-deal-subtitle">{{ section.settings.main_subtitle }}</h3>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="deals-carousel" id="deals-carousel-{{ section.id }}">
+    <div class="deals-wrapper" id="deals-wrapper-{{ section.id }}">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'deal_slide' %}
+            <div class="deal-slide" {{ block.shopify_attributes }}>
+              <div class="deal-card">
+                <div class="deal-image-container">
+                  <div class="deal-image">
+                    {% if block.settings.deal_image != blank %}
+                      <img src="{{ block.settings.deal_image | img_url: '800x800' }}" 
+                           alt="{{ block.settings.deal_image.alt | default: block.settings.feature_title }}"
+                           loading="lazy">
+                    {% else %}
+                      <!-- Placeholder for when no image is uploaded -->
+                      <div style="width: 100%; height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #999;">
+                        Product Image
+                      </div>
+                    {% endif %}
+                    
+                    {% if block.settings.badge_text != blank %}
+                      <a href="{{ block.settings.badge_link | default: '#' }}" class="gift-badge">
+                        <span class="badge-text">{{ block.settings.badge_text }}</span>
+                        {% if block.settings.badge_value != blank %}
+                          <span class="badge-value">{{ block.settings.badge_value }}</span>
+                        {% endif %}
+                      </a>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <div class="deal-content">
+                  <div class="deal-info">
+                    {% if block.settings.feature_title != blank or block.settings.feature_description != blank %}
+                      <div class="deal-feature">
+                        <div class="feature-icon">
+                          <svg width="36" height="36" viewBox="0 0 36 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M33.6474 15.4688L26.6397 22.2998L28.2946 31.9478C28.3666 32.3696 28.1934 32.796 27.8469 33.048C27.6511 33.1909 27.4182 33.2629 27.1854 33.2629C27.0065 33.2629 26.8265 33.2201 26.6622 33.1335L17.9975 28.5784L9.33387 33.1324C8.95587 33.3326 8.49574 33.3 8.14924 33.0469C7.80274 32.7949 7.62949 32.3685 7.70149 31.9466L9.35637 22.2986L2.34762 15.4688C2.04162 15.1695 1.93024 14.7218 2.06299 14.3156C2.19574 13.9095 2.54787 13.6114 2.97199 13.5495L12.6571 12.1433L16.9884 3.36602C17.3675 2.59764 18.6275 2.59764 19.0066 3.36602L23.3379 12.1433L33.023 13.5495C33.4471 13.6114 33.7992 13.9084 33.932 14.3156C34.0647 14.7229 33.9534 15.1684 33.6474 15.4688Z" fill="#DCA11C"></path>
+                          </svg>
+                        </div>
+                        <div class="feature-content">
+                          {% if block.settings.feature_title != blank %}
+                            <h3>{{ block.settings.feature_title }}</h3>
+                          {% endif %}
+                          {% if block.settings.feature_description != blank %}
+                            <p class="feature-description">{{ block.settings.feature_description }}</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  <div class="deal-action">
+                    {% if block.settings.button_text != blank %}
+                      <a href="{{ block.settings.button_link | default: '#' }}" class="shop-now-btn">
+                        <span>{{ block.settings.button_text }}</span>
+                        <span class="btn-icon">
+                          <svg width="48" height="48" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M39 16H9C8.45 16 8 15.55 8 15C8 14.45 8.45 14 9 14H39C39.55 14 40 14.45 40 15C40 15.55 39.55 16 39 16Z" fill="white"/>
+                            <path d="M39 25H9C8.45 25 8 24.55 8 24C8 23.45 8.45 23 9 23H39C39.55 23 40 23.45 40 24C40 24.55 39.55 25 39 25Z" fill="white"/>
+                            <path d="M39 34H9C8.45 34 8 33.55 8 33C8 32.45 8.45 32 9 32H39C39.55 32 40 32.45 40 33C40 33.55 39.55 34 39 34Z" fill="white"/>
+                            <path d="M19 40H14C12.9 40 12 39.1 12 38V10C12 8.9 12.9 8 14 8H19C20.1 8 21 8.9 21 10V38C21 39.1 20.1 40 19 40Z" fill="white"/>
+                            <path d="M34 40H29C27.9 40 27 39.1 27 38V10C27 8.9 27.9 8 29 8H34C35.1 8 36 8.9 36 10V38C36 39.1 35.1 40 34 40Z" fill="white"/>
+                          </svg>
+                        </span>
+                      </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    {% if section.blocks.size > 1 and section.settings.show_navigation %}
+      <div class="carousel-nav">
+        <button class="nav-btn prev-btn" onclick="changeSlide(-1, '{{ section.id }}')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button class="nav-btn next-btn" onclick="changeSlide(1, '{{ section.id }}')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      {% if section.settings.show_dots %}
+        <div class="carousel-dots">
+          {% for block in section.blocks %}
+            <span class="dot{% if forloop.first %} active{% endif %}" onclick="currentSlide({{ forloop.index0 }}, '{{ section.id }}')"></span>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let slideIndex = {};
+    
+    function initCarousel(sectionId) {
+      slideIndex[sectionId] = 0;
+      showSlide(sectionId, 0);
+    }
+    
+    window.changeSlide = function(n, sectionId) {
+      const totalSlides = document.querySelectorAll(`#deals-carousel-${sectionId} .deal-slide`).length;
+      
+      if (totalSlides <= 2) {
+        // If 2 or fewer slides, don't change anything
+        return;
+      }
+      
+      slideIndex[sectionId] += n;
+      
+      if (slideIndex[sectionId] >= totalSlides - 1) slideIndex[sectionId] = totalSlides - 2;
+      if (slideIndex[sectionId] < 0) slideIndex[sectionId] = 0;
+      
+      showSlide(sectionId, slideIndex[sectionId]);
+    }
+    
+    window.currentSlide = function(n, sectionId) {
+      const totalSlides = document.querySelectorAll(`#deals-carousel-${sectionId} .deal-slide`).length;
+      
+      if (n >= totalSlides - 1) n = totalSlides - 2;
+      if (n < 0) n = 0;
+      
+      slideIndex[sectionId] = n;
+      showSlide(sectionId, n);
+    }
+    
+    function showSlide(sectionId, n) {
+      const wrapper = document.getElementById(`deals-wrapper-${sectionId}`);
+      const slides = document.querySelectorAll(`#deals-carousel-${sectionId} .deal-slide`);
+      const dots = document.querySelectorAll(`#deals-carousel-${sectionId} .dot`);
+      const prevBtn = document.querySelector(`#deals-carousel-${sectionId} .prev-btn`);
+      const nextBtn = document.querySelector(`#deals-carousel-${sectionId} .next-btn`);
+      
+      if (wrapper && slides.length > 0) {
+        const slideWidth = slides[0].offsetWidth + 20; // including gap
+        wrapper.style.transform = `translateX(-${n * slideWidth}px)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === n);
+        });
+        
+        // Update navigation buttons
+        if (prevBtn) prevBtn.disabled = n === 0;
+        if (nextBtn) nextBtn.disabled = n >= slides.length - 2;
+      }
+    }
+    
+    // Initialize carousel for this section
+    initCarousel('{{ section.id }}');
+    
+    // Auto-play functionality
+    {% if section.settings.auto_play %}
+      setInterval(() => {
+        window.changeSlide(1, '{{ section.id }}');
+      }, {{ section.settings.auto_play_speed | times: 1000 }});
+    {% endif %}
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      showSlide('{{ section.id }}', slideIndex['{{ section.id }}'] || 0);
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Special Deal Section",
+  "tag": "section",
+  "class": "special-deal-section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show header",
+      "default": true,
+    },
+    {
+      "type": "header",
+      "content": "Deal Cards"
+    },
+    {
+      "type": "color",
+      "id": "info_bg_color",
+      "label": "Info card background",
+      "default": "#00356B"
+    },
+    {
+      "type": "text",
+      "id": "action_bg_gradient",
+      "label": "Action card background gradient",
+      "default": "linear-gradient(123deg, #0370BB 0%, #68B5F8 100%)"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "min": 8,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Card content padding",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "image_border_color",
+      "label": "Image border color",
+      "default": "#00528C3D"
+    },
+    {
+      "type": "header",
+      "content": "Badge Settings"
+    },
+    {
+      "type": "font_picker",
+      "id": "badge_font",
+      "label": "Badge font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Badge font size",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "badge_font_weight",
+      "label": "Badge font weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "500", "label": "Medium"},
+        {"value": "600", "label": "Semi-bold"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#0370BB"
+    },
+    {
+      "type": "header",
+      "content": "Feature Settings"
+    },
+    {
+      "type": "range",
+      "id": "feature_spacing",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Feature bottom spacing",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon size",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#DCA11C"
+    },
+    {
+      "type": "font_picker",
+      "id": "feature_title_font",
+      "label": "Feature title font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "feature_title_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Feature title size",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "feature_title_weight",
+      "label": "Feature title weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "500", "label": "Medium"},
+        {"value": "600", "label": "Semi-bold"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "feature_title_color",
+      "label": "Feature title color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "feature_title_transform",
+      "label": "Feature title transform",
+      "options": [
+        {"value": "none", "label": "None"},
+        {"value": "uppercase", "label": "Uppercase"},
+        {"value": "lowercase", "label": "Lowercase"},
+        {"value": "capitalize", "label": "Capitalize"}
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "font_picker",
+      "id": "feature_desc_font",
+      "label": "Feature description font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "feature_desc_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Feature description size",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "feature_desc_weight",
+      "label": "Feature description weight",
+      "options": [
+        {"value": "300", "label": "Light"},
+        {"value": "400", "label": "Normal"},
+        {"value": "500", "label": "Medium"}
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "feature_desc_color",
+      "label": "Feature description color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "font_picker",
+      "id": "button_font",
+      "label": "Button font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Button font size",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Button font weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "500", "label": "Medium"},
+        {"value": "600", "label": "Semi-bold"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button text transform",
+      "options": [
+        {"value": "none", "label": "None"},
+        {"value": "uppercase", "label": "Uppercase"},
+        {"value": "lowercase", "label": "Lowercase"},
+        {"value": "capitalize", "label": "Capitalize"}
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "min": 60,
+      "max": 180,
+      "step": 10,
+      "unit": "px",
+      "label": "Button height",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "button_letter_spacing",
+      "min": -1,
+      "max": 1,
+      "step": 0.1,
+      "unit": "px",
+      "label": "Button letter spacing",
+      "default": -0.3
+    },
+    {
+      "type": "color",
+      "id": "button_icon_color",
+      "label": "Button icon color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_icon_size",
+      "min": 24,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Button icon size",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Carousel Navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "Show navigation arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show pagination dots",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Navigation arrow color",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "dot_active_color",
+      "label": "Active dot color",
+      "default": "#007aff"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_play",
+      "label": "Enable auto-play",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "auto_play_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Auto-play speed",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "deal_slide",
+      "name": "Deal Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Deal Image & Badge"
+        },
+        {
+          "type": "image_picker",
+          "id": "deal_image",
+          "label": "Deal image"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge text",
+          "default": "Gift Worth"
+        },
+        {
+          "type": "text",
+          "id": "badge_value",
+          "label": "Badge value",
+          "default": "$35"
+        },
+        {
+          "type": "url",
+          "id": "badge_link",
+          "label": "Badge link"
+        },
+        {
+          "type": "header",
+          "content": "Feature Content"
+        },
+        {
+          "type": "text",
+          "id": "feature_title",
+          "label": "Feature title",
+          "default": "GET A FREE FACIAL CLEANSER ON ORDERS OVER $100!"
+        },
+        {
+          "type": "textarea",
+          "id": "feature_description",
+          "label": "Feature description",
+          "default": "Spend $100 or more and enjoy a free gift – a premium facial cleanser that refreshes your skin."
+        },
+        {
+          "type": "header",
+          "content": "Call to Action"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Special Deal Section",
+      "blocks": [
+        {
+          "type": "deal_slide",
+          "settings": {
+            "feature_title": "GET A FREE FACIAL CLEANSER ON ORDERS OVER $100!",
+            "feature_description": "Spend $100 or more and enjoy a free gift – a premium facial cleanser that refreshes your skin.",
+            "badge_text": "Gift Worth",
+            "badge_value": "$35",
+            "button_text": "SHOP NOW"
+          }
+        },
+        {
+          "type": "deal_slide",
+          "settings": {
+            "feature_title": "MYSTERY GIFT WITH EVERY ORDER OVER $50",
+            "feature_description": "Spend $50 or more and receive a mystery skincare gift in your package.",
+            "badge_text": "Flash Sale",
+            "badge_value": "30%",
+            "button_text": "SHOP NOW"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} 

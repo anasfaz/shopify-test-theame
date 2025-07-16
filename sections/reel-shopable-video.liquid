@@ -1,0 +1,287 @@
+<style>
+.reel-section {
+  width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: var(--color-bg, #fff);
+  padding: 0;
+}
+.reel-videos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+  height: 100vh;
+}
+.reel-video-block {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  transition: box-shadow 0.2s;
+}
+.reel-video-block video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  cursor: pointer;
+  background: #000;
+}
+.reel-product-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 2;
+  transition: opacity 0.2s;
+}
+.reel-product-img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #eee;
+}
+.reel-product-info {
+  flex: 1;
+}
+.reel-product-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #222;
+}
+.reel-product-price {
+  font-size: 1rem;
+  color: #d32f2f;
+  margin-bottom: 8px;
+}
+.reel-add-to-cart-btn {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.reel-add-to-cart-btn:hover {
+  background: #d32f2f;
+}
+.reel-expand-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.2s;
+}
+.reel-expand-modal video {
+  width: 90vw;
+  height: 90vh;
+  object-fit: contain;
+  background: #000;
+}
+.reel-modal-close {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  font-size: 2rem;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+}
+@media (max-width: 600px) {
+  .reel-product-overlay {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    padding: 10px;
+  }
+  .reel-product-img {
+    width: 48px;
+    height: 48px;
+  }
+  .reel-expand-modal video {
+    width: 98vw;
+    height: 60vh;
+  }
+  .reel-modal-close {
+    top: 8px;
+    right: 12px;
+    font-size: 1.5rem;
+  }
+}
+</style>
+
+<div class="reel-section">
+  <div class="reel-videos" id="reel-videos">
+    {% for block in section.blocks %}
+      {% assign product = block.settings.product %}
+      {% assign video = block.settings.local_video %}
+      {% assign poster = block.settings.poster_image %}
+      <div class="reel-video-block" data-block-index="{{ forloop.index0 }}">
+        {% if video != blank %}
+          <video
+            src="{{ video | file_url }}"
+            poster="{% if poster != blank %}{{ poster | image_url: width: 900 }}{% endif %}"
+            playsinline
+            muted
+            preload="none"
+            loop
+            data-autoplay
+            tabindex="0"
+          ></video>
+        {% else %}
+          <div style="width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:#222;color:#fff;">No video</div>
+        {% endif %}
+        {% if product != blank %}
+          <div class="reel-product-overlay">
+            {% if product.featured_image %}
+              <img class="reel-product-img" src="{{ product.featured_image | image_url: width: 120 }}" alt="{{ product.title | escape }}" width="64" height="64" />
+            {% endif %}
+            <div class="reel-product-info">
+              <div class="reel-product-title">{{ product.title }}</div>
+              <div class="reel-product-price">{{ product.price | money }}</div>
+            </div>
+            <form method="post" action="/cart/add" style="margin:0;">
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+              <button type="submit" class="reel-add-to-cart-btn">Add to Cart</button>
+            </form>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  <div id="reel-expand-modal" class="reel-expand-modal" style="display:none;">
+    <button class="reel-modal-close" onclick="closeReelModal()">&times;</button>
+    <video id="reel-modal-video" controls autoplay></video>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Autoplay/pause videos on scroll (reel style)
+  const blocks = document.querySelectorAll('.reel-video-block');
+  const videos = document.querySelectorAll('.reel-video-block video');
+  const modal = document.getElementById('reel-expand-modal');
+  const modalVideo = document.getElementById('reel-modal-video');
+  let currentPlaying = null;
+
+  function playVisibleVideo(entries) {
+    entries.forEach(entry => {
+      const video = entry.target.querySelector('video');
+      if (!video) return;
+      if (entry.isIntersecting) {
+        if (currentPlaying && currentPlaying !== video) {
+          currentPlaying.pause();
+        }
+        video.play();
+        currentPlaying = video;
+      } else {
+        video.pause();
+      }
+    });
+  }
+
+  const observer = new window.IntersectionObserver(playVisibleVideo, {
+    root: null,
+    threshold: 0.7
+  });
+  blocks.forEach(block => observer.observe(block));
+
+  // Click to expand video
+  videos.forEach(video => {
+    video.addEventListener('click', function(e) {
+      modal.style.display = 'flex';
+      modalVideo.src = video.currentSrc || video.src;
+      modalVideo.poster = video.poster;
+      modalVideo.currentTime = video.currentTime;
+      modalVideo.play();
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  window.closeReelModal = function() {
+    modal.style.display = 'none';
+    modalVideo.pause();
+    modalVideo.src = '';
+    document.body.style.overflow = '';
+  };
+  // Close modal on background click
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) window.closeReelModal();
+  });
+  // Pause all videos when modal is open
+  modal.addEventListener('show', function() {
+    videos.forEach(v => v.pause());
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Reel Shopable Video",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Instagram Reel Style Shoppable Videos"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster_image",
+          "label": "Poster Image"
+        },
+        {
+          "type": "video",
+          "id": "local_video",
+          "label": "Video File"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reel Shopable Video",
+      "blocks": [
+        { "type": "video" },
+        { "type": "video" },
+        { "type": "video" }
+      ]
+    }
+  ]
+}
+{% endschema %} 

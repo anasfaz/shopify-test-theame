@@ -1,0 +1,933 @@
+{% comment %}
+  Subscription Benefits Section
+  Allows admin to customize heading, description, benefits list, CTA button, and image
+{% endcomment %}
+
+<style>
+  #shopify-section-{{ section.id }} .subscription-section {
+    padding: {{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px;
+    background: {{ section.settings.background_gradient_start }} {{ section.settings.background_gradient_end }};
+    background: linear-gradient({{ section.settings.gradient_direction }}deg, {{ section.settings.background_gradient_start }} 50%, {{ section.settings.background_gradient_end }});
+  }
+
+  #shopify-section-{{ section.id }} .subscription-inner {
+    display: flex;
+    align-items: center;
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  #shopify-section-{{ section.id }} .subscription-content {
+    width: {{ section.settings.content_width }}%;
+    padding-right: {{ section.settings.content_padding_right }}px;
+  }
+
+  #shopify-section-{{ section.id }} .subscription-image {
+    width: {{ section.settings.image_width }}%;
+  }
+
+  #shopify-section-{{ section.id }} .subscription-content h2 {
+    font-family: {{ section.settings.heading_font }}, sans-serif;
+    font-size: {{ section.settings.heading_size }}px;
+    line-height: {{ section.settings.heading_line_height }};
+    color: {{ section.settings.heading_color }};
+    font-weight: {{ section.settings.heading_weight }};
+    margin: 0 0 {{ section.settings.heading_margin_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .subscription-content p {
+    font-family: {{ section.settings.text_font }}, sans-serif;
+    font-size: {{ section.settings.text_size }}px;
+    line-height: {{ section.settings.text_line_height }};
+    color: {{ section.settings.text_color }};
+    font-weight: {{ section.settings.text_weight }};
+    margin: 0 0 {{ section.settings.text_margin_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .subscription-benefits {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #shopify-section-{{ section.id }} .subscription-benefits li {
+    display: flex;
+    align-items: center;
+    margin: 0 0 {{ section.settings.benefit_spacing }}px;
+  }
+
+  #shopify-section-{{ section.id }} .benefit-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: {{ section.settings.icon_size }}px;
+    height: {{ section.settings.icon_size }}px;
+  }
+
+  #shopify-section-{{ section.id }} .benefit-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .benefit-text {
+    font-family: {{ section.settings.benefit_font }}, sans-serif;
+    font-size: {{ section.settings.benefit_text_size }}px;
+    line-height: {{ section.settings.benefit_text_line_height }};
+    font-weight: {{ section.settings.benefit_text_weight }};
+    color: {{ section.settings.benefit_text_color }};
+    margin: 0;
+    padding-left: {{ section.settings.benefit_text_spacing }}px;
+  }
+
+  #shopify-section-{{ section.id }} .subscription-button {
+    display: flex;
+    margin-top: {{ section.settings.button_margin_top }}px;
+  }
+
+  #shopify-section-{{ section.id }} .subscription-cta {
+    padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
+    font-family: {{ section.settings.button_font }}, sans-serif;
+    font-size: {{ section.settings.button_text_size }}px;
+    line-height: {{ section.settings.button_text_size }}px;
+    font-weight: {{ section.settings.button_text_weight }};
+    color: {{ section.settings.button_text_color }};
+    text-decoration: none;
+    text-transform: {{ section.settings.button_text_transform }};
+    background-color: {{ section.settings.button_bg_color }};
+    border-radius: {{ section.settings.button_border_radius }}px;
+    transition: all 0.3s ease;
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    display: inline-block;
+    text-align: center;
+  }
+
+  #shopify-section-{{ section.id }} .subscription-cta:hover {
+    color: {{ section.settings.button_hover_text_color }};
+    background-color: {{ section.settings.button_hover_bg_color }};
+    border-color: {{ section.settings.button_hover_border_color }};
+    transform: translateY({{ section.settings.button_hover_transform }}px);
+  }
+
+  #shopify-section-{{ section.id }} .subscription-image-wrapper {
+    border-radius: {{ section.settings.image_border_radius }}px;
+    overflow: hidden;
+    {% if section.settings.image_shadow %}
+      box-shadow: 0 {{ section.settings.image_shadow_y }}px {{ section.settings.image_shadow_blur }}px {{ section.settings.image_shadow_spread }}px {{ section.settings.image_shadow_color }};
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .subscription-image-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} .subscription-inner {
+      flex-direction: {{ section.settings.mobile_layout }};
+    }
+
+    #shopify-section-{{ section.id }} .subscription-content,
+    #shopify-section-{{ section.id }} .subscription-image {
+      width: 100%;
+      padding: 0;
+    }
+
+    #shopify-section-{{ section.id }} .subscription-image {
+      margin: 0 0 {{ section.settings.mobile_image_margin }}px;
+    }
+
+    #shopify-section-{{ section.id }} .subscription-content h2 {
+      font-size: {{ section.settings.mobile_heading_size }}px;
+      line-height: {{ section.settings.mobile_heading_line_height }};
+      margin: 0 0 {{ section.settings.mobile_heading_margin }}px;
+    }
+
+    #shopify-section-{{ section.id }} .subscription-content p {
+      font-size: {{ section.settings.mobile_text_size }}px;
+      line-height: {{ section.settings.mobile_text_line_height }};
+      margin: 0 0 {{ section.settings.mobile_text_margin }}px;
+    }
+
+    #shopify-section-{{ section.id }} .benefit-text {
+      font-size: {{ section.settings.mobile_benefit_size }}px;
+      line-height: {{ section.settings.mobile_benefit_line_height }};
+      padding-left: {{ section.settings.mobile_benefit_spacing }}px;
+    }
+
+    #shopify-section-{{ section.id }} .subscription-cta {
+      width: {{ section.settings.mobile_button_width }}%;
+      padding: {{ section.settings.mobile_button_padding }}px;
+      font-size: {{ section.settings.mobile_button_text_size }}px;
+    }
+
+    #shopify-section-{{ section.id }} .subscription-image-wrapper {
+      border-radius: {{ section.settings.mobile_image_border_radius }}px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    #shopify-section-{{ section.id }} .subscription-section {
+      padding: {{ section.settings.mobile_section_padding }}px 0;
+    }
+  }
+</style>
+
+<div class="subscription-section">
+  <div class="subscription-inner">
+    <div class="subscription-content">
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      
+      {% if section.settings.description != blank %}
+        <p>{{ section.settings.description }}</p>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+        <ul class="subscription-benefits">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'benefit' %}
+                <li {{ block.shopify_attributes }}>
+                  {% if block.settings.icon != blank %}
+                    <div class="benefit-icon">
+                      <img src="{{ block.settings.icon | img_url: 'master' }}" 
+                           alt="{{ block.settings.text | escape }}"
+                           loading="lazy">
+                    </div>
+                  {% endif %}
+                  {% if block.settings.text != blank %}
+                    <span class="benefit-text">{{ block.settings.text }}</span>
+                  {% endif %}
+                </li>
+            {% endcase %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if section.settings.button_text != blank and section.settings.button_url != blank %}
+        <div class="subscription-button">
+          <a href="{{ section.settings.button_url }}" class="subscription-cta">
+            {{ section.settings.button_text }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if section.settings.image != blank %}
+      <div class="subscription-image">
+        <div class="subscription-image-wrapper">
+          <img src="{{ section.settings.image | img_url: 'master' }}" 
+               alt="{{ section.settings.heading | escape }}"
+               loading="lazy">
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Subscription Benefits",
+  "tag": "section",
+  "class": "subscription-benefits-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get your childhood favorites delivered to your door monthly"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Subscribe & Save 20%"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Section Image"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Build Your Bundle"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container Max Width (px)",
+      "min": 1000,
+      "max": 1600,
+      "step": 20,
+      "default": 1380
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content Width (%)",
+      "min": 40,
+      "max": 70,
+      "step": 5,
+      "default": 55
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Image Width (%)",
+      "min": 30,
+      "max": 60,
+      "step": 5,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "content_padding_right",
+      "label": "Content Right Padding (px)",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 85
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile Layout",
+      "options": [
+        {
+          "value": "column-reverse",
+          "label": "Image Top, Content Bottom"
+        },
+        {
+          "value": "column",
+          "label": "Content Top, Image Bottom"
+        }
+      ],
+      "default": "column-reverse"
+    },
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_gradient_start",
+      "label": "Background Gradient Start",
+      "default": "#d4beff"
+    },
+    {
+      "type": "color",
+      "id": "background_gradient_end",
+      "label": "Background Gradient End",
+      "default": "#bfedfe"
+    },
+    {
+      "type": "range",
+      "id": "gradient_direction",
+      "label": "Gradient Direction (degrees)",
+      "min": 0,
+      "max": 360,
+      "step": 15,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Section Top Padding (px)",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Section Bottom Padding (px)",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading Font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading Size (px)",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Heading Line Height",
+      "min": 0.8,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "heading_weight",
+      "label": "Heading Font Weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#3f0791"
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "label": "Heading Bottom Margin (px)",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Text Font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text Size (px)",
+      "min": 14,
+      "max": 36,
+      "step": 2,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "text_line_height",
+      "label": "Text Line Height",
+      "min": 0.8,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "text_weight",
+      "label": "Text Font Weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 500
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#3f0791"
+    },
+    {
+      "type": "range",
+      "id": "text_margin_bottom",
+      "label": "Text Bottom Margin (px)",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "Benefits List Settings"
+    },
+    {
+      "type": "font_picker",
+      "id": "benefit_font",
+      "label": "Benefit Font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "range",
+      "id": "benefit_text_size",
+      "label": "Benefit Text Size (px)",
+      "min": 14,
+      "max": 28,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "benefit_text_line_height",
+      "label": "Benefit Line Height",
+      "min": 0.8,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "benefit_text_weight",
+      "label": "Benefit Font Weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 500
+    },
+    {
+      "type": "color",
+      "id": "benefit_text_color",
+      "label": "Benefit Text Color",
+      "default": "#3f0791"
+    },
+    {
+      "type": "range",
+      "id": "benefit_spacing",
+      "label": "Space Between Benefits (px)",
+      "min": 5,
+      "max": 40,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "benefit_text_spacing",
+      "label": "Icon to Text Spacing (px)",
+      "min": 5,
+      "max": 25,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon Size (px)",
+      "min": 20,
+      "max": 60,
+      "step": 5,
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "Button Styling"
+    },
+    {
+      "type": "font_picker",
+      "id": "button_font",
+      "label": "Button Font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Button Text Size (px)",
+      "min": 12,
+      "max": 30,
+      "step": 2,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "button_text_weight",
+      "label": "Button Font Weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 900
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#3f0791"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#3f0791"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button Border Width (px)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button Border Radius (px)",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "button_padding_x",
+      "label": "Button Horizontal Padding (px)",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "button_padding_y",
+      "label": "Button Vertical Padding (px)",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "button_margin_top",
+      "label": "Button Top Margin (px)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Button Hover Effects"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Button Hover Background Color",
+      "default": "#5b00ed"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Button Hover Border Color",
+      "default": "#5b00ed"
+    },
+    {
+      "type": "range",
+      "id": "button_hover_transform",
+      "label": "Button Hover Transform Y (px)",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "default": -2
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Image Border Radius (px)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 25
+    },
+    {
+      "type": "checkbox",
+      "id": "image_shadow",
+      "label": "Enable Image Shadow",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "image_shadow_color",
+      "label": "Image Shadow Color",
+      "default": "rgba(0,0,0,0.1)"
+    },
+    {
+      "type": "range",
+      "id": "image_shadow_y",
+      "label": "Shadow Y Offset (px)",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "image_shadow_blur",
+      "label": "Shadow Blur (px)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "image_shadow_spread",
+      "label": "Shadow Spread (px)",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Mobile Responsive Settings"
+    },
+    {
+      "type": "range",
+      "id": "mobile_section_padding",
+      "label": "Mobile Section Padding (px)",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_margin",
+      "label": "Mobile Image Bottom Margin (px)",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile Heading Size (px)",
+      "min": 20,
+      "max": 50,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_line_height",
+      "label": "Mobile Heading Line Height",
+      "min": 0.8,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_margin",
+      "label": "Mobile Heading Bottom Margin (px)",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_size",
+      "label": "Mobile Text Size (px)",
+      "min": 14,
+      "max": 24,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_line_height",
+      "label": "Mobile Text Line Height",
+      "min": 0.8,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_margin",
+      "label": "Mobile Text Bottom Margin (px)",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "mobile_benefit_size",
+      "label": "Mobile Benefit Text Size (px)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_benefit_line_height",
+      "label": "Mobile Benefit Line Height",
+      "min": 0.8,
+      "max": 2,
+      "step": 0.1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "mobile_benefit_spacing",
+      "label": "Mobile Icon to Text Spacing (px)",
+      "min": 3,
+      "max": 15,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "mobile_button_width",
+      "label": "Mobile Button Width (%)",
+      "min": 50,
+      "max": 100,
+      "step": 10,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "mobile_button_padding",
+      "label": "Mobile Button Padding (px)",
+      "min": 12,
+      "max": 30,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_button_text_size",
+      "label": "Mobile Button Text Size (px)",
+      "min": 14,
+      "max": 24,
+      "step": 2,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_border_radius",
+      "label": "Mobile Image Border Radius (px)",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "default": 15
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Benefit Text",
+          "default": "Enter benefit text here"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subscription Benefits",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "Free bowl set with your first order"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "VIP Access to limited-edition launches"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "Change flavors anytime"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "Skip or cancel delivery anytime"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

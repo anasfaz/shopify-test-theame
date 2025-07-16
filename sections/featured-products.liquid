@@ -1,0 +1,1400 @@
+<!-- sections/featured-products.liquid -->
+<style>
+  .featured-products {
+    padding: {{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px;
+    background: {% if section.settings.background_image %}url('{{ section.settings.background_image | img_url: '1920x1080' }}') no-repeat center center/cover{% else %}{{ section.settings.background_color }}{% endif %};
+    position: relative;
+    clear: both;
+  }
+
+  .featured-products::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: {{ section.settings.overlay_color }};
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    pointer-events: none;
+  }
+
+  .featured-products .container {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-title {
+    text-align: {{ section.settings.title_alignment }};
+    margin-bottom: {{ section.settings.title_margin_bottom }}px;
+  }
+
+  .section-title h2 {
+    font-size: {{ section.settings.title_font_size }}px;
+    font-weight: {{ section.settings.title_font_weight }};
+    color: {{ section.settings.title_color }};
+    text-transform: {% if section.settings.title_uppercase %}uppercase{% else %}none{% endif %};
+    letter-spacing: {{ section.settings.title_letter_spacing | times: 0.1 }}px;
+    line-height: 1.3em;
+    margin: 0;
+    padding: 0;
+    font-family: {{ section.settings.title_font_family }};
+  }
+
+  .products-carousel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .products-wrapper {
+    display: flex;
+    transition: transform 0.3s ease;
+    gap: {{ section.settings.product_gap }}px;
+    align-items: stretch;
+  }
+
+  .product-card {
+    flex: 0 0 calc((100% - {{ section.settings.product_gap | times: section.settings.products_per_row | minus: 1 }}px) / {{ section.settings.products_per_row }});
+    background: {{ section.settings.card_background }};
+    border-radius: {{ section.settings.card_border_radius }}px;
+    overflow: hidden;
+    text-align: center;
+    padding: {{ section.settings.card_padding }}px;
+    box-shadow: {{ section.settings.card_shadow }};
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .product-card:hover {
+    transform: translateY({{ section.settings.hover_lift }}px);
+    box-shadow: {{ section.settings.card_hover_shadow }};
+  }
+
+  .product-image {
+    position: relative;
+    margin-bottom: {{ section.settings.image_margin_bottom }}px;
+    border-radius: {{ section.settings.image_border_radius }}px;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 100%; /* Square aspect ratio like the image */
+    background: #f8f9fa;
+  }
+
+  .product-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Changed to contain to show full product like image */
+    transition: transform 0.3s ease;
+    display: block;
+    max-width: 100%;
+    padding: 20px; /* Add padding around product image */
+    box-sizing: border-box;
+  }
+
+  .product-card:hover .product-image img {
+    transform: scale({{ section.settings.image_hover_scale | divided_by: 100.0 }});
+  }
+
+  .product-title {
+    font-size: {{ section.settings.product_title_size }}px;
+    font-weight: {{ section.settings.product_title_weight }};
+    color: {{ section.settings.product_title_color }};
+    margin: 0 0 {{ section.settings.title_margin }}px 0;
+    padding: 0 10px;
+    text-transform: {% if section.settings.product_title_uppercase %}uppercase{% else %}none{% endif %};
+    letter-spacing: {{ section.settings.product_title_letter_spacing }}px;
+    line-height: 1.25em;
+    font-family: {{ section.settings.product_title_font_family }};
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 50px;
+  }
+
+  .product-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .product-title a:hover {
+    color: {{ section.settings.product_title_hover_color }};
+  }
+
+  .price-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 auto {{ section.settings.price_margin }}px auto;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+    border-radius: 25px;
+    width: auto;
+    min-width: 120px;
+    flex-wrap: nowrap;
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+  }
+
+  .current-price {
+    font-size: {{ section.settings.price_font_size }}px;
+    font-weight: {{ section.settings.price_font_weight }};
+    color: {{ section.settings.price_color }};
+    font-family: {{ section.settings.price_font_family }};
+    text-decoration: none;
+    line-height: 1em;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    white-space: nowrap;
+  }
+
+  .original-price {
+    font-size: {{ section.settings.compare_price_size }}px;
+    color: {{ section.settings.compare_price_color }};
+    text-decoration: line-through;
+    font-weight: {{ section.settings.compare_price_weight }};
+    font-family: {{ section.settings.price_font_family }};
+    line-height: 1em;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    white-space: nowrap;
+  }
+
+  .discount-badge {
+    background: {{ section.settings.badge_background }};
+    color: {{ section.settings.badge_text_color }};
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: {{ section.settings.badge_font_size }}px;
+    font-weight: {{ section.settings.badge_font_weight }};
+    font-family: {{ section.settings.badge_font_family }};
+    line-height: 1em;
+    margin: 0;
+    overflow: hidden;
+    display: inline-flex;
+    white-space: nowrap;
+    min-width: 40px;
+    justify-content: center;
+  }
+
+  .add-to-cart-btn {
+    background: {{ section.settings.button_background }};
+    color: {{ section.settings.button_text_color }};
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
+    border-radius: {{ section.settings.button_border_radius }}px;
+    font-size: {{ section.settings.button_font_size }}px;
+    font-weight: {{ section.settings.button_font_weight }};
+    text-transform: {% if section.settings.button_uppercase %}uppercase{% else %}none{% endif %};
+    letter-spacing: {{ section.settings.button_letter_spacing | times: 0.1 }}px;
+    cursor: pointer;
+    transition: all 300ms ease;
+    width: {{ section.settings.button_width }}px;
+    min-height: {{ section.settings.button_height }}px;
+    height: {{ section.settings.button_height }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-family: {{ section.settings.button_font_family }};
+    margin: 10px auto 0;
+    font-style: normal;
+    line-height: 1em;
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+  }
+
+  .add-to-cart-btn:hover {
+    background: {{ section.settings.button_hover_background }};
+    color: {{ section.settings.button_hover_text_color }};
+    border-color: {{ section.settings.button_hover_border_color }};
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+  }
+
+  .add-to-cart-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .carousel-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: {{ section.settings.navigation_margin_top }}px;
+  }
+
+  .nav-btn {
+    background: {{ section.settings.nav_button_background }};
+    border: none;
+    border-radius: 50%;
+    width: {{ section.settings.nav_button_size }}px;
+    height: {{ section.settings.nav_button_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: {{ section.settings.nav_button_color }};
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .nav-btn:hover {
+    background: {{ section.settings.nav_button_hover_background }};
+    color: {{ section.settings.nav_button_hover_color }};
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .nav-btn.disabled {
+    opacity: 0.35;
+    cursor: auto;
+  }
+
+  .nav-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }: {{ section.settings.product_title_font_family }};
+  }
+
+  .product-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .product-title a:hover {
+    color: {{ section.settings.product_title_hover_color }};
+  }
+
+  .price-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: {{ section.settings.price_margin }}px;
+    padding: {{ section.settings.price_container_padding }}px;
+    background: {% if section.settings.price_background %}{{ section.settings.price_background }}{% else %}linear-gradient(123deg, #0370BB 4.05%, #68B5F8 93.33%){% endif %};
+    border-radius: {{ section.settings.price_border_radius }}px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .current-price {
+    font-size: {{ section.settings.price_font_size }}px;
+    font-weight: {{ section.settings.price_font_weight }};
+    color: {{ section.settings.price_color }};
+    font-family: {{ section.settings.price_font_family }};
+  }
+
+  .original-price {
+    font-size: {{ section.settings.compare_price_size }}px;
+    color: {{ section.settings.compare_price_color }};
+    text-decoration: line-through;
+    font-weight: {{ section.settings.compare_price_weight }};
+    font-family: {{ section.settings.price_font_family }};
+  }
+
+  .discount-badge {
+    background: {{ section.settings.badge_background }};
+    color: {{ section.settings.badge_text_color }};
+    padding: {{ section.settings.badge_padding }}px;
+    border-radius: {{ section.settings.badge_border_radius }}px;
+    font-size: {{ section.settings.badge_font_size }}px;
+    font-weight: {{ section.settings.badge_font_weight }};
+    text-transform: uppercase;
+    font-family: {{ section.settings.badge_font_family }};
+  }
+
+  .add-to-cart-btn {
+    background: {{ section.settings.button_background }};
+    color: {{ section.settings.button_text_color }};
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    padding: {{ section.settings.button_padding_y }}px {{ section.settings.button_padding_x }}px;
+    border-radius: {{ section.settings.button_border_radius }}px;
+    font-size: {{ section.settings.button_font_size }}px;
+    font-weight: {{ section.settings.button_font_weight }};
+    text-transform: {% if section.settings.button_uppercase %}uppercase{% else %}none{% endif %};
+    letter-spacing: {{ section.settings.button_letter_spacing | times: 0.1 }}px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: {{ section.settings.button_width }}px;
+    min-height: {{ section.settings.button_height }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-family: {{ section.settings.button_font_family }};
+  }
+
+  .add-to-cart-btn:hover {
+    background: {{ section.settings.button_hover_background }};
+    color: {{ section.settings.button_hover_text_color }};
+    border-color: {{ section.settings.button_hover_border_color }};
+    transform: translateY(-2px);
+  }
+
+  .carousel-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: {{ section.settings.navigation_margin_top }}px;
+  }
+
+  .nav-btn {
+    background: {{ section.settings.nav_button_background }};
+    border: none;
+    border-radius: 50%;
+    width: {{ section.settings.nav_button_size }}px;
+    height: {{ section.settings.nav_button_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: {{ section.settings.nav_button_color }};
+  }
+
+  .nav-btn:hover {
+    background: {{ section.settings.nav_button_hover_background }};
+    color: {{ section.settings.nav_button_hover_color }};
+  }
+
+  .nav-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .product-card {
+      flex: 0 0 calc((100% - {{ section.settings.product_gap | times: section.settings.products_per_row_tablet | minus: 1 }}px) / {{ section.settings.products_per_row_tablet }});
+    }
+    
+    .section-title h2 {
+      font-size: {{ section.settings.title_font_size | times: 0.8 }}px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .featured-products {
+      padding: {{ section.settings.section_padding_top | times: 0.5 }}px 0 {{ section.settings.section_padding_bottom | times: 0.5 }}px;
+    }
+    
+    .product-card {
+      flex: 0 0 calc((100% - {{ section.settings.product_gap | times: section.settings.products_per_row_mobile | minus: 1 }}px) / {{ section.settings.products_per_row_mobile }});
+    }
+    
+    .section-title h2 {
+      font-size: {{ section.settings.title_font_size | times: 0.7 }}px;
+    }
+    
+    .container {
+      padding: 0 15px;
+    }
+  }
+</style>
+
+<section class="featured-products" id="featured-products-{{ section.id }}">
+  <div class="container">
+    {% if section.settings.section_title != blank %}
+      <div class="section-title">
+        <h2>{{ section.settings.section_title }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="products-carousel">
+      <div class="products-wrapper" id="products-wrapper-{{ section.id }}">
+        {% if section.settings.product_collection != blank %}
+          {% assign collection = collections[section.settings.product_collection] %}
+          {% for product in collection.products limit: section.settings.products_to_show %}
+            <div class="product-card">
+              <div class="product-image">
+                {% if product.featured_image %}
+                  <img src="{{ product.featured_image | img_url: '400x400' }}" 
+                       alt="{{ product.title | escape }}"
+                       loading="lazy">
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+
+              <h3 class="product-title">
+                <a href="{{ product.url }}">{{ product.title }}</a>
+              </h3>
+
+              <div class="price-container">
+                <span class="current-price">{{ product.price | money }}</span>
+                {% if product.compare_at_price > product.price %}
+                  <span class="original-price">{{ product.compare_at_price | money }}</span>
+                  {% assign discount_percentage = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
+                  <span class="discount-badge">-{{ discount_percentage | round }}%</span>
+                {% endif %}
+              </div>
+
+              <form action="/cart/add" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="add-to-cart-btn" 
+                        {% unless product.available %}disabled{% endunless %}>
+                  {% if product.available %}
+                    {{ section.settings.button_text | default: 'Add to Cart' }}
+                  {% else %}
+                    {{ section.settings.sold_out_text | default: 'Sold Out' }}
+                  {% endif %}
+                </button>
+              </form>
+            </div>
+          {% endfor %}
+        {% else %}
+          {% comment %} Placeholder products for when no collection is selected {% endcomment %}
+          {% for i in (1..6) %}
+            <div class="product-card">
+              <div class="product-image">
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+              <h3 class="product-title">
+                <a href="#">Sample Product {{ i }}</a>
+              </h3>
+              <div class="price-container">
+                <span class="current-price">${{ 19.99 | times: i }}</span>
+                <span class="original-price">${{ 29.99 | times: i }}</span>
+                <span class="discount-badge">-33%</span>
+              </div>
+              <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_navigation %}
+        <div class="carousel-navigation">
+          <button class="nav-btn" id="prev-{{ section.id }}" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15,18 9,12 15,6"></polyline>
+            </svg>
+          </button>
+          <button class="nav-btn" id="next-{{ section.id }}" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9,18 15,12 9,6"></polyline>
+            </svg>
+          </button>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% if section.settings.enable_carousel %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const wrapper = document.getElementById('products-wrapper-{{ section.id }}');
+    const prevBtn = document.getElementById('prev-{{ section.id }}');
+    const nextBtn = document.getElementById('next-{{ section.id }}');
+    
+    if (!wrapper) return;
+    
+    let currentIndex = 0;
+    const cardWidth = wrapper.querySelector('.product-card').offsetWidth;
+    const gap = {{ section.settings.product_gap }};
+    const cardsToShow = {{ section.settings.products_per_row }};
+    const totalCards = wrapper.querySelectorAll('.product-card').length;
+    const maxIndex = Math.max(0, totalCards - cardsToShow);
+    
+    function updateCarousel() {
+      const translateX = currentIndex * (cardWidth + gap);
+      wrapper.style.transform = `translateX(-${translateX}px)`;
+      
+      if (prevBtn) prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+      if (nextBtn) nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+    }
+    
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateCarousel();
+        }
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        if (currentIndex < maxIndex) {
+          currentIndex++;
+          updateCarousel();
+        }
+      });
+    }
+    
+    // Auto-play functionality
+    {% if section.settings.enable_autoplay %}
+      let autoplayInterval = setInterval(function() {
+        if (currentIndex >= maxIndex) {
+          currentIndex = 0;
+        } else {
+          currentIndex++;
+        }
+        updateCarousel();
+      }, {{ section.settings.autoplay_delay | times: 1000 }});
+      
+      // Pause on hover
+      wrapper.addEventListener('mouseenter', function() {
+        clearInterval(autoplayInterval);
+      });
+      
+      wrapper.addEventListener('mouseleave', function() {
+        autoplayInterval = setInterval(function() {
+          if (currentIndex >= maxIndex) {
+            currentIndex = 0;
+          } else {
+            currentIndex++;
+          }
+          updateCarousel();
+        }, {{ section.settings.autoplay_delay | times: 1000 }});
+      });
+    {% endif %}
+    
+    updateCarousel();
+    
+    // Handle responsive behavior
+    window.addEventListener('resize', function() {
+      updateCarousel();
+    });
+  });
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "tag": "section",
+  "class": "section-featured-products",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "TOP BEST SELLER"
+    },
+    {
+      "type": "collection",
+      "id": "product_collection",
+      "label": "Product Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to Show",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container Max Width (px)",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "default": 1250
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Section Padding Top (px)",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 85
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Section Padding Bottom (px)",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "default": 85
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products Per Row (Desktop)",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "products_per_row_tablet",
+      "label": "Products Per Row (Tablet)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "products_per_row_mobile",
+      "label": "Products Per Row (Mobile)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "product_gap",
+      "label": "Gap Between Products (px)",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#E8F4FD"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image",
+      "info": "Light blue gradient background"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay Color",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Opacity (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Title Settings"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Title Alignment",
+      "options": [
+        {"value": "left", "label": "Left"},
+        {"value": "center", "label": "Center"},
+        {"value": "right", "label": "Right"}
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size (px)",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Title Font Weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "500", "label": "Medium"},
+        {"value": "600", "label": "Semi Bold"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#4A90E2"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_uppercase",
+      "label": "Title Uppercase",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Title Letter Spacing (px)",
+      "min": -20,
+      "max": 50,
+      "step": 1,
+      "default": -8,
+      "info": "Multiplied by 0.1 in CSS (-8 = -0.8px)"
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "label": "Title Bottom Margin (px)",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "default": 80
+    },
+    {
+      "type": "select",
+      "id": "title_font_family",
+      "label": "Title Font Family",
+      "options": [
+        {"value": "inherit", "label": "Theme Default"},
+        {"value": "'Satoshi-Variable', sans-serif", "label": "Satoshi Variable"},
+        {"value": "'Montserrat', sans-serif", "label": "Montserrat"},
+        {"value": "'Arial', sans-serif", "label": "Arial"}
+      ],
+      "default": "'Satoshi-Variable', sans-serif"
+    },
+    {
+      "type": "header",
+      "content": "Product Card Settings"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card Border Radius (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card Padding (px)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card Shadow",
+      "default": "0 4px 20px rgba(0,0,0,0.08)",
+      "info": "CSS box-shadow value"
+    },
+    {
+      "type": "text",
+      "id": "card_hover_shadow",
+      "label": "Card Hover Shadow",
+      "default": "0 8px 30px rgba(0,0,0,0.12)",
+      "info": "CSS box-shadow value"
+    },
+    {
+      "type": "range",
+      "id": "hover_lift",
+      "label": "Hover Lift Effect (px)",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "default": -2
+    },
+    {
+      "type": "header",
+      "content": "Product Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "image_margin_bottom",
+      "label": "Image Bottom Margin (px)",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Image Border Radius (px)",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "image_aspect_ratio",
+      "label": "Image Aspect Ratio",
+      "default": "1 / 1",
+      "info": "e.g., '1 / 1' for square, '4 / 3' for landscape"
+    },
+    {
+      "type": "range",
+      "id": "image_hover_scale",
+      "label": "Image Hover Scale",
+      "min": 100,
+      "max": 130,
+      "step": 5,
+      "default": 105,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Product Title Settings"
+    },
+    {
+      "type": "range",
+      "id": "product_title_size",
+      "label": "Product Title Font Size (px)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "product_title_weight",
+      "label": "Product Title Font Weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "500", "label": "Medium"},
+        {"value": "600", "label": "Semi Bold"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Product Title Color",
+      "default": "#4A90E2"
+    },
+    {
+      "type": "color",
+      "id": "product_title_hover_color",
+      "label": "Product Title Hover Color",
+      "default": "#357ABD"
+    },
+    {
+      "type": "checkbox",
+      "id": "product_title_uppercase",
+      "label": "Product Title Uppercase",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "product_title_letter_spacing",
+      "label": "Product Title Letter Spacing (px)",
+      "min": -1,
+      "max": 3,
+      "step": 0.1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "title_margin",
+      "label": "Title Bottom Margin (px)",
+      "min": 0,
+      "max": 30,
+      "step": 5,
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "product_title_font_family",
+      "label": "Product Title Font Family",
+      "options": [
+        {"value": "inherit", "label": "Theme Default"},
+        {"value": "'Satoshi-Variable', sans-serif", "label": "Satoshi Variable"},
+        {"value": "'Montserrat', sans-serif", "label": "Montserrat"},
+        {"value": "'Arial', sans-serif", "label": "Arial"}
+      ],
+      "default": "'Satoshi-Variable', sans-serif"
+    },
+    {
+      "type": "header",
+      "content": "Price Settings"
+    },
+    {
+      "type": "color",
+      "id": "price_background",
+      "label": "Price Container Background",
+      "default": "#0370BB"
+    },
+    {
+      "type": "range",
+      "id": "price_border_radius",
+      "label": "Price Container Border Radius (px)",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "price_container_padding",
+      "label": "Price Container Padding",
+      "default": "6px 12px",
+      "info": "CSS padding value"
+    },
+    {
+      "type": "range",
+      "id": "price_font_size",
+      "label": "Current Price Font Size (px)",
+      "min": 14,
+      "max": 30,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "price_font_weight",
+      "label": "Price Font Weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "500", "label": "Medium"},
+        {"value": "600", "label": "Semi Bold"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Current Price Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "compare_price_size",
+      "label": "Compare Price Font Size (px)",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "compare_price_weight",
+      "label": "Compare Price Font Weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "500", "label": "Medium"},
+        {"value": "600", "label": "Semi Bold"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "compare_price_color",
+      "label": "Compare Price Color",
+      "default": "rgba(255,255,255,0.7)"
+    },
+    {
+      "type": "range",
+      "id": "price_margin",
+      "label": "Price Bottom Margin (px)",
+      "min": 0,
+      "max": 30,
+      "step": 5,
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "price_font_family",
+      "label": "Price Font Family",
+      "options": [
+        {"value": "inherit", "label": "Theme Default"},
+        {"value": "'Satoshi-Variable', sans-serif", "label": "Satoshi Variable"},
+        {"value": "'Montserrat', sans-serif", "label": "Montserrat"},
+        {"value": "'Arial', sans-serif", "label": "Arial"}
+      ],
+      "default": "'Satoshi-Variable', sans-serif"
+    },
+    {
+      "type": "header",
+      "content": "Discount Badge Settings"
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Badge Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#4A90E2"
+    },
+    {
+      "type": "range",
+      "id": "badge_padding",
+      "label": "Badge Padding (px)",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "badge_border_radius",
+      "label": "Badge Border Radius (px)",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "label": "Badge Font Size (px)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "badge_font_weight",
+      "label": "Badge Font Weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "500", "label": "Medium"},
+        {"value": "600", "label": "Semi Bold"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "badge_font_family",
+      "label": "Badge Font Family",
+      "options": [
+        {"value": "inherit", "label": "Theme Default"},
+        {"value": "'Satoshi-Variable', sans-serif", "label": "Satoshi Variable"},
+        {"value": "'Montserrat', sans-serif", "label": "Montserrat"},
+        {"value": "'Arial', sans-serif", "label": "Arial"}
+      ],
+      "default": "'Satoshi-Variable', sans-serif"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_text",
+      "label": "Sold Out Button Text",
+      "default": "Sold Out"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button Background",
+      "default": "#4A90E2"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#4A90E2"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Button Border Width (px)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Button Hover Background",
+      "default": "#357ABD"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Button Hover Border Color",
+      "default": "#357ABD"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_x",
+      "label": "Button Horizontal Padding (px)",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_padding_y",
+      "label": "Button Vertical Padding (px)",
+      "min": 8,
+      "max": 25,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button Border Radius (px)",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button Font Size (px)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Button Font Weight",
+      "options": [
+        {"value": "400", "label": "Normal"},
+        {"value": "500", "label": "Medium"},
+        {"value": "600", "label": "Semi Bold"},
+        {"value": "700", "label": "Bold"}
+      ],
+      "default": "700"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_uppercase",
+      "label": "Button Text Uppercase",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "button_letter_spacing",
+      "label": "Button Letter Spacing (0.1px)",
+      "min": -10,
+      "max": 30,
+      "step": 1,
+      "default": -3
+    },
+    {
+      "type": "range",
+      "id": "button_width",
+      "label": "Button Width (px)",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "default": 145
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Button Height (px)",
+      "min": 30,
+      "max": 60,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "button_font_family",
+      "label": "Button Font Family",
+      "options": [
+        {"value": "inherit", "label": "Theme Default"},
+        {"value": "'Satoshi-Variable', sans-serif", "label": "Satoshi Variable"},
+        {"value": "'Montserrat', sans-serif", "label": "Montserrat"},
+        {"value": "'Arial', sans-serif", "label": "Arial"}
+      ],
+      "default": "'Satoshi-Variable', sans-serif"
+    },
+    {
+      "type": "header",
+      "content": "Carousel Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_carousel",
+      "label": "Enable Carousel",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "Show Navigation Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay (seconds)",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "navigation_margin_top",
+      "label": "Navigation Top Margin (px)",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "nav_button_background",
+      "label": "Navigation Button Background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "nav_button_color",
+      "label": "Navigation Button Color",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "nav_button_hover_background",
+      "label": "Navigation Button Hover Background",
+      "default": "#00528C"
+    },
+    {
+      "type": "color",
+      "id": "nav_button_hover_color",
+      "label": "Navigation Button Hover Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "nav_button_size",
+      "label": "Navigation Button Size (px)",
+      "min": 30,
+      "max": 60,
+      "step": 2,
+      "default": 44
+    }
+  ],
+  "blocks": [
+    {
+      "type": "featured_product",
+      "name": "Featured Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_custom_badge",
+          "label": "Show Custom Badge",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "custom_badge_text",
+          "label": "Custom Badge Text",
+          "default": "Featured"
+        },
+        {
+          "type": "color",
+          "id": "custom_badge_background",
+          "label": "Custom Badge Background",
+          "default": "#ff6b6b"
+        },
+        {
+          "type": "color",
+          "id": "custom_badge_color",
+          "label": "Custom Badge Text Color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products",
+      "settings": {
+        "section_title": "TOP BEST SELLER",
+        "products_to_show": 6,
+        "products_per_row": 3,
+        "enable_carousel": true,
+        "show_navigation": true
+      }
+    }
+  ]
+}
+{% endschema %}

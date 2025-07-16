@@ -1,0 +1,701 @@
+{% comment %}
+  Banner Image Slider Section
+  
+  Accepts:
+  - section: {Object} Section object
+  - section.settings: {Object} Section settings
+  - section.blocks: {Array} Section blocks
+  
+  Usage:
+  {% section 'banner-slider' %}
+{% endcomment %}
+
+{%- if section.blocks.size > 0 -%}
+  {%- liquid
+    assign slider_id = 'banner-slider-' | append: section.id
+    assign enable_autoplay = section.settings.enable_autoplay
+    assign autoplay_speed = section.settings.autoplay_speed | times: 1000
+    assign enable_dots = section.settings.enable_dots
+    assign enable_arrows = section.settings.enable_arrows
+    assign slider_height_mobile = section.settings.slider_height_mobile
+    assign slider_height_desktop = section.settings.slider_height_desktop
+  -%}
+
+  <div class="banner-slider-container" id="{{ slider_id }}">
+    <div class="banner-slider-wrapper">
+      <div class="banner-slider swiper" data-slider-id="{{ slider_id }}">
+        <div class="swiper-wrapper">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign image = block.settings.image
+              assign image_mobile = block.settings.image_mobile
+              assign heading = block.settings.heading
+              assign subheading = block.settings.subheading
+              assign button_text = block.settings.button_text
+              assign button_url = block.settings.button_url
+              assign text_alignment = block.settings.text_alignment
+              assign overlay_opacity = block.settings.overlay_opacity
+              assign overlay_opacity_mobile = block.settings.overlay_opacity_mobile
+              assign content_position = block.settings.content_position
+            -%}
+            
+            <div class="swiper-slide banner-slide" 
+                 style="--padding-bottom: {{ slider_height_desktop }}%; --padding-bottom-mobile: {{ slider_height_mobile }}%; --overlay-opacity: {{ overlay_opacity }}; --overlay-opacity-mobile: {{ overlay_opacity_mobile }};"
+                 {{ block.shopify_attributes }}>
+              
+              {%- if button_url != blank -%}
+                <a href="{{ button_url }}" class="slide-link" aria-label="{{ heading | default: 'View collection' }}"></a>
+              {%- endif -%}
+              
+              <div class="slide-image-wrapper">
+                {%- if image != blank or image_mobile != blank -%}
+                  <picture>
+                    {%- if image_mobile != blank -%}
+                      <source media="(max-width: 749px)" srcset="{{ image_mobile | image_url: width: 750 }} 750w, {{ image_mobile | image_url: width: 1500 }} 1500w">
+                    {%- endif -%}
+                    {%- if image != blank -%}
+                      <img src="{{ image | image_url: width: 1920 }}"
+                           srcset="{{ image | image_url: width: 750 }} 750w, {{ image | image_url: width: 1500 }} 1500w, {{ image | image_url: width: 3000 }} 3000w"
+                           alt="{{ image.alt | escape }}"
+                           class="slide-image"
+                           width="{{ image.width }}"
+                           height="{{ image.height }}"
+                           loading="lazy">
+                    {%- else -%}
+                      {{ 'hero-apparel-1' | placeholder_svg_tag: 'slide-image placeholder-svg' }}
+                    {%- endif -%}
+                  </picture>
+                {%- else -%}
+                  {{ 'hero-apparel-1' | placeholder_svg_tag: 'slide-image placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              
+              {%- if heading != blank or subheading != blank -%}
+                <div class="slide-content slide-content--{{ text_alignment }} slide-content--{{ content_position }}">
+                  {%- if subheading != blank -%}
+                    <div class="slide-subheading">{{ subheading }}</div>
+                  {%- endif -%}
+                  {%- if heading != blank -%}
+                    <h2 class="slide-heading">{{ heading }}</h2>
+                  {%- endif -%}
+                  {%- if button_text != blank and button_url != blank -%}
+                    <div class="slide-button-wrapper">
+                      <a href="{{ button_url }}" class="slide-button btn">{{ button_text }}</a>
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        
+        {%- if enable_arrows and section.blocks.size > 1 -%}
+          <div class="slider-navigation">
+            <button class="slider-button slider-button--prev" aria-label="{{ 'general.slider.previous' | t }}">
+              <svg class="icon icon-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.6333 12.5L8 6.86673L8.86673 6L15.3667 12.5L8.86673 19L8 18.1333L13.6333 12.5Z" fill="currentColor" stroke="currentColor" stroke-width="0.3"></path>
+              </svg>
+            </button>
+            <button class="slider-button slider-button--next" aria-label="{{ 'general.slider.next' | t }}">
+              <svg class="icon icon-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.6333 12.5L8 6.86673L8.86673 6L15.3667 12.5L8.86673 19L8 18.1333L13.6333 12.5Z" fill="currentColor" stroke="currentColor" stroke-width="0.3"></path>
+              </svg>
+            </button>
+          </div>
+        {%- endif -%}
+        
+        {%- if enable_dots and section.blocks.size > 1 -%}
+          <div class="swiper-pagination"></div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .banner-slider-container {
+      width: 100%;
+      padding-right: 0.8rem;
+      padding-left: 0.8rem;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    
+    @media screen and (min-width: 576px) {
+      .banner-slider-container {
+        padding-right: 2rem;
+        padding-left: 2rem;
+      }
+    }
+    
+    @media screen and (min-width: 1200px) {
+      .banner-slider-container {
+        padding-right: 4rem;
+        padding-left: 4rem;
+      }
+    }
+    
+    @media (min-width: 1360px) {
+      .banner-slider-container {
+        max-width: 1920px;
+      }
+    }
+    
+    .banner-slider {
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      overflow: hidden;
+      list-style: none;
+      padding: 0;
+      z-index: 1;
+      border-radius: 4px;
+    }
+    
+    .banner-slider .swiper-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      display: flex;
+      transition-property: transform;
+      box-sizing: content-box;
+    }
+    
+    .banner-slide {
+      flex-shrink: 0;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .banner-slide:before {
+      content: "";
+      display: block;
+      padding-bottom: var(--padding-bottom-mobile);
+    }
+    
+    @media screen and (min-width: 750px) {
+      .banner-slide:before {
+        padding-bottom: var(--padding-bottom);
+      }
+    }
+    
+    .slide-link {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+    }
+    
+    .slide-image-wrapper {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .slide-image-wrapper:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, var(--overlay-opacity-mobile));
+      border-radius: 4px;
+      z-index: 1;
+    }
+    
+    @media screen and (min-width: 750px) {
+      .slide-image-wrapper:after {
+        background-color: rgba(0, 0, 0, var(--overlay-opacity));
+      }
+    }
+    
+    .slide-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.25, 1);
+    }
+    
+    .slide-content {
+      position: relative;
+      padding: 2rem 2.4rem;
+      pointer-events: none;
+      z-index: 2;
+      color: white;
+    }
+    
+    @media screen and (min-width: 750px) {
+      .slide-content {
+        padding: 1.4rem 2.4rem;
+      }
+    }
+    
+    .slide-content--center {
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      align-self: center;
+    }
+    
+    .slide-content--left {
+      text-align: left;
+      align-self: center;
+    }
+    
+    .slide-content--right {
+      text-align: right;
+      align-self: center;
+    }
+    
+    .slide-content--top {
+      align-self: flex-start;
+    }
+    
+    .slide-content--bottom {
+      align-self: flex-end;
+    }
+    
+    @media screen and (min-width: 750px) {
+      .slide-content--center {
+        padding-inline: 10rem;
+      }
+    }
+    
+    @media screen and (min-width: 1200px) {
+      .slide-content--center {
+        padding-inline: 12rem;
+      }
+    }
+    
+    .slide-subheading {
+      font-family: var(--font-heading-family, system-ui);
+      font-size: 1.4rem;
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .slide-heading {
+      font-family: var(--font-accent-family, system-ui);
+      font-style: italic;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 5vw, 5.6rem);
+      line-height: 1;
+      margin: 0;
+      word-wrap: break-word;
+      word-break: break-word;
+      max-width: 100%;
+    }
+    
+    .slide-button-wrapper {
+      margin-top: 1.6rem;
+      pointer-events: auto;
+    }
+    
+    .slide-button {
+      display: inline-block;
+      padding: 1.2rem 2.4rem;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .slide-button:hover {
+      background-color: white;
+      transform: translateY(-2px);
+    }
+    
+    .slider-navigation {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 2rem;
+      pointer-events: none;
+    }
+    
+    @media screen and (min-width: 1200px) {
+      .slider-navigation {
+        padding: 0 4rem;
+      }
+    }
+    
+    @media screen and (max-width: 749px) {
+      .slider-navigation {
+        display: none;
+      }
+    }
+    
+    .slider-button {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 4.4rem;
+      height: 4.4rem;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.25s;
+      pointer-events: auto;
+    }
+    
+    @media screen and (min-width: 990px) {
+      .slider-button {
+        width: 5.6rem;
+        height: 5.6rem;
+      }
+    }
+    
+    .slider-button:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    .slider-button--prev .icon {
+      transform: scale(-1);
+    }
+    
+    .slider-button .icon {
+      width: 2.64rem;
+      height: 2.64rem;
+    }
+    
+    @media screen and (min-width: 990px) {
+      .slider-button .icon {
+        width: 3.3rem;
+        height: 3.3rem;
+      }
+    }
+    
+    .swiper-pagination {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      z-index: 10;
+    }
+    
+    .swiper-pagination-bullet {
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 0.4rem;
+      background-color: rgba(255, 255, 255, 0.4);
+      transition: background-color 0.25s, width 0.25s;
+      cursor: pointer;
+    }
+    
+    .swiper-pagination-bullet:hover {
+      background-color: white;
+    }
+    
+    .swiper-pagination-bullet-active {
+      width: 4rem;
+      background-color: white;
+    }
+    
+    .placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sliderId = '{{ slider_id }}';
+      const sliderElement = document.querySelector(`[data-slider-id="${sliderId}"]`);
+      
+      if (sliderElement && typeof Swiper !== 'undefined') {
+        {%- liquid
+          assign has_multiple_slides = false
+          if section.blocks.size > 1
+            assign has_multiple_slides = true
+          endif
+        -%}
+        
+        const swiper = new Swiper(sliderElement, {
+          loop: {{ has_multiple_slides }},
+          {% if enable_autoplay and has_multiple_slides %}
+          autoplay: {
+            delay: {{ autoplay_speed }},
+            disableOnInteraction: false,
+          },
+          {% endif %}
+          {% if enable_dots and has_multiple_slides %}
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          {% endif %}
+          {% if enable_arrows and has_multiple_slides %}
+          navigation: {
+            nextEl: '.slider-button--next',
+            prevEl: '.slider-button--prev',
+          },
+          {% endif %}
+          effect: 'slide',
+          speed: 700,
+          on: {
+            init: function() {
+              // Add animation class to slides
+              this.slides.forEach(slide => slide.classList.add('banner-slide--animated'));
+            }
+          }
+        });
+      }
+    });
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Banner Image Slider",
+  "tag": "section",
+  "class": "section-banner-slider",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slider_height_desktop",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "%",
+      "label": "Desktop height",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "slider_height_mobile",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Mobile height",
+      "default": 60
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay speed",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_dots",
+      "label": "Show navigation dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_arrows",
+      "label": "Show navigation arrows",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop image",
+          "info": "Recommended: 1920x800px"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile image (optional)",
+          "info": "Recommended: 750x1000px"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "FLASH SALE"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "BUY 3 – PAY FOR 2"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button link"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Content position",
+          "options": [
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "header",
+          "content": "Overlay"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "label": "Desktop overlay opacity",
+          "default": 0.3
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity_mobile",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "label": "Mobile overlay opacity",
+          "default": 0.4
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner Image Slider",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "subheading": "FLASH SALE",
+            "heading": "BUY 3 – PAY FOR 2",
+            "button_text": "Shop Now",
+            "button_url": "/collections/sale"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "subheading": "EXPRESS OFFER",
+            "heading": "FLASH SALE",
+            "button_text": "Shop Now",
+            "button_url": "/collections"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "subheading": "FRENZY SALE",
+            "heading": "1+1 = FREE",
+            "button_text": "Shop Now",
+            "button_url": "/collections/all"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

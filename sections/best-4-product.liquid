@@ -1,0 +1,1095 @@
+<!-- sections/best-sellers-section.liquid -->
+<style>
+  .best-sellers-section {
+    padding: {{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px;
+    background: {{ section.settings.background_gradient | default: 'linear-gradient(180deg, #bfeefe, #d5bdff 50.5%, #d4beff)' }};
+  }
+  
+  .best-sellers-container {
+    max-width: {{ section.settings.container_width }}px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+  
+  .best-sellers-title {
+    margin-bottom: {{ section.settings.title_margin_bottom }}px;
+    text-align: center;
+  }
+  
+  .best-sellers-title h2 {
+    margin: 0;
+    font-size: {{ section.settings.title_font_size }}px;
+    line-height: {{ section.settings.title_line_height }}px;
+    color: {{ section.settings.title_color }};
+    font-weight: {{ section.settings.title_font_weight }};
+    font-family: {{ section.settings.font_family }}, Helvetica, sans-serif;
+  }
+  
+  .best-sellers-grid {
+    margin: 0 -{{ section.settings.grid_gap }}px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+  }
+  
+  .best-sellers-item {
+    width: {{ 100 | divided_by: section.settings.items_per_row }}%;
+    padding: 0 {{ section.settings.grid_gap }}px;
+    display: flex;
+    flex-flow: column;
+    margin-bottom: {{ section.settings.item_margin_bottom }}px;
+  }
+  
+  .product-card {
+    background: {{ section.settings.card_background }};
+    padding: {{ section.settings.card_padding }}px;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    position: relative;
+    border-radius: {{ section.settings.card_border_radius }}px;
+    box-shadow: {{ section.settings.card_shadow }};
+  }
+  
+  .product-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: {{ section.settings.image_aspect_ratio }}%;
+  }
+  
+  .product-image {
+    margin: 0 auto;
+    width: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    object-position: center;
+    display: block;
+    max-width: 100%;
+    border: none;
+    outline: none;
+  }
+  
+  .product-badge {
+    height: {{ section.settings.badge_size }}px;
+    width: {{ section.settings.badge_size }}px;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    max-width: {{ section.settings.badge_size }}px;
+    max-height: {{ section.settings.badge_size }}px;
+  }
+  
+  .product-content {
+    margin: 22px 0 0;
+    text-align: center;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    flex-grow: 1;
+  }
+  
+  .product-price {
+    font-size: {{ section.settings.price_font_size }}px;
+    line-height: {{ section.settings.price_line_height }}px;
+    color: {{ section.settings.price_color }};
+    font-weight: {{ section.settings.price_font_weight }};
+    margin: 0;
+  }
+  
+  .product-price del {
+    color: {{ section.settings.compare_price_color }};
+    margin-left: 10px;
+  }
+  
+  .product-title {
+    font-size: {{ section.settings.product_title_font_size }}px;
+    line-height: {{ section.settings.product_title_line_height }}px;
+    text-transform: uppercase;
+    font-weight: {{ section.settings.product_title_font_weight }};
+    margin: 9px 0;
+    color: {{ section.settings.product_title_color }};
+  }
+  
+  .product-reviews {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+  
+  .star-rating {
+    display: inline-block;
+    height: 20px;
+    width: 100px;
+    position: relative;
+    vertical-align: middle;
+    margin-right: 0.25em;
+  }
+  
+  .star-rating-bg {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='80' height='14' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M71.996 11.368l-3.94 2.42c-.474.292-.756.096-.628-.443l1.074-4.53-3.507-3.022c-.422-.363-.324-.693.24-.74l4.602-.37 1.778-4.3c.21-.51.55-.512.762 0l1.78 4.3 4.602.37c.552.046.666.37.237.74l-3.507 3.02 1.075 4.532c.127.536-.147.74-.628.444l-3.94-2.422zm-16 0l-3.94 2.42c-.474.292-.756.096-.628-.443l1.074-4.53-3.507-3.022c-.422-.363-.324-.693.24-.74l4.602-.37 1.778-4.3c.21-.51.55-.512.762 0l1.78 4.3 4.602.37c.552.046.666.37.237.74l-3.507 3.02 1.075 4.532c.127.536-.147.74-.628.444l-3.94-2.422zm-15.873 0l-3.94 2.42c-.475.292-.756.096-.63-.443l1.076-4.53-3.508-3.022c-.422-.363-.324-.693.24-.74l4.602-.37 1.778-4.3c.21-.51.55-.512.762 0l1.778 4.3 4.603.37c.554.046.667.37.24.74l-3.508 3.02 1.075 4.532c.127.536-.147.74-.628.444l-3.94-2.422zm-16.047 0l-3.94 2.42c-.475.292-.757.096-.63-.443l1.076-4.53-3.507-3.022c-.422-.363-.324-.693.238-.74l4.603-.37 1.78-4.3c.21-.51.55-.512.76 0l1.78 4.3 4.602.37c.554.046.667.37.24.74l-3.508 3.02 1.074 4.532c.127.536-.146.74-.628.444l-3.94-2.422zm-15.953 0l-3.94 2.42c-.475.292-.756.096-.63-.443l1.076-4.53L1.12 5.792c-.422-.363-.324-.693.24-.74l4.602-.37L7.74.382c.21-.51.55-.512.762 0l1.778 4.3 4.603.37c.554.046.667.37.24.74l-3.508 3.02 1.075 4.532c.127.536-.147.74-.628.444l-3.94-2.422z' fill='%23E5E5E5' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 100px 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .star-rating-fill {
+    background-image: url('data:image/svg+xml;charset=UTF-8, %3Csvg%20width%3D%2280%22%20height%3D%2214%22%20viewBox%3D%220%200%2080%2014%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%233F0791%22%20fill-rule%3D%22evenodd%22%3E%3Cpath%20d%3D%22M71.996%2011.368l-3.94%202.42c-.474.292-.756.096-.628-.443l1.074-4.53-3.507-3.022c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.78%204.3%204.602.37c.552.046.666.37.237.74l-3.507%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422zM55.996%2011.368l-3.94%202.42c-.474.292-.756.096-.628-.443l1.074-4.53-3.507-3.022c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.78%204.3%204.602.37c.552.046.666.37.237.74l-3.507%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422zM40.123%2011.368l-3.94%202.42c-.475.292-.756.096-.63-.443l1.076-4.53-3.508-3.022c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.778%204.3%204.603.37c.554.046.667.37.24.74l-3.508%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422zM24.076%2011.368l-3.94%202.42c-.475.292-.757.096-.63-.443l1.076-4.53-3.507-3.022c-.422-.363-.324-.693.238-.74l4.603-.37%201.78-4.3c.21-.51.55-.512.76%200l1.78%204.3%204.602.37c.554.046.667.37.24.74l-3.508%203.02%201.074%204.532c.127.536-.146.74-.628.444l-3.94-2.422zM8.123%2011.368l-3.94%202.42c-.475.292-.756.096-.63-.443l1.076-4.53L1.12%205.792c-.422-.363-.324-.693.24-.74l4.602-.37%201.778-4.3c.21-.51.55-.512.762%200l1.778%204.3%204.603.37c.554.046.667.37.24.74l-3.508%203.02%201.075%204.532c.127.536-.147.74-.628.444l-3.94-2.422z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-size: 100px 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+  
+  .review-count {
+    font-size: {{ section.settings.review_font_size }}px;
+    line-height: {{ section.settings.review_line_height }}px;
+    color: {{ section.settings.review_color }};
+    text-transform: uppercase;
+    font-weight: {{ section.settings.review_font_weight }};
+    letter-spacing: 0.6px;
+    padding-top: 3px;
+  }
+  
+  .product-button {
+    margin-top: auto;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  .product-button span {
+    background: {{ section.settings.button_background }};
+    color: {{ section.settings.button_text_color }};
+    display: inline-block;
+    width: 100%;
+    font-size: {{ section.settings.button_font_size }}px;
+    line-height: {{ section.settings.button_line_height }}px;
+    text-transform: {{ section.settings.button_text_transform }};
+    padding: {{ section.settings.button_padding }}px 10px;
+    border-radius: {{ section.settings.button_border_radius }}px;
+    max-width: 250px;
+    font-weight: {{ section.settings.button_font_weight }};
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .product-button:hover span {
+    background: {{ section.settings.button_hover_background }};
+    color: {{ section.settings.button_hover_text_color }};
+  }
+  
+  .shop-all-button {
+    margin: {{ section.settings.shop_all_margin_top }}px 0 0;
+    text-align: center;
+  }
+  
+  .shop-all-button a {
+    background: {{ section.settings.shop_all_background }};
+    color: {{ section.settings.shop_all_text_color }};
+    display: inline-block;
+    width: 100%;
+    font-size: {{ section.settings.shop_all_font_size }}px;
+    font-weight: {{ section.settings.shop_all_font_weight }};
+    line-height: {{ section.settings.shop_all_line_height }}px;
+    text-transform: uppercase;
+    padding: {{ section.settings.shop_all_padding }}px 10px;
+    border-radius: {{ section.settings.shop_all_border_radius }}px;
+    max-width: 350px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .shop-all-button a:hover {
+    background: {{ section.settings.shop_all_hover_background }};
+    color: {{ section.settings.shop_all_hover_text_color }};
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1240px) {
+    .best-sellers-container {
+      padding-inline: 15px;
+    }
+    .best-sellers-title h2 {
+      font-size: {{ section.settings.title_font_size | minus: 12 }}px;
+      line-height: {{ section.settings.title_line_height | minus: 12 }}px;
+    }
+    .best-sellers-grid {
+      margin-inline: 0px;
+    }
+    .best-sellers-item {
+      padding-inline: 15px;
+    }
+    .product-card {
+      padding: 20px;
+    }
+    .product-price {
+      font-size: {{ section.settings.price_font_size | minus: 4 }}px;
+      line-height: {{ section.settings.price_line_height | minus: 4 }}px;
+    }
+    .product-title {
+      font-size: {{ section.settings.product_title_font_size | minus: 4 }}px;
+      line-height: {{ section.settings.product_title_line_height | minus: 4 }}px;
+    }
+  }
+  
+  @media (max-width: 750px) {
+    .best-sellers-section {
+      padding: {{ section.settings.section_padding_top | minus: 23 }}px 0 {{ section.settings.section_padding_bottom | minus: 23 }}px;
+    }
+    .best-sellers-container {
+      padding-inline: 0px;
+    }
+    .best-sellers-title {
+      padding-inline: 14px;
+      margin-bottom: {{ section.settings.title_margin_bottom | minus: 20 }}px;
+    }
+    .best-sellers-title h2 {
+      font-size: {{ section.settings.title_font_size | minus: 24 }}px;
+      line-height: {{ section.settings.title_line_height | minus: 24 }}px;
+    }
+    .best-sellers-item {
+      padding-inline: 10px;
+    }
+    .product-card {
+      padding: 26px 25px 20px;
+    }
+  }
+  
+  @media (max-width: 550px) {
+    .best-sellers-item {
+      width: 270px;
+    }
+    .shop-all-button {
+      margin: {{ section.settings.shop_all_margin_top | minus: 20 }}px 0 0;
+    }
+    .shop-all-button a {
+      font-size: {{ section.settings.shop_all_font_size | plus: 2 }}px;
+      line-height: {{ section.settings.shop_all_line_height | minus: 4 }}px;
+      padding: {{ section.settings.shop_all_padding | minus: 1 }}px 12px;
+    }
+    .product-price {
+      font-size: {{ section.settings.price_font_size | minus: 6 }}px;
+      line-height: {{ section.settings.price_line_height | minus: 6 }}px;
+    }
+    .product-title {
+      font-size: {{ section.settings.product_title_font_size | minus: 8 }}px;
+      line-height: {{ section.settings.product_title_line_height | minus: 16 }}px;
+    }
+    .product-button span {
+      font-size: {{ section.settings.button_font_size | minus: 2 }}px;
+      line-height: {{ section.settings.button_line_height | minus: 7 }}px;
+      padding: {{ section.settings.button_padding | minus: 4.5 }}px;
+      height: 40px;
+    }
+  }
+</style>
+
+<section class="best-sellers-section">
+  <div class="best-sellers-container">
+    {% if section.settings.section_title != blank %}
+      <div class="best-sellers-title">
+        <h2>{{ section.settings.section_title }}</h2>
+      </div>
+    {% endif %}
+    
+    <div class="best-sellers-grid">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'product' %}
+            <div class="best-sellers-item" {{ block.shopify_attributes }}>
+              <div class="product-card">
+                {% if block.settings.product_image %}
+                  <a href="{{ block.settings.product_url }}" class="product-image-wrapper">
+                    <img src="{{ block.settings.product_image | img_url: '400x332' }}" 
+                         alt="{{ block.settings.product_title }}" 
+                         class="product-image"
+                         loading="lazy">
+                  </a>
+                {% endif %}
+                
+                {% if block.settings.badge_image %}
+                  <img src="{{ block.settings.badge_image | img_url: '100x100' }}" 
+                       alt="Badge" 
+                       class="product-badge">
+                {% endif %}
+                
+                <div class="product-content">
+                  <a href="{{ block.settings.product_url }}">
+                    {% if block.settings.product_price %}
+                      <h4 class="product-price">
+                        {{ block.settings.product_price }}
+                        {% if block.settings.compare_price %}
+                          <span><del>{{ block.settings.compare_price }}</del></span>
+                        {% endif %}
+                      </h4>
+                    {% endif %}
+                    
+                    {% if block.settings.product_title %}
+                      <h3 class="product-title">{{ block.settings.product_title }}</h3>
+                    {% endif %}
+                    
+                    {% if block.settings.show_reviews %}
+                      <div class="product-reviews">
+                        <div class="star-rating">
+                          <span class="star-rating-bg"></span>
+                          <span class="star-rating-fill" style="width: {{ block.settings.star_rating }}%"></span>
+                        </div>
+                        {% if block.settings.review_count %}
+                          <div class="review-count">{{ block.settings.review_count }} Reviews</div>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  </a>
+                  
+                  {% if block.settings.button_text %}
+                    <a href="{{ block.settings.product_url }}" class="product-button">
+                      <span>{{ block.settings.button_text }}</span>
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            
+          {% when 'custom_item' %}
+            <div class="best-sellers-item" {{ block.shopify_attributes }}>
+              <div class="product-card">
+                {% if block.settings.custom_image %}
+                  <div class="product-image-wrapper">
+                    <img src="{{ block.settings.custom_image | img_url: '400x332' }}" 
+                         alt="{{ block.settings.custom_title }}" 
+                         class="product-image"
+                         loading="lazy">
+                  </div>
+                {% endif %}
+                
+                <div class="product-content">
+                  {% if block.settings.custom_price %}
+                    <h4 class="product-price">{{ block.settings.custom_price }}</h4>
+                  {% endif %}
+                  
+                  {% if block.settings.custom_title %}
+                    <h3 class="product-title">{{ block.settings.custom_title }}</h3>
+                  {% endif %}
+                  
+                  {% if block.settings.show_custom_reviews %}
+                    <div class="product-reviews">
+                      <div class="star-rating">
+                        <span class="star-rating-bg"></span>
+                        <span class="star-rating-fill" style="width: {{ block.settings.custom_star_rating }}%"></span>
+                      </div>
+                      {% if block.settings.custom_review_count %}
+                        <div class="review-count">{{ block.settings.custom_review_count }} Reviews</div>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                  
+                  {% if block.settings.custom_button_text %}
+                    <div class="product-button">
+                      <span>{{ block.settings.custom_button_text }}</span>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+    
+    {% if section.settings.show_shop_all %}
+      <div class="shop-all-button">
+        <a href="{{ section.settings.shop_all_url }}">{{ section.settings.shop_all_text }}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Best Sellers Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Shop Best Sellers"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Section Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 63
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Section Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 63
+    },
+    {
+      "type": "text",
+      "id": "background_gradient",
+      "label": "Background Gradient",
+      "default": "linear-gradient(180deg, #bfeefe, #d5bdff 50.5%, #d4beff)",
+      "info": "CSS gradient value"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container Max Width",
+      "min": 1000,
+      "max": 1400,
+      "step": 10,
+      "default": 1280
+    },
+    {
+      "type": "header",
+      "content": "Title Settings"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Title Line Height",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 64
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#3f0791"
+    },
+    {
+      "type": "range",
+      "id": "title_font_weight",
+      "label": "Title Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "label": "Title Margin Bottom",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "font_family",
+      "label": "Font Family",
+      "default": "Mabry"
+    },
+    {
+      "type": "header",
+      "content": "Grid Settings"
+    },
+    {
+      "type": "range",
+      "id": "items_per_row",
+      "label": "Items Per Row",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid Gap",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "item_margin_bottom",
+      "label": "Item Margin Bottom",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Product Card Settings"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card Padding",
+      "min": 20,
+      "max": 50,
+      "step": 2,
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card Border Radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "card_shadow",
+      "label": "Card Shadow",
+      "default": "none",
+      "info": "CSS box-shadow value"
+    },
+    {
+      "type": "range",
+      "id": "image_aspect_ratio",
+      "label": "Image Aspect Ratio",
+      "min": 60,
+      "max": 100,
+      "step": 1,
+      "default": 83
+    },
+    {
+      "type": "range",
+      "id": "badge_size",
+      "label": "Badge Size",
+      "min": 30,
+      "max": 70,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Price Settings"
+    },
+    {
+      "type": "range",
+      "id": "price_font_size",
+      "label": "Price Font Size",
+      "min": 16,
+      "max": 32,
+      "step": 1,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "price_line_height",
+      "label": "Price Line Height",
+      "min": 20,
+      "max": 40,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price Color",
+      "default": "#3f0791"
+    },
+    {
+      "type": "color",
+      "id": "compare_price_color",
+      "label": "Compare Price Color",
+      "default": "#3f0791"
+    },
+    {
+      "type": "range",
+      "id": "price_font_weight",
+      "label": "Price Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "header",
+      "content": "Product Title Settings"
+    },
+    {
+      "type": "range",
+      "id": "product_title_font_size",
+      "label": "Product Title Font Size",
+      "min": 20,
+      "max": 40,
+      "step": 1,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "product_title_line_height",
+      "label": "Product Title Line Height",
+      "min": 24,
+      "max": 50,
+      "step": 1,
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Product Title Color",
+      "default": "#3f0791"
+    },
+    {
+      "type": "range",
+      "id": "product_title_font_weight",
+      "label": "Product Title Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "header",
+      "content": "Review Settings"
+    },
+    {
+      "type": "range",
+      "id": "review_font_size",
+      "label": "Review Font Size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "review_line_height",
+      "label": "Review Line Height",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "review_color",
+      "label": "Review Color",
+      "default": "#3f0791"
+    },
+    {
+      "type": "range",
+      "id": "review_font_weight",
+      "label": "Review Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 500
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button Background",
+      "default": "#5b00ed"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Button Hover Background",
+      "default": "#4a00c4"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button Font Size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_line_height",
+      "label": "Button Line Height",
+      "min": 16,
+      "max": 28,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "range",
+      "id": "button_padding",
+      "label": "Button Padding",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button Border Radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "button_font_weight",
+      "label": "Button Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Shop All Button Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shop_all",
+      "label": "Show Shop All Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shop_all_text",
+      "label": "Shop All Button Text",
+      "default": "Shop All Products"
+    },
+    {
+      "type": "url",
+      "id": "shop_all_url",
+      "label": "Shop All Button URL",
+      "default": "/collections/all"
+    },
+    {
+      "type": "color",
+      "id": "shop_all_background",
+      "label": "Shop All Button Background",
+      "default": "#5b00ed"
+    },
+    {
+      "type": "color",
+      "id": "shop_all_text_color",
+      "label": "Shop All Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "shop_all_hover_background",
+      "label": "Shop All Button Hover Background",
+      "default": "#4a00c4"
+    },
+    {
+      "type": "color",
+      "id": "shop_all_hover_text_color",
+      "label": "Shop All Button Hover Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "shop_all_font_size",
+      "label": "Shop All Button Font Size",
+      "min": 16,
+      "max": 28,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "shop_all_line_height",
+      "label": "Shop All Button Line Height",
+      "min": 18,
+      "max": 32,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "shop_all_font_weight",
+      "label": "Shop All Button Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "shop_all_padding",
+      "label": "Shop All Button Padding",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "shop_all_border_radius",
+      "label": "Shop All Button Border Radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "shop_all_margin_top",
+      "label": "Shop All Button Margin Top",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image"
+        },
+        {
+          "type": "url",
+          "id": "product_url",
+          "label": "Product URL"
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title"
+        },
+        {
+          "type": "text",
+          "id": "product_price",
+          "label": "Product Price",
+          "placeholder": "$39"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Compare Price",
+          "placeholder": "$59"
+        },
+        {
+          "type": "image_picker",
+          "id": "badge_image",
+          "label": "Badge Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_reviews",
+          "label": "Show Reviews",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "star_rating",
+          "label": "Star Rating Percentage",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 93,
+          "info": "Percentage of stars to fill (0-100)"
+        },
+        {
+          "type": "text",
+          "id": "review_count",
+          "label": "Review Count",
+          "placeholder": "1061"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now →"
+        }
+      ]
+    },
+    {
+      "type": "custom_item",
+      "name": "Custom Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image"
+        },
+        {
+          "type": "url",
+          "id": "custom_url",
+          "label": "Custom URL"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Title"
+        },
+        {
+          "type": "text",
+          "id": "custom_price",
+          "label": "Custom Price",
+          "placeholder": "$39+"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_custom_reviews",
+          "label": "Show Reviews",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "custom_star_rating",
+          "label": "Star Rating Percentage",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 94,
+          "info": "Percentage of stars to fill (0-100)"
+        },
+        {
+          "type": "text",
+          "id": "custom_review_count",
+          "label": "Review Count",
+          "placeholder": "3456"
+        },
+        {
+          "type": "text",
+          "id": "custom_button_text",
+          "label": "Button Text",
+          "default": "Shop Now →"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Sellers Section",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "product_title": "Granola Variety 6-pack",
+            "product_price": "$54",
+            "compare_price": "$59",
+            "star_rating": 93,
+            "review_count": "1061",
+            "button_text": "Shop Now →"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "product_title": "TREATS VARIETY 4-PACK",
+            "product_price": "$39",
+            "star_rating": 93,
+            "review_count": "2656",
+            "button_text": "Shop Now →"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "product_title": "Summer Flavors 4-PACK",
+            "product_price": "$39",
+            "star_rating": 93,
+            "review_count": "25291",
+            "button_text": "Shop Now →"
+          }
+        },
+        {
+          "type": "custom_item",
+          "settings": {
+            "custom_title": "Build Your Own Bundle",
+            "custom_price": "$39+",
+            "custom_star_rating": 94,
+            "custom_review_count": "3456",
+            "custom_button_text": "Shop Now →"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

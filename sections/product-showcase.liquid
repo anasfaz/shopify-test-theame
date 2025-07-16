@@ -1,0 +1,1546 @@
+{% comment %}
+Exact HTML/CSS to Shopify Conversion
+File: sections/product-showcase.liquid
+{% endcomment %}
+
+{%- style -%}
+  @import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap');
+
+  /* Dynamic CSS Variables */
+  :root {
+    --heading-font-family: {{ section.settings.font_heading.family | default: 'Poppins' }}, sans-serif;
+    --heading-font-weight: {{ section.settings.font_heading.weight | default: 400 }};
+    --heading-font-style: {{ section.settings.font_heading.style | default: 'normal' }};
+    --text-font-family: {{ section.settings.font_body.family | default: 'Poppins' }}, sans-serif;
+    --text-font-weight: {{ section.settings.font_body.weight | default: 400 }};
+    --text-font-style: {{ section.settings.font_body.style | default: 'normal' }};
+    --base-text-font-size: {{ section.settings.base_font_size | default: 16 }}px;
+    --default-text-font-size: {{ section.settings.default_font_size | default: 14 }}px;
+    --background: {{ section.settings.section_background | default: '#ffffff' }};
+    --light-background: {{ section.settings.light_background | default: '#ffffff' }};
+    --heading-color: {{ section.settings.heading_color | default: '#054663' }};
+    --text-color: {{ section.settings.text_color | default: '#373838' }};
+    --text-color-light: {{ section.settings.text_color_light | default: '#373838' }};
+    --border-color: {{ section.settings.border_color | default: '#e1e1e1' }};
+    --atlas-white: #ffffff;
+    --atlas-overlay-light: rgba(0, 0, 0, 0.05);
+    --atlas-overlay-medium: rgba(0, 0, 0, 0.15);
+  }
+
+  * {
+    box-sizing: border-box!important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--text-font-family);
+    font-weight: var(--text-font-weight);
+    font-style: var(--text-font-style);
+    color: var(--text-color);
+    background: var(--background);
+    line-height: 1.65;
+    font-size: var(--base-text-font-size);
+    margin: 0;
+  }
+
+  .section-6se {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    padding: {{ section.settings.section_padding_top | default: 100 }}px 0 {{ section.settings.section_padding_bottom | default: 0 }}px;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .Con-sbz {
+    margin: 0 auto;
+    padding: 0 24px;
+    max-width: {{ section.settings.container_width | default: 1700 }}px;
+  }
+
+  @media screen and (min-width: 641px) {
+    .Con-sbz {
+      padding: 0 50px;
+    }
+  }
+
+  @media screen and (min-width: 1140px) {
+    .Con-sbz {
+      padding: 0 80px;
+    }
+  }
+
+  .section-m9a {
+    text-align: center;
+    width: 100%;
+    margin: 0 0 60px;
+  }
+
+  .content-jb1 .section-m9a {
+    margin: 0;
+  }
+
+  .row-v7p {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+  }
+
+  .content-jb1 .product-ozk {
+    width: {{ section.settings.product_width | default: 33 }}%;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .content-jb1 .product-rok {
+    display: flex;
+    width: {{ 100 | minus: section.settings.product_width | default: 67 }}%;
+    padding: 10px;
+  }
+
+  .grid-iaa {
+    padding: 0 12px;
+  }
+
+  @media screen and (min-width: 641px) {
+    .grid-iaa {
+      padding: 0 24px;
+      margin-left: -24px;
+    }
+  }
+
+  @media screen and (min-width: 1140px) {
+    .grid-iaa {
+      padding: 0 50px;
+    }
+  }
+
+  .Pro-pp5 {
+    margin: 0 20px;
+  }
+
+  .content-jb1 .product-ozk .Pro-pp5 {
+    padding: 0;
+    margin: 0;
+    display: block;
+  }
+
+  .content-jb1 .product-rok .text-evw {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    text-align: left;
+    padding: 20px 50px;
+    width: 50%;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-style: none;
+    vertical-align: top;
+  }
+
+  .content-jb1 .product-rok img {
+    object-fit: cover;
+    width: 50%;
+    height: 100%;
+  }
+
+  .Pro-ipo {
+    text-align: center;
+    white-space: normal;
+  }
+
+  h2 {
+    margin-top: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: {{ section.settings.content_title_font | default: 'Gastromond' }};
+    font-style: normal;
+    font-weight: 400;
+    font-size: {{ section.settings.content_title_size | default: 42 }}px;
+    line-height: 50px;
+    color: var(--heading-color);
+  }
+
+  .content-jb1 .text-evw h2 {
+    font-size: {{ section.settings.content_block_title_size | default: 45 }}px;
+  }
+
+  .Pro-d16 {
+    position: relative;
+  }
+
+  a {
+    color: inherit;
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+  .Pro-61m {
+    display: block;
+  }
+
+  a:hover {
+    outline: 0;
+  }
+
+  .Asp-j3t {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .Asp-j3t:before {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+  }
+
+  .AspectRatio--pmo:before {
+    padding-bottom: 100%;
+  }
+
+  .Pro-fjr {
+    margin-top: 20px;
+    font-size: calc(var(--base-text-font-size) - (var(--default-text-font-size) - 12px));
+  }
+
+  .ProductItem__Info--48w {
+    text-align: left;
+  }
+
+  @media screen and (min-width: 641px) {
+    .Pro-fjr {
+      font-size: calc(var(--base-text-font-size) - (var(--default-text-font-size) - 13px));
+    }
+  }
+
+  .Pro-fjr.ProductItem__Info--48w {
+    text-align: center;
+  }
+
+  .content-jb1 .product-ozk .Pro-fjr.ProductItem__Info--48w {
+    margin: 0;
+  }
+
+  .Pro-rbv .ProductForm__BuyButtons--b33 {
+    display: flex;
+    justify-content: center;
+  }
+
+  .content-jb1 .product-ozk .ProductForm__BuyButtons--b33 {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .fa-249 {
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+
+  .ProductItem__Image--bow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0!important;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center;
+  }
+
+  .Asp-j3t > img {
+    max-height: 100%;
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .AspectRatio--pmo > img {
+    position: absolute;
+    width: auto;
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: contain;
+    object-fit: contain;
+  }
+
+  .Image--yxd.fa-249 {
+    opacity: 1;
+  }
+
+  @media (-moz-touch-enabled: 0), (hover: hover) {
+    .ProductItem__ImageWrapper--ets:hover .Pro-nrf {
+      opacity: 0!important;
+    }
+    .ProductItem__ImageWrapper--ets:hover .ProductItem__Image--bow {
+      opacity: 1!important;
+    }
+  }
+
+  .Ima-xq7 {
+    position: absolute;
+    display: block;
+    height: 2px;
+    width: 50px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    visibility: hidden;
+    margin: auto;
+    pointer-events: none;
+    background-color: var(--border-color);
+    z-index: -1;
+    transition: all .2s ease-in-out;
+    overflow: hidden;
+  }
+
+  .Ima-xq7:after {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 200%;
+    background-color: var(--heading-color);
+  }
+
+  .Hea-njm {
+    font-family: var(--heading-font-family);
+    font-weight: var(--heading-font-weight);
+    font-style: var(--heading-font-style);
+    color: var(--heading-color);
+    transition: color .2s ease-in-out;
+  }
+
+  .Pro-9hq {
+    display: block;
+    margin-bottom: 4px;
+    font-family: {{ section.settings.product_title_font | default: 'Gastromond' }};
+    font-style: normal;
+    font-weight: 400;
+    font-size: {{ section.settings.product_title_size | default: 20 }}px;
+    line-height: 22px;
+    color: var(--heading-color);
+  }
+
+  h4 {
+    margin-top: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: {{ section.settings.product_subtitle_font | default: 'Poppins' }};
+    font-style: normal;
+    font-weight: 500;
+    font-size: {{ section.settings.product_subtitle_size | default: 22 }}px;
+    line-height: 23px;
+    color: var(--heading-color);
+    margin: 0;
+  }
+
+  .Pro-g27 {
+    font-family: {{ section.settings.product_main_title_font | default: 'Gastromond' }};
+    font-style: normal;
+    font-weight: 400;
+    font-size: {{ section.settings.product_main_title_size | default: 36 }}px;
+    line-height: 36px;
+    color: var(--heading-color);
+    margin-bottom: 0;
+  }
+
+  .content-jb1 h4 {
+    font-family: '{{ section.settings.content_h4_font | default: 'Gastromond' }}';
+    font-style: normal;
+    font-weight: 400;
+    font-size: {{ section.settings.content_h4_size | default: 28 }}px;
+    line-height: 1.2;
+    color: var(--heading-color);
+    margin: 15px 0 15px 0;
+  }
+
+  p {
+    margin-top: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: {{ section.settings.paragraph_font | default: 'Poppins' }};
+    font-style: normal;
+    font-weight: 500;
+    font-size: {{ section.settings.paragraph_size | default: 16 }}px;
+    line-height: 22px;
+    color: #094763;
+  }
+
+  .Col-hec {
+    font-family: {{ section.settings.small_text_font | default: 'Poppins' }};
+    font-style: normal;
+    font-weight: 400;
+    font-size: {{ section.settings.small_text_size | default: 11 }}px;
+    line-height: 16px;
+    color: var(--heading-color);
+    margin-top: 0;
+    min-height: 48px;
+  }
+
+  .product-ozk .Col-hec {
+    min-height: 1px;
+    margin: 0;
+  }
+
+  .Pro-cwk {
+    margin-top: 4px;
+    margin-bottom: 10px;
+  }
+
+  .Pro-afh {
+    justify-content: center;
+    width: {{ section.settings.button_width | default: 287 }}px;
+    height: {{ section.settings.button_height | default: 48 }}px;
+    background: {{ section.settings.button_bg_color | default: '#054663' }};
+    border-radius: {{ section.settings.button_border_radius | default: 26.5 }}px;
+    font-family: {{ section.settings.button_font | default: 'Poppins' }};
+    font-style: normal;
+    font-weight: {{ section.settings.button_font_weight | default: 600 }};
+    font-size: {{ section.settings.button_font_size | default: 16 }}px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: {{ section.settings.button_text_color | default: '#fff' }};
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: .3s ease all;
+  }
+
+  .Pro-afh:hover {
+    background-color: {{ section.settings.button_hover_color | default: '#4584a0' }};
+  }
+
+  .Pro-cwk .Pro-cwk {
+    margin-top: 0;
+  }
+
+  input {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    line-height: normal;
+    border-radius: 0;
+  }
+
+  .Qua-gaf {
+    display: inline-block;
+    padding: 0;
+    letter-spacing: normal;
+    background: transparent;
+    border: none;
+    margin: 0;
+    width: 30px;
+    margin: 0 8px;
+    font-family: {{ section.settings.quantity_font | default: 'Poppins' }};
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--heading-color);
+  }
+
+  #pro-2bz {
+    margin-left: 10px;
+  }
+
+  .pop-5cm {
+    font-family: {{ section.settings.accent_font | default: 'poppins' }}!important;
+    font-weight: 400;
+  }
+
+  .Pro-g27 span {
+    font-family: {{ section.settings.span_font | default: 'poppins' }};
+    font-weight: 200;
+  }
+
+  .Pro-5hf {
+    display: inline-block;
+    margin: 0 5px;
+  }
+
+  .Col-3f7 {
+    position: absolute;
+    height: 0;
+    width: 0;
+    opacity: 0;
+  }
+
+  input[type="radio"] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  .Col-i9d {
+    position: relative;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    vertical-align: top;
+    cursor: pointer;
+    background-size: cover;
+  }
+
+  .ColorSwatch--8ff {
+    width: {{ section.settings.swatch_size | default: 16 }}px;
+    height: {{ section.settings.swatch_size | default: 16 }}px;
+    border-radius: 100%;
+  }
+
+  .Col-i9d:after {
+    content: "";
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: -4px;
+    left: -4px;
+  }
+
+  .ColorSwatch--8ff.Col-i9d:after {
+    width: 20px;
+    height: 20px;
+    left: -2px;
+    top: -2px;
+  }
+
+  .Col-i9d.is-active:after,
+  .Col-3f7:checked + .Col-i9d::after {
+    border: 3px solid var(--heading-color);
+    border-radius: 100%;
+  }
+
+  /* Mobile Responsive Styles */
+  @media screen and (max-width: 959px) {
+    .section-6se {
+      padding: 60px 0 0;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .Con-sbz {
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .content-jb1 .Con-sbz {
+      padding: 0;
+    }
+  }
+
+  @media screen and (max-width: 959px) {
+    .section-6se .section-m9a {
+      margin: 0 0 40px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .section-6se .section-m9a {
+      margin: 0 0 30px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .section-6se .section-m9a {
+      max-width: 284px;
+      margin-left: auto!important;
+      margin-right: auto!important;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .content-jb1 .section-m9a {
+      padding: 0 20px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    body:not(#shop-all) .Pro-rbv {
+      column-count: 1!important;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .content-jb1 .product-ozk {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .content-jb1 .product-ozk {
+      padding-top: 0;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .content-jb1 .product-rok {
+      width: 100%;
+      margin-top: 25px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .content-jb1 .product-rok {
+      flex-wrap: wrap;
+      justify-content: center;
+      padding-bottom: 0;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .grid-iaa {
+      margin-left: -10px;
+    }
+  }
+
+  @media screen and (max-width: 1007px) {
+    .Pro-pp5 {
+      overflow: hidden;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .grid-iaa {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .Pro-pp5 {
+      margin: 0 18px;
+    }
+  }
+
+  @media screen and (max-width: 1440px) {
+    .content-jb1 .product-rok .text-evw {
+      padding: 20px 40px;
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    .content-jb1 .product-rok .text-evw {
+      padding: 20px 30px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .content-jb1 .product-rok .text-evw {
+      width: 100%;
+      padding: 20px;
+    }
+
+    .content-jb1 .product-rok img {
+      object-fit: cover;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  @media screen and (max-width: 959px) {
+    h2 {
+      font-size: 36px;
+      line-height: 1.2;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    h2 {
+      font-size: 26px;
+    }
+  }
+
+  @media screen and (max-width: 1440px) {
+    .content-jb1 .text-evw h2 {
+      font-size: 38px;
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    .content-jb1 .text-evw h2 {
+      font-size: 34px;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .content-jb1 .text-evw h2 {
+      font-size: 28px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .Pro-d16 {
+      height: auto!important;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .content-jb1 .product-ozk .Pro-d16 {
+      display: flex;
+      overflow: hidden;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .content-jb1 .product-ozk .Pro-61m {
+      width: 50%;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .content-jb1 .product-ozk .Pro-61m {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .product-ozk .info-e9z {
+      width: 50%;
+      padding: 0 20px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .product-ozk .info-e9z {
+      width: 100%;
+      padding: 0 30px 20px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .Pro-fjr.ProductItem__Info--48w {
+      text-align: center!important;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .Pro-9hq {
+      font-family: {{ section.settings.product_title_font | default: 'Gastromond' }};
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 14px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .content-jb1 h4 {
+      padding: 0 30px;
+      font-size: 24px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .Con-sbz .Pro-g27 {
+      font-weight: 400;
+      font-size: 24px;
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 680px) {
+    p {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .hidden-b28 {
+      display: none!important;
+    }
+  }
+
+  @media (max-width: 559px) {
+    .Pro-5hf {
+      margin: 0 2px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .Pro-5hf {
+      float: none!important;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .Pro-5hf {
+      margin: 0 1px;
+    }
+  }
+
+  /* Dynamic visibility classes */
+  .hidden-b28 {
+    {% unless section.settings.show_mobile_elements %}
+      display: none;
+    {% endunless %}
+  }
+{%- endstyle -%}
+
+<section class="section-6se">
+  <div class="content-jb1">
+    <div class="Con-sbz">
+      {% if section.settings.show_section_header %}
+        <div class="section-m9a">
+          {% if section.settings.section_title != blank %}
+            <h2>{{ section.settings.section_title }}</h2>
+          {% endif %}
+          {% if section.settings.section_description != blank %}
+            <p>{{ section.settings.section_description }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="row-v7p Pro-rbv">
+        <!-- Product Column -->
+        <div class="product-ozk">
+          <div class="Pro-pp5 grid-iaa">
+            <div class="Pro-ipo">
+              <div class="Pro-d16">
+                {% if section.settings.featured_product != blank %}
+                  {% assign product = section.settings.featured_product %}
+                  <a href="{{ product.url }}" class="Pro-61m ProductItem__ImageWrapper--ets">
+                    <div class="Asp-j3t AspectRatio--pmo" style="max-width: 720px; --aspect-ratio: 1.0">
+                      {% if product.featured_media %}
+                        <img class="Pro-nrf ProductItem__Image--bow fa-249 Image--yxd" 
+                             src="{{ product.featured_media | image_url: width: 600 }}" 
+                             alt="{{ product.featured_media.alt | escape }}"
+                             loading="lazy">
+                      {% endif %}
+                      {% if product.media[1] %}
+                        <img class="Pro-nrf fa-249 Image--yxd" 
+                             src="{{ product.media[1] | image_url: width: 600 }}" 
+                             alt="{{ product.media[1].alt | escape }}"
+                             loading="lazy">
+                      {% endif %}
+                      <span class="Ima-xq7"></span>
+                    </div>
+                  </a>
+                {% else %}
+                  <a href="#" class="Pro-61m ProductItem__ImageWrapper--ets">
+                    <div class="Asp-j3t AspectRatio--pmo" style="max-width: 720px; --aspect-ratio: 1.0">
+                      {{ 'product-1' | placeholder_svg_tag: 'Pro-nrf fa-249 Image--yxd' }}
+                      <span class="Ima-xq7"></span>
+                    </div>
+                  </a>
+                {% endif %}
+
+                <div class="info-e9z">
+                  <div class="Pro-fjr ProductItem__Info--48w">
+                    {% if section.settings.featured_product != blank %}
+                      <h2 class="Pro-9hq Hea-njm" style="{% unless section.settings.show_product_brand %}display:none !important{% endunless %}">
+                        <a href="{{ product.url }}"><span class="pop-5cm">{{ product.vendor }}</span></a>
+                      </h2>
+                      <h4 class="Pro-g27">
+                        <a href="{{ product.url }}">{{ product.title }}<span class="pop-5cm"> {{ section.settings.product_suffix }}</span></a>
+                      </h4>
+                    {% else %}
+                      <h2 class="Pro-9hq Hea-njm" style="{% unless section.settings.show_product_brand %}display:none !important{% endunless %}">
+                        <a href="#"><span class="pop-5cm">LastSwab</span></a>
+                      </h2>
+                      <h4 class="Pro-g27">
+                        <a href="#">LastSwab<span class="pop-5cm"> Original</span></a>
+                      </h4>
+                    {% endif %}
+
+                    <p class="Col-hec {% unless section.settings.show_mobile_elements %}hidden-b28{% endunless %}">
+                      {{ section.settings.product_small_description }}
+                    </p>
+
+                    <div>
+                      {% if section.settings.featured_product != blank %}
+                        {{ product.description | strip_html | truncate: section.settings.description_length }}
+                      {% else %}
+                        {{ section.settings.product_description | default: "LastSwab is a reusable and sustainable alternative to cotton swabs. Easy to use and easy to clean." }}
+                      {% endif %}
+                    </div>
+
+                    {% if section.settings.show_color_swatches %}
+                      <div class="Pro-cwk">
+                        <div class="Pro-cwk">
+                          {% if section.settings.featured_product != blank and product.variants.size > 1 %}
+                            {% for variant in product.variants limit: 6 %}
+                              <div class="Pro-5hf">
+                                <input class="Col-3f7" type="radio" name="variant-{{ section.id }}" id="variant-{{ variant.id }}" value="{{ variant.title }}">
+                                <label class="Col-i9d ColorSwatch--8ff" for="variant-{{ variant.id }}" 
+                                       {% if variant.featured_media %}style="background-image: url({{ variant.featured_media | image_url: width: 72 }})"{% endif %}
+                                       data-tooltip="{{ variant.title }}"></label>
+                              </div>
+                            {% endfor %}
+                          {% else %}
+                            <!-- Default color swatches -->
+                            <div class="Pro-5hf">
+                              <input class="Col-3f7" type="radio" name="color-{{ section.id }}" id="turquoise-{{ section.id }}" value="Turquoise">
+                              <label class="Col-i9d ColorSwatch--8ff" for="turquoise-{{ section.id }}" 
+                                     style="background-image: url(//lastobject.com/cdn/shop/files/turquoise_new_72x72.png?v=1643087223)" 
+                                     data-tooltip="Turquoise"></label>
+                            </div>
+                            <div class="Pro-5hf">
+                              <input class="Col-3f7" type="radio" name="color-{{ section.id }}" id="peach-{{ section.id }}" value="Peach">
+                              <label class="Col-i9d ColorSwatch--8ff" for="peach-{{ section.id }}" 
+                                     style="background-image: url(//lastobject.com/cdn/shop/files/peach_new_72x72.png?v=1643087222)" 
+                                     data-tooltip="Peach"></label>
+                            </div>
+                            <div class="Pro-5hf">
+                              <input class="Col-3f7" type="radio" name="color-{{ section.id }}" id="blue-{{ section.id }}" value="Blue">
+                              <label class="Col-i9d ColorSwatch--8ff" for="blue-{{ section.id }}" 
+                                     style="background-image: url(//lastobject.com/cdn/shop/files/blue_72x72.png?v=1614329472)" 
+                                     data-tooltip="Blue"></label>
+                            </div>
+                            <div class="Pro-5hf">
+                              <input class="Col-3f7" type="radio" name="color-{{ section.id }}" id="red-{{ section.id }}" value="Red">
+                              <label class="Col-i9d ColorSwatch--8ff" for="red-{{ section.id }}" 
+                                     style="background-image: url(//lastobject.com/cdn/shop/files/red_new_72x72.png?v=1643087222)" 
+                                     data-tooltip="Red"></label>
+                            </div>
+                            <div class="Pro-5hf">
+                              <input class="Col-3f7" type="radio" name="color-{{ section.id }}" id="black-{{ section.id }}" value="Black">
+                              <label class="Col-i9d ColorSwatch--8ff" for="black-{{ section.id }}" 
+                                     style="background-image: url(//lastobject.com/cdn/shop/files/black_new_72x72.png?v=1643087222)" 
+                                     data-tooltip="Black"></label>
+                            </div>
+                            <div class="Pro-5hf">
+                              <input class="Col-3f7" type="radio" name="color-{{ section.id }}" id="green-{{ section.id }}" value="Green">
+                              <label class="Col-i9d ColorSwatch--8ff" for="green-{{ section.id }}" 
+                                     style="background-image: url(//lastobject.com/cdn/shop/files/green_new_72x72.png?v=1643087222)" 
+                                     data-tooltip="Green"></label>
+                            </div>
+                          {% endif %}
+                          <input type="text" class="Qua-gaf" style="display: none;" name="quantity" value="1" id="quantity-{{ section.id }}">
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
+
+                  <div class="ProductForm__BuyButtons--b33">
+                    {% if section.settings.featured_product != blank %}
+                      <a href="{{ product.url }}" class="Pro-afh">
+                        {{ section.settings.button_text | default: 'Add to cart' }}
+                        {% if section.settings.show_price %}
+                          <span id="pro-2bz">{{ product.price | money }}</span>
+                        {% endif %}
+                      </a>
+                    {% else %}
+                      <button type="button" class="Pro-afh">
+                        {{ section.settings.button_text | default: 'Add to cart' }}
+                        <span id="pro-2bz">{{ section.settings.default_price | default: 'Rs. 1,100' }}</span>
+                      </button>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Blocks -->
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'content_block' %}
+              <div class="product-rok" {{ block.shopify_attributes }}>
+                <div class="text-evw" style="background-color: {{ block.settings.background_color | default: '#f47a71' }}">
+                  <h2 style="color: {{ block.settings.title_color | default: '#9b355f' }}">
+                    {{ block.settings.title | default: "It Feels Good to Do Your Part for the Planet... and to Clean Your Ears With Reusable Swabs" }}
+                  </h2>
+                </div>
+                {% if block.settings.image != blank %}
+                  <img src="{{ block.settings.image | image_url: width: 800 }}" 
+                       alt="{{ block.settings.image.alt | escape }}"
+                       loading="lazy">
+                {% else %}
+                  <img src="{{ block.settings.default_image_url | default: 'https://lastobject.com/cdn/shop/files/lastswab-new-lastswab-693398_8a7abdbf-d354-47f4-ab73-3d8ec2bf98a9.jpg?v=1739871205' }}" 
+                       alt="Product lifestyle image"
+                       loading="lazy">
+                {% endif %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Color swatch selection
+    const swatches = document.querySelectorAll('.Col-i9d');
+    swatches.forEach(swatch => {
+      swatch.addEventListener('click', function() {
+        const radio = this.previousElementSibling;
+        if (radio && radio.type === 'radio') {
+          // Remove active class from all swatches in the same group
+          const groupSwatches = document.querySelectorAll(`input[name="${radio.name}"] + .Col-i9d`);
+          groupSwatches.forEach(s => s.classList.remove('is-active'));
+          
+          // Add active class to clicked swatch
+          this.classList.add('is-active');
+          radio.checked = true;
+        }
+      });
+    });
+
+    // Hover effects for product images
+    const imageWrappers = document.querySelectorAll('.ProductItem__ImageWrapper--ets');
+    imageWrappers.forEach(wrapper => {
+      wrapper.addEventListener('mouseenter', function() {
+        const images = this.querySelectorAll('.Pro-nrf');
+        if (images.length > 1) {
+          images[0].style.opacity = '0';
+          images[1].style.opacity = '1';
+        }
+      });
+
+      wrapper.addEventListener('mouseleave', function() {
+        const images = this.querySelectorAll('.Pro-nrf');
+        if (images.length > 1) {
+          images[0].style.opacity = '1';
+          images[1].style.opacity = '0';
+        }
+      });
+    });
+
+    // Tooltip functionality
+    const tooltipElements = document.querySelectorAll('[data-tooltip]');
+    tooltipElements.forEach(element => {
+      element.addEventListener('mouseenter', function() {
+        // Tooltip functionality can be enhanced here
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Product Showcase",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_header",
+      "label": "Show section header",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title"
+    },
+    {
+      "type": "textarea",
+      "id": "section_description",
+      "label": "Section description"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container max width",
+      "min": 1000,
+      "max": 2000,
+      "step": 50,
+      "unit": "px",
+      "default": 1700
+    },
+    {
+      "type": "range",
+      "id": "product_width",
+      "label": "Product column width",
+      "min": 25,
+      "max": 75,
+      "step": 5,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "light_background",
+      "label": "Light background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#054663"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#373838"
+    },
+    {
+      "type": "color",
+      "id": "text_color_light",
+      "label": "Light text color",
+      "default": "#373838"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e1e1e1"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "font_heading",
+      "label": "Heading font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "font_picker",
+      "id": "font_body",
+      "label": "Body font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "base_font_size",
+      "label": "Base font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "default_font_size",
+      "label": "Default font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "text",
+      "id": "content_title_font",
+      "label": "Content title font family",
+      "default": "Gastromond"
+    },
+    {
+      "type": "range",
+      "id": "content_title_size",
+      "label": "Content title size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "content_block_title_size",
+      "label": "Content block title size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "header",
+      "content": "Product Settings"
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_brand",
+      "label": "Show product brand",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "product_suffix",
+      "label": "Product title suffix",
+      "default": "Original"
+    },
+    {
+      "type": "textarea",
+      "id": "product_small_description",
+      "label": "Small product description"
+    },
+    {
+      "type": "textarea",
+      "id": "product_description",
+      "label": "Default product description",
+      "default": "LastSwab is a reusable and sustainable alternative to cotton swabs. Easy to use and easy to clean."
+    },
+    {
+      "type": "range",
+      "id": "description_length",
+      "label": "Description truncate length",
+      "min": 50,
+      "max": 500,
+      "step": 10,
+      "default": 150
+    },
+    {
+      "type": "checkbox",
+      "id": "show_color_swatches",
+      "label": "Show color swatches",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "swatch_size",
+      "label": "Color swatch size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "text",
+      "id": "product_title_font",
+      "label": "Product title font",
+      "default": "Gastromond"
+    },
+    {
+      "type": "range",
+      "id": "product_title_size",
+      "label": "Product title size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "text",
+      "id": "product_subtitle_font",
+      "label": "Product subtitle font",
+      "default": "Poppins"
+    },
+    {
+      "type": "range",
+      "id": "product_subtitle_size",
+      "label": "Product subtitle size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "text",
+      "id": "product_main_title_font",
+      "label": "Product main title font",
+      "default": "Gastromond"
+    },
+    {
+      "type": "range",
+      "id": "product_main_title_size",
+      "label": "Product main title size",
+      "min": 18,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "text",
+      "id": "content_h4_font",
+      "label": "Content H4 font",
+      "default": "Gastromond"
+    },
+    {
+      "type": "range",
+      "id": "content_h4_size",
+      "label": "Content H4 size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "text",
+      "id": "paragraph_font",
+      "label": "Paragraph font",
+      "default": "Poppins"
+    },
+    {
+      "type": "range",
+      "id": "paragraph_size",
+      "label": "Paragraph size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "text",
+      "id": "small_text_font",
+      "label": "Small text font",
+      "default": "Poppins"
+    },
+    {
+      "type": "range",
+      "id": "small_text_size",
+      "label": "Small text size",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Add to cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price on button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "default_price",
+      "label": "Default price (when no product selected)",
+      "default": "Rs. 1,100"
+    },
+    {
+      "type": "range",
+      "id": "button_width",
+      "label": "Button width",
+      "min": 200,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Button height",
+      "min": 32,
+      "max": 72,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#054663"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover color",
+      "default": "#4584a0"
+    },
+    {
+      "type": "text",
+      "id": "button_font",
+      "label": "Button font",
+      "default": "Poppins"
+    },
+    {
+      "type": "range",
+      "id": "button_font_weight",
+      "label": "Button font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Additional Fonts"
+    },
+    {
+      "type": "text",
+      "id": "quantity_font",
+      "label": "Quantity font",
+      "default": "Poppins"
+    },
+    {
+      "type": "text",
+      "id": "accent_font",
+      "label": "Accent font",
+      "default": "Poppins"
+    },
+    {
+      "type": "text",
+      "id": "span_font",
+      "label": "Span font",
+      "default": "Poppins"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_elements",
+      "label": "Show elements on mobile",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content_block",
+      "name": "Content Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "It Feels Good to Do Your Part for the Planet"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "default_image_url",
+          "label": "Default image URL",
+          "info": "Used when no image is selected"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "default": "#f47a71"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#9b355f"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Showcase",
+      "blocks": [
+        {
+          "type": "content_block",
+          "settings": {
+            "title": "It Feels Good to Do Your Part for the Planet... and to Clean Your Ears With Reusable Swabs",
+            "default_image_url": "https://lastobject.com/cdn/shop/files/lastswab-new-lastswab-693398_8a7abdbf-d354-47f4-ab73-3d8ec2bf98a9.jpg?v=1739871205",
+            "background_color": "#f47a71",
+            "title_color": "#9b355f"
+          }
+        },
+        {
+          "type": "content_block",
+          "settings": {
+            "title": "Make Your Daily Beauty and Skincare Routine Sustainable With LastRound",
+            "default_image_url": "https://lastobject.com/cdn/shop/files/lastround-new-lastobject-475745_f5bf4a45-ab07-4cfe-b047-166275f53f7c.jpg?v=1707902900",
+            "background_color": "#4881a0",
+            "title_color": "#69d6e2"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

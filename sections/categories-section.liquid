@@ -1,0 +1,579 @@
+{% comment %}
+  Katjes Categories Section - Dynamic Shopify Section
+  File: sections/katjes-categories-section.liquid
+{% endcomment %}
+
+<style>
+  @font-face { 
+    font-family: cooper-black-std;
+    src: url(https://use.typekit.net/af/9044bf/000000000000000000013102/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff2"),
+         url(https://use.typekit.net/af/9044bf/000000000000000000013102/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff"),
+         url(https://use.typekit.net/af/9044bf/000000000000000000013102/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("opentype");
+    font-weight: 400;
+    font-style: italic;
+    font-stretch: normal;
+    font-display: auto;
+  } 
+  
+  @font-face { 
+    font-family: cooper-black-std;
+    src: url(https://use.typekit.net/af/4e1b68/000000000000000000013101/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff2"),
+         url(https://use.typekit.net/af/4e1b68/000000000000000000013101/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff"),
+         url(https://use.typekit.net/af/4e1b68/000000000000000000013101/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    font-display: auto;
+  }
+
+  .katjes-categories-section {
+    background-color: {{ section.settings.background_color | default: '#ff0080' }};
+    -webkit-clip-path: polygon(0% 5%, 20% 2.5%, 40% 7.5%, 60% 4%, 80% 6.5%, 100% 4%, 100% 100%, 0% 100%);
+    clip-path: polygon(0% 5%, 20% 2.5%, 40% 7.5%, 60% 4%, 80% 6.5%, 100% 4%, 100% 100%, 0% 100%);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .katjes-categories-container {
+    width: 100%;
+    padding-left: {{ section.settings.container_padding }}px;
+    padding-right: {{ section.settings.container_padding }}px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .katjes-categories-inner {
+    width: 100%;
+    max-width: {{ section.settings.max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .katjes-categories-header {
+    color: {{ section.settings.header_color | default: '#ffffff' }};
+    margin-bottom: {{ section.settings.header_margin_bottom }}px;
+    display: none;
+  }
+
+  .katjes-categories-title {
+    font-family: cooper-black-std, sans-serif;
+    font-size: {{ section.settings.title_font_size }}px;
+    font-weight: 400;
+    line-height: 92%;
+    letter-spacing: 0.6px;
+    margin: 0;
+  }
+
+  .katjes-categories-list {
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 0;
+    gap: {{ section.settings.item_gap }}px;
+  }
+
+  .katjes-category-item {
+    flex: none;
+    max-width: 100%;
+    height: 100%;
+    margin-bottom: 0;
+    max-width: {{ section.settings.item_max_width }}px;
+  }
+
+  .katjes-category-link {
+    color: {{ section.settings.link_color | default: '#ffffff' }};
+    text-decoration: none;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    position: relative;
+    max-width: 100%;
+  }
+
+  .katjes-category-image-wrapper {
+    border-radius: 100%;
+  }
+
+  .katjes-category-image {
+    border-radius: 100%;
+    width: {{ section.settings.image_size }}px;
+    height: {{ section.settings.image_size }}px;
+    display: inline-block;
+    max-width: 100%;
+    transition: all 0.3s;
+  }
+
+  .katjes-category-image:hover {
+    transform: scale({{ section.settings.hover_scale }}) rotate({{ section.settings.hover_rotate }}deg);
+  }
+
+  .katjes-category-spacer {
+    height: {{ section.settings.spacer_height }}px;
+  }
+
+  .katjes-category-text-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  .katjes-category-text {
+    font-size: {{ section.settings.text_font_size }}px;
+    font-weight: 400;
+    line-height: 92%;
+    font-family: cooper-black-std, sans-serif;
+  }
+
+  .katjes-category-underline {
+    background-color: {{ section.settings.underline_color | default: '#ffffff' }};
+    border-radius: 1rem;
+    width: 0%;
+    height: {{ section.settings.underline_height }}px;
+    margin-top: 0.2rem;
+  }
+
+  /* Responsive Design */
+  @media screen and (max-width: 991px) {
+    .katjes-categories-list {
+      grid-template-columns: 1fr 1fr;
+      display: grid;
+      gap: {{ section.settings.mobile_gap }}px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .katjes-categories-container {
+      padding-left: {{ section.settings.mobile_padding }}px;
+      padding-right: {{ section.settings.mobile_padding }}px;
+    }
+    
+    .katjes-categories-header {
+      display: block;
+    }
+    
+    .katjes-categories-title {
+      font-size: {{ section.settings.mobile_title_size }}px;
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    .katjes-categories-section {
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    }
+    
+    .katjes-categories-container {
+      padding-left: {{ section.settings.small_mobile_padding }}px;
+      padding-right: {{ section.settings.small_mobile_padding }}px;
+    }
+    
+    .katjes-categories-list {
+      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: {{ section.settings.small_mobile_gap }}px;
+    }
+    
+    .katjes-category-item {
+      width: 100%;
+      max-width: none;
+    }
+    
+    .katjes-category-image {
+      width: {{ section.settings.mobile_image_size }}px;
+      height: {{ section.settings.mobile_image_size }}px;
+    }
+    
+    .katjes-category-text {
+      font-size: {{ section.settings.mobile_text_size }}px;
+    }
+  }
+</style>
+
+<section class="katjes-categories-section" id="katjes-categories-{{ section.id }}">
+  <div class="katjes-categories-container">
+    <div class="katjes-categories-inner">
+      <div>
+        {% if section.settings.show_header %}
+          <div class="katjes-categories-header">
+            <h2 class="katjes-categories-title">{{ section.settings.section_title }}</h2>
+          </div>
+        {% endif %}
+        
+        <div class="katjes-categories-slide">
+          <ul class="katjes-categories-list">
+            {% for block in section.blocks %}
+              {% if block.type == 'category_item' %}
+                <li class="katjes-category-item" {{ block.shopify_attributes }}>
+                  <a href="{{ block.settings.category_url | default: '#' }}" class="katjes-category-link">
+                    <div class="katjes-category-image-wrapper">
+                      {% if block.settings.category_image %}
+                        <img src="{{ block.settings.category_image | img_url: '400x400' }}" 
+                             alt="{{ block.settings.category_name }}" 
+                             class="katjes-category-image">
+                      {% else %}
+                        <div class="katjes-category-image" style="background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;">
+                          <span>{{ block.settings.category_name | slice: 0, 1 | upcase }}</span>
+                        </div>
+                      {% endif %}
+                    </div>
+                    <div class="katjes-category-spacer"></div>
+                    <div class="katjes-category-text-wrapper">
+                      <div class="katjes-category-text">{{ block.settings.category_name }}</div>
+                      <div class="katjes-category-underline"></div>
+                    </div>
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Katjes Categories",
+  "tag": "section",
+  "class": "katjes-categories-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Mehr von Katjes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show Header on Mobile",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ff0080"
+    },
+    {
+      "type": "color",
+      "id": "header_color",
+      "label": "Header Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "underline_color",
+      "label": "Underline Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum Container Width (px)",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "default": 1300
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Section Padding Top (px)",
+      "min": 20,
+      "max": 200,
+      "step": 5,
+      "default": 95
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Section Padding Bottom (px)",
+      "min": 20,
+      "max": 200,
+      "step": 5,
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "container_padding",
+      "label": "Container Side Padding (px)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Items Gap (px)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "item_max_width",
+      "label": "Item Maximum Width (px)",
+      "min": 200,
+      "max": 400,
+      "step": 10,
+      "default": 320
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title Font Size (px)",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Category Text Font Size (px)",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "header_margin_bottom",
+      "label": "Header Margin Bottom (px)",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "range",
+      "id": "image_size",
+      "label": "Image Size (px)",
+      "min": 100,
+      "max": 300,
+      "step": 5,
+      "default": 190
+    },
+    {
+      "type": "range",
+      "id": "spacer_height",
+      "label": "Spacer Height (px)",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "default": 29
+    },
+    {
+      "type": "range",
+      "id": "underline_height",
+      "label": "Underline Height (px)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Hover Effects"
+    },
+    {
+      "type": "range",
+      "id": "hover_scale",
+      "label": "Hover Scale",
+      "min": 1.0,
+      "max": 1.2,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "range",
+      "id": "hover_rotate",
+      "label": "Hover Rotation (degrees)",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Mobile Settings"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Mobile Padding Top (px)",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "default": 55
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Mobile Padding Bottom (px)",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding",
+      "label": "Mobile Side Padding (px)",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "small_mobile_padding",
+      "label": "Small Mobile Side Padding (px)",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_title_size",
+      "label": "Mobile Title Font Size (px)",
+      "min": 24,
+      "max": 50,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mobile_text_size",
+      "label": "Mobile Text Font Size (px)",
+      "min": 16,
+      "max": 30,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_size",
+      "label": "Mobile Image Size (px)",
+      "min": 60,
+      "max": 150,
+      "step": 5,
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Mobile Grid Gap (px)",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "small_mobile_gap",
+      "label": "Small Mobile Grid Gap (px)",
+      "min": 10,
+      "max": 30,
+      "step": 5,
+      "default": 25
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_item",
+      "name": "Category Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category_name",
+          "label": "Category Name",
+          "default": "Category"
+        },
+        {
+          "type": "url",
+          "id": "category_url",
+          "label": "Category URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "category_image",
+          "label": "Category Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Katjes Categories",
+      "blocks": [
+        {
+          "type": "category_item",
+          "settings": {
+            "category_name": "Fruchtgummi",
+            "category_url": "/collections/fruchtgummi"
+          }
+        },
+        {
+          "type": "category_item",
+          "settings": {
+            "category_name": "Lakritz",
+            "category_url": "/collections/lakritz"
+          }
+        },
+        {
+          "type": "category_item",
+          "settings": {
+            "category_name": "Mixboxen",
+            "category_url": "/collections/mixboxen"
+          }
+        },
+        {
+          "type": "category_item",
+          "settings": {
+            "category_name": "Fashion",
+            "category_url": "/collections/fashion"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

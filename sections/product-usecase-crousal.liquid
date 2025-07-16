@@ -1,0 +1,1134 @@
+<!-- sections/noka-carousel.liquid -->
+{%- style -%}
+  .noka-carousel-{{ section.id }} {
+    background: linear-gradient(180deg, {{ section.settings.bg_start }} 0%, {{ section.settings.bg_end }} 100%);
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  .noka-carousel-{{ section.id }} .grid-697 {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .noka-carousel-{{ section.id }} .cel-ioo {
+    flex: 0 0 auto;
+    min-height: 0px;
+    min-width: 0px;
+    width: 100%;
+  }
+
+  .noka-carousel-{{ section.id }} .small-bas {
+    width: 91.66667%;
+  }
+
+  @media (min-width: 640px) {
+    .noka-carousel-{{ section.id }} .medium-dhw {
+      width: 83.33333%;
+    }
+    .noka-carousel-{{ section.id }} .medium-n96 {
+      width: 91.66667%;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .content-rpg {
+    margin-bottom: {{ section.settings.header_spacing }}px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .noka-carousel-{{ section.id }} .text-4wr {
+    text-align: {{ section.settings.text_align }};
+  }
+
+  .noka-carousel-{{ section.id }} .inn-irz {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .noka-carousel-{{ section.id }} .text-4wr .inn-irz {
+    width: 100%;
+    align-items: center;
+  }
+
+  .noka-carousel-{{ section.id }} .title-ekz {
+    font-family: 'Mier-A-DemiBold', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.25rem;
+    letter-spacing: -0.2px;
+    font-weight: 700;
+    text-transform: {{ section.settings.pill_transform }};
+    margin-bottom: 0.5rem;
+  }
+
+  .noka-carousel-{{ section.id }} .pill-569 {
+    padding: 0.4375rem 1.125rem;
+    margin-bottom: 1.25rem;
+    background-color: {{ section.settings.pill_bg }};
+    color: {{ section.settings.pill_color }};
+    border-radius: 1.25rem;
+  }
+
+  .noka-carousel-{{ section.id }} .section-don {
+    font-family: 'Lexend', 'Helvetica Neue', Arial, sans-serif;
+    font-size: {{ section.settings.heading_mobile }}px;
+    line-height: 120%;
+    font-weight: 700;
+    margin: 0;
+    text-transform: {{ section.settings.heading_transform }};
+    color: {{ section.settings.heading_color }};
+    position: relative;
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 1.0625rem;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .section-don {
+      font-size: {{ section.settings.heading_desktop }}px;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .carousel-rzm .carousel-yeo {
+    padding: 0.625rem;
+    color: #2a2a2a;
+    background-color: {{ section.settings.carousel_bg }};
+    border-radius: 1.875rem;
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .carousel-rzm .carousel-yeo {
+      padding: 1rem;
+      border-radius: {{ section.settings.border_radius }}px;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .carousel-kok {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5625rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 1023px) {
+    .noka-carousel-{{ section.id }} .carousel-kok {
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .carousel-kok button {
+    font-family: 'Mier-A-DemiBold', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: -0.0125rem;
+    color: {{ section.settings.nav_color }};
+    text-transform: {{ section.settings.nav_transform }};
+    padding: 0.5rem 0.875rem;
+    margin: 0 0.3125rem 0.3125rem 0;
+    border-radius: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.5, 0, 0, 1);
+    border: none;
+    background: {{ section.settings.nav_bg }};
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .carousel-kok button {
+      margin-right: 0.4375rem;
+      padding: 0.625rem 1rem;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .carousel-kok button:hover,
+  .noka-carousel-{{ section.id }} .carousel-kok button.is-4zy {
+    color: {{ section.settings.nav_active_color }};
+    background-color: {{ section.settings.nav_active_bg }};
+  }
+
+  .noka-carousel-{{ section.id }} .flickity-m4c {
+    position: relative;
+  }
+
+  .noka-carousel-{{ section.id }} .flickity-m4c.is-r2z {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .noka-carousel-{{ section.id }} .flickity-dek {
+    overflow: hidden;
+    position: relative;
+    height: 530px;
+    z-index: 1;
+    touch-action: pan-y;
+  }
+
+  .noka-carousel-{{ section.id }} .flickity-m4c.is-r2z .flickity-dek {
+    cursor: grab;
+    cursor: -webkit-grab;
+  }
+
+  .noka-carousel-{{ section.id }} .slide-tpg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.5s ease;
+    transform: translateX(400%);
+  }
+
+  .noka-carousel-{{ section.id }} .slide-tpg.select-x6s {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  .noka-carousel-{{ section.id }} .carousel-v7v {
+    width: 100%;
+  }
+
+  .noka-carousel-{{ section.id }} .slide-grid {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .noka-carousel-{{ section.id }} .small-6bk {
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .large-8mq {
+      width: {{ section.settings.image_width }}%;
+    }
+    .noka-carousel-{{ section.id }} .large-o8q {
+      width: {{ 100 | minus: section.settings.image_width }}%;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .image-zdz {
+    height: 16.875rem;
+    overflow: hidden;
+    border-radius: {{ section.settings.image_radius }}px;
+  }
+
+  @media (min-width: 640px) {
+    .noka-carousel-{{ section.id }} .image-zdz {
+      height: 23.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .image-zdz {
+      height: 33.125rem;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .image-zdz img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: {{ section.settings.image_radius }}px;
+    backface-visibility: hidden;
+    pointer-events: none;
+  }
+
+  .noka-carousel-{{ section.id }} .content-rch {
+    padding: 1.25rem 0.625rem 3.4375rem;
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .content-rch {
+      padding: 3.75rem 2.8125rem 2.6875rem 3.4375rem;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .reg-eos {
+    font-size: {{ section.settings.category_size }}px;
+    line-height: 1.25rem;
+    font-family: 'Mier-A-DemiBold', 'Helvetica Neue', Arial, sans-serif;
+    color: {{ section.settings.category_color }};
+    margin: 0;
+    text-transform: {{ section.settings.category_transform }};
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .reg-eos {
+      font-size: {{ section.settings.category_size }}px;
+      line-height: 1.4375rem;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .content-rch h3 {
+    font-size: {{ section.settings.title_mobile }}px;
+    line-height: 120%;
+    font-family: 'Mier-A-Bold', 'Lexend', 'Helvetica Neue', Arial, sans-serif;
+    margin: 0 0 0.9375rem;
+    color: {{ section.settings.title_color }};
+    text-transform: {{ section.settings.title_transform }};
+    font-weight: 700;
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .content-rch h3 {
+      font-size: {{ section.settings.title_desktop }}px;
+      margin: 0 0 1.5625rem;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .lar-vj1 {
+    font-size: {{ section.settings.desc_size }}px;
+    line-height: 1.5rem;
+    opacity: {{ section.settings.desc_opacity }};
+    color: {{ section.settings.desc_color }};
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .lar-vj1 {
+      line-height: 1.75rem;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .lar-vj1 p {
+    margin: 0;
+    font-size: {{ section.settings.desc_size }}px;
+    line-height: 1.4762;
+    letter-spacing: -0.2px;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+
+  .noka-carousel-{{ section.id }} .lar-vj1 p:last-child {
+    margin-bottom: 0;
+  }
+
+  .noka-carousel-{{ section.id }} .flickity-page-t54 {
+    width: auto;
+    padding: 0.625rem 1.3125rem;
+    margin: 3.5rem auto 0;
+    list-style: none;
+    text-align: center;
+    line-height: 1;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    display: flex;
+    z-index: 2;
+    border-radius: 1.25rem;
+    max-width: max-content;
+    min-width: auto;
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .flickity-page-t54 {
+      margin: 2.25rem auto 0;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .carousel-rzm .flickity-page-t54 {
+    margin: auto;
+    position: relative;
+    bottom: 0.9375rem;
+    padding: 0;
+    width: 90%;
+    max-width: 27.625rem;
+    display: flex;
+    flex-flow: row;
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .carousel-rzm .flickity-page-t54 {
+      position: absolute;
+      width: 100%;
+      bottom: 3.75rem;
+      left: calc({{ section.settings.image_width }}% + 2.8125rem);
+      margin: 0;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .jmbni {
+    border-radius: 6.25rem;
+    position: relative;
+    display: inline-block;
+    width: calc(100% - 0.5rem);
+    height: 0.25rem;
+    margin: 0 0.125rem;
+    cursor: pointer;
+    border: none;
+    background-color: #2a2a2a26;
+    opacity: 1;
+    border-radius: 0.125rem;
+    overflow: hidden;
+  }
+
+  @media (min-width: 1024px) {
+    .noka-carousel-{{ section.id }} .jmbni {
+      width: calc(100% - 0.375rem);
+      margin: 0 0.1875rem;
+    }
+  }
+
+  .noka-carousel-{{ section.id }} .jmbni::before {
+    content: "";
+    display: block;
+    height: 100%;
+    width: var(--dynamic-width);
+    background: {{ section.settings.progress_color }};
+    transition: 0s all linear;
+    border-radius: 0.125rem;
+  }
+
+  .noka-carousel-{{ section.id }} .jmbni:not(.select-x6s)::before {
+    opacity: 0;
+  }
+
+  .noka-carousel-{{ section.id }} .jmbni.select-x6s::before {
+    opacity: 1;
+  }
+
+  .noka-carousel-{{ section.id }} .jmbni.autoplay::before {
+    animation: progress-{{ section.id }} {{ section.settings.autoplay_time }}s linear forwards;
+  }
+
+  @keyframes progress-{{ section.id }} {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+
+  .noka-carousel-{{ section.id }} .placeholder {
+    color: #999;
+    font-size: 14px;
+    text-align: center;
+    padding: 40px 20px;
+    background: #f5f5f5;
+    border-radius: {{ section.settings.image_radius }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+{%- endstyle -%}
+
+<section class="noka-carousel-{{ section.id }}" data-carousel="{{ section.id }}">
+  <div class="grid-697 align-h1r">
+    {%- if section.settings.show_header -%}
+      <div class="cel-ioo small-bas medium-dhw content-rpg text-4wr">
+        <div class="inn-irz">
+          {%- if section.settings.pill_text != blank -%}
+            <div class="title-ekz pill-569">
+              <span>{{ section.settings.pill_text }}</span>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <div class="section-don">
+              <div>{{ section.settings.heading }}</div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="cel-ioo small-bas medium-n96 carousel-rzm">
+      <div class="carousel-kok">
+        {%- for block in section.blocks -%}
+          <button type="button" class="{% if forloop.first %}is-4zy{% endif %}" 
+                  data-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+            {{ block.settings.category | default: 'Category' }}
+          </button>
+        {%- endfor -%}
+      </div>
+
+      <div class="carousel-yeo flickity-m4c is-r2z">
+        <div class="flickity-dek">
+          {%- for block in section.blocks -%}
+            <div class="slide-tpg{% if forloop.first %} select-x6s{% endif %}" data-slide="{{ forloop.index0 }}">
+              <div class="carousel-v7v">
+                <div class="grid-697 align-h1r slide-grid">
+                  <div class="cel-ioo small-6bk large-8mq">
+                    <div class="image-zdz">
+                      {%- if block.settings.image -%}
+                        <img src="{{ block.settings.image | image_url: width: 750 }}" 
+                             alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                             loading="lazy" width="750" height="563">
+                      {%- else -%}
+                        <div class="placeholder">
+                          <p>Upload image for {{ block.settings.category | default: 'this slide' }}</p>
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                  <div class="cel-ioo small-6bk large-o8q">
+                    <div class="content-rch">
+                      {%- if block.settings.category -%}
+                        <p class="reg-eos">{{ block.settings.category }}</p>
+                      {%- endif -%}
+                      {%- if block.settings.title -%}
+                        <h3>{{ block.settings.title }}</h3>
+                      {%- endif -%}
+                      {%- if block.settings.description -%}
+                        <div class="lar-vj1">
+                          <p>{{ block.settings.description }}</p>
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.show_indicators and section.blocks.size > 1 -%}
+          <ol class="flickity-page-t54">
+            {%- for block in section.blocks -%}
+              {%- assign dynamic_width = '99.90%' -%}
+              {%- if forloop.index == 5 -%}
+                {%- assign dynamic_width = '27.87%' -%}
+              {%- endif -%}
+              <li class="jmbni{% if forloop.first %} select-x6s{% endif %}" 
+                  data-slide="{{ forloop.index0 }}" 
+                  style="--dynamic-width: {{ dynamic_width }};"></li>
+            {%- endfor -%}
+          </ol>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('[data-carousel="{{ section.id }}"]');
+    if (!carousel) return;
+
+    const navButtons = carousel.querySelectorAll('.carousel-kok button');
+    const slides = carousel.querySelectorAll('.slide-tpg');
+    const indicators = carousel.querySelectorAll('.jmbni');
+    const autoplay = {{ section.settings.enable_autoplay | default: false }};
+    const duration = {{ section.settings.autoplay_time | default: 5 }} * 1000;
+    
+    let currentSlide = 0;
+    let autoplayInterval;
+    let isTransitioning = false;
+
+    function showSlide(index, immediate = false) {
+      if (index < 0 || index >= slides.length || isTransitioning) return;
+      
+      if (!immediate) {
+        isTransitioning = true;
+      }
+
+      // Remove active classes
+      navButtons.forEach(btn => btn.classList.remove('is-4zy'));
+      slides.forEach(slide => slide.classList.remove('select-x6s'));
+      indicators.forEach(ind => ind.classList.remove('select-x6s', 'autoplay'));
+
+      // Add active classes
+      if (navButtons[index]) navButtons[index].classList.add('is-4zy');
+      if (slides[index]) slides[index].classList.add('select-x6s');
+      if (indicators[index]) {
+        indicators[index].classList.add('select-x6s');
+        if (autoplay && !immediate) {
+          indicators[index].classList.add('autoplay');
+        }
+      }
+
+      currentSlide = index;
+
+      if (!immediate) {
+        setTimeout(() => {
+          isTransitioning = false;
+        }, 500);
+      }
+    }
+
+    function nextSlide() {
+      if (isTransitioning) return;
+      showSlide((currentSlide + 1) % slides.length);
+    }
+
+    function startAutoplay() {
+      if (!autoplay || slides.length <= 1) return;
+      stopAutoplay();
+      autoplayInterval = setInterval(nextSlide, duration);
+      if (indicators[currentSlide]) {
+        indicators[currentSlide].classList.add('autoplay');
+      }
+    }
+
+    function stopAutoplay() {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+      }
+      indicators.forEach(ind => ind.classList.remove('autoplay'));
+    }
+
+    function resetAutoplay() {
+      stopAutoplay();
+      setTimeout(startAutoplay, 500);
+    }
+
+    // Navigation button clicks
+    navButtons.forEach((btn, index) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (index !== currentSlide && !isTransitioning) {
+          showSlide(index);
+          resetAutoplay();
+        }
+      });
+    });
+
+    // Indicator clicks
+    indicators.forEach((ind, index) => {
+      ind.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (index !== currentSlide && !isTransitioning) {
+          showSlide(index);
+          resetAutoplay();
+        }
+      });
+    });
+
+    // Touch/swipe support
+    let startX = 0;
+    let startY = 0;
+    let isScrolling = undefined;
+
+    carousel.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isScrolling = undefined;
+      stopAutoplay();
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+      if (isScrolling === undefined) {
+        isScrolling = Math.abs(startY - e.touches[0].clientY) > Math.abs(startX - e.touches[0].clientX);
+      }
+      
+      if (!isScrolling) {
+        e.preventDefault();
+      }
+    });
+
+    carousel.addEventListener('touchend', (e) => {
+      if (isScrolling || isTransitioning) {
+        resetAutoplay();
+        return;
+      }
+
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          showSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1);
+        }
+      }
+      resetAutoplay();
+    });
+
+    // Mouse events for autoplay control
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', () => {
+      if (autoplay && slides.length > 1) {
+        startAutoplay();
+      }
+    });
+
+    // Keyboard navigation
+    carousel.addEventListener('keydown', (e) => {
+      if (isTransitioning) return;
+      
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        showSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1);
+        resetAutoplay();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextSlide();
+        resetAutoplay();
+      }
+    });
+
+    // Initialize
+    if (slides.length > 0) {
+      showSlide(0, true);
+      if (autoplay && slides.length > 1) {
+        setTimeout(startAutoplay, 1000);
+      }
+    }
+
+    // Handle visibility change (pause when tab not active)
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopAutoplay();
+      } else if (autoplay && slides.length > 1) {
+        setTimeout(startAutoplay, 1000);
+      }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Noka Carousel",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show header",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "pill_text",
+      "label": "Pill text",
+      "default": "Made to Move With You"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Everyday Smoothie"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Max width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Header spacing",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "min": 40,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "label": "Desktop image width",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_start",
+      "label": "Background start",
+      "default": "#ff7a1f"
+    },
+    {
+      "type": "color",
+      "id": "bg_end",
+      "label": "Background end",
+      "default": "#f8583a"
+    },
+    {
+      "type": "color",
+      "id": "carousel_bg",
+      "label": "Carousel background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "pill_bg",
+      "label": "Pill background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "pill_color",
+      "label": "Pill text",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "nav_bg",
+      "label": "Nav button background",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Nav button text",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "nav_active_bg",
+      "label": "Active nav background",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "nav_active_color",
+      "label": "Active nav text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "category_color",
+      "label": "Category text",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description color",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "progress_color",
+      "label": "Progress color",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_mobile",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile heading size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_desktop",
+      "min": 40,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop heading size",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "title_mobile",
+      "min": 24,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile title size",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "title_desktop",
+      "min": 40,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop title size",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "category_size",
+      "min": 14,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Category size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "desc_size",
+      "min": 16,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "desc_opacity",
+      "min": 0.5,
+      "max": 1.0,
+      "step": 0.1,
+      "label": "Description opacity",
+      "default": 0.7
+    },
+    {
+      "type": "select",
+      "id": "pill_transform",
+      "label": "Pill text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "lowercase"
+    },
+    {
+      "type": "select",
+      "id": "heading_transform",
+      "label": "Heading transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "lowercase"
+    },
+    {
+      "type": "select",
+      "id": "nav_transform",
+      "label": "Nav text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "lowercase"
+    },
+    {
+      "type": "select",
+      "id": "category_transform",
+      "label": "Category transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "title_transform",
+      "label": "Title transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "lowercase"
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Image radius",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "show_indicators",
+      "label": "Show indicators",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_time",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay duration",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Recommended: 750x563px"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category",
+          "default": "Fitness"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Crush Your PR"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Get all natural, fast hitting energy for your workouts and vital nutrients for your recovery all in a light and refreshing smoothie that won't weigh you down."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Noka Carousel",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "category": "Fitness",
+            "title": "Crush Your PR",
+            "description": "Get all natural, fast hitting energy for your workouts and vital nutrients for your recovery all in a light and refreshing smoothie that won't weigh you down."
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "category": "Outdoors",
+            "title": "Ultimate Trail Snack",
+            "description": "Ditch the dry bar and sticky goo for a light and refreshing smoothie on your next run, hike or bike ride."
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "category": "Breakfast",
+            "title": "Kickstart Your Day",
+            "description": "Save the time, skip the mess with our grab & go smoothies packed with balanced nutrition including organic fruits, plant protein, prebiotic fiber, flax, and essential vitamins & minerals."
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "category": "School",
+            "title": "Level-Up Your Lunch",
+            "description": "Treat yourself or your kids to delicious smoothies with the added benefits of brain and body supporting nutrients to help power you through the day."
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "category": "Work",
+            "title": "Refresh and Recharge",
+            "description": "Stay on your game (and away from the vending machine) and power through that meeting marathon with our superfood smoothies that you can keep in your work bag, desk or fridge."
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "category": "Travel",
+            "title": "Squeeze More, Sneeze Less",
+            "description": "Supercharge your immunity enroute to your destination with a powerful dose of organic fruits, plant protein, elderberry, zinc and Vitamins B12, C & D."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

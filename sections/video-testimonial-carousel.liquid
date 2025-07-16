@@ -1,0 +1,145 @@
+{% schema %}
+{
+  "name": "Testimonial Carousel",
+  "tag": "section",
+  "class": "section-testimonial-carousel",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "autoplay_videos",
+      "label": "Autoplay on hover",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Video Testimonial",
+      "settings": [
+        {
+          "type": "video",
+          "id": "local_video",
+          "label": "Upload video"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster_image",
+          "label": "Poster Image"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Tag Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dynamic Testimonial Carousel",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="testimonial-carousel-wrapper">
+  <div class="testimonial-carousel swiper">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        {% if block.settings.local_video != blank %}
+          {% assign video_sources = block.settings.local_video.sources %}
+          {% assign video_url = '' %}
+          {% for source in video_sources %}
+            {% if source.format == 'mp4' %}
+              {% assign video_url = source.url %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        {% assign poster = block.settings.poster_image | image_url: width: 1000 %}
+        {% assign product = block.settings.product %}
+
+        <div class="swiper-slide testimonial-item">
+          {% if video_url != '' %}
+            <video
+              class="testimonial-video"
+              loop
+              muted
+              playsinline
+              preload="metadata"
+              poster="{{ poster }}"
+            >
+              <source src="{{ video_url }}" type="video/mp4">
+            </video>
+          {% else %}
+            <img src="{{ poster }}" alt="Testimonial Poster" class="testimonial-video">
+          {% endif %}
+
+          {% if product %}
+            <div class="testimonial-product-info">
+              <h4>{{ product.title }}</h4>
+              <form method="post" action="/cart/add">
+                <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                <button type="submit">Add to Cart</button>
+              </form>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</div>
+
+<style>
+  .testimonial-carousel-wrapper {
+    padding: 50px 20px;
+    overflow: hidden;
+  }
+  .testimonial-carousel .swiper-wrapper {
+    display: flex;
+    gap: 30px;
+  }
+  .testimonial-item {
+    width: 260px;
+    text-align: center;
+  }
+  .testimonial-video {
+    width: 100%;
+    aspect-ratio: 9/16;
+    border-radius: 10px;
+    object-fit: cover;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  .testimonial-product-info {
+    margin-top: 12px;
+  }
+  .testimonial-product-info button {
+    background: #000;
+    color: #fff;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.testimonial-video').forEach(video => {
+      if (video.tagName.toLowerCase() === 'video') {
+        video.addEventListener('mouseenter', () => video.play());
+        video.addEventListener('mouseleave', () => {
+          video.pause();
+          video.currentTime = 0;
+        });
+      }
+    });
+  });
+</script>
